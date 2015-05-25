@@ -5,6 +5,14 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataProcessor", "DataProcessor\DataProcessor.csproj", "{E66F9C23-201D-42C7-A8EE-D2A3F0B2E190}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataProcessor.Unit.Tests", "DataProcessor.Unit.Tests\DataProcessor.Unit.Tests.csproj", "{4F044910-C900-4D3A-9DCD-FA6807D598B5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{8FF5AFD9-EB6F-44CE-B38F-AC7DEB0598B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataProcessor.Integration.Tests", "DataProcessor.Integration.Tests\DataProcessor.Integration.Tests.csproj", "{5836006B-7B6D-4810-BFF2-0435B51C60E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataProcessor.Acceptance.Tests", "DataProcessor.Acceptance.Tests\DataProcessor.Acceptance.Tests.csproj", "{1E1A665E-7054-4436-8942-96E03209CEB3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,8 +23,25 @@ Global
 		{E66F9C23-201D-42C7-A8EE-D2A3F0B2E190}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E66F9C23-201D-42C7-A8EE-D2A3F0B2E190}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E66F9C23-201D-42C7-A8EE-D2A3F0B2E190}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F044910-C900-4D3A-9DCD-FA6807D598B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F044910-C900-4D3A-9DCD-FA6807D598B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F044910-C900-4D3A-9DCD-FA6807D598B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F044910-C900-4D3A-9DCD-FA6807D598B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5836006B-7B6D-4810-BFF2-0435B51C60E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5836006B-7B6D-4810-BFF2-0435B51C60E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5836006B-7B6D-4810-BFF2-0435B51C60E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5836006B-7B6D-4810-BFF2-0435B51C60E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E1A665E-7054-4436-8942-96E03209CEB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E1A665E-7054-4436-8942-96E03209CEB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E1A665E-7054-4436-8942-96E03209CEB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E1A665E-7054-4436-8942-96E03209CEB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4F044910-C900-4D3A-9DCD-FA6807D598B5} = {8FF5AFD9-EB6F-44CE-B38F-AC7DEB0598B5}
+		{5836006B-7B6D-4810-BFF2-0435B51C60E7} = {8FF5AFD9-EB6F-44CE-B38F-AC7DEB0598B5}
+		{1E1A665E-7054-4436-8942-96E03209CEB3} = {8FF5AFD9-EB6F-44CE-B38F-AC7DEB0598B5}
 	EndGlobalSection
 EndGlobal
