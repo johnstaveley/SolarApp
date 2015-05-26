@@ -11,5 +11,11 @@ namespace DataProcessor.Unit.Tests
         {
             Assert.IsTrue(true);
         }
+
+        [Test]
+        public void DummyTest2()
+        {
+            Assert.IsTrue(true);
+        }
     }
 }
