@@ -11,7 +11,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace DataProcessor.Acceptance.Tests
+namespace DataProcessor.Integration.Tests
 {
     using TechTalk.SpecFlow;
     
@@ -32,8 +32,8 @@ namespace DataProcessor.Acceptance.Tests
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Processing Data", "In order to process data into the system\nAs an automated system\nI want to open fi" +
-                    "les, understand their contents and save to the database", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Processing Data", "In order to process data into the system\r\nAs an automated system\r\nI want to open " +
+                    "files, understand their contents and save to the database", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -67,20 +67,22 @@ namespace DataProcessor.Acceptance.Tests
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Process the exception contents of a file")]
+        [NUnit.Framework.IgnoreAttribute()]
         public virtual void ProcessTheExceptionContentsOfAFile()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Process the exception contents of a file", ((string[])(null)));
-#line 6
-this.ScenarioSetup(scenarioInfo);
-#line 7
- testRunner.Given("I have access to a new file", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Process the exception contents of a file", new string[] {
+                        "Ignore"});
 #line 8
- testRunner.And("is a new file there containing some unusual content", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+this.ScenarioSetup(scenarioInfo);
 #line 9
- testRunner.When("I process the file", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.Given("I have access to a new file", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 10
- testRunner.Then("I can store the unusual content", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.And("is a new file there containing some unusual content", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 11
+ testRunner.When("I process the file", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 12
+ testRunner.Then("I can store the unusual content", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 13
  testRunner.And("raise a notification", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -88,12 +90,14 @@ this.ScenarioSetup(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Process data from an incoming file")]
+        [NUnit.Framework.IgnoreAttribute()]
         public virtual void ProcessDataFromAnIncomingFile()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Process data from an incoming file", ((string[])(null)));
-#line 13
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Process data from an incoming file", new string[] {
+                        "Ignore"});
+#line 16
 this.ScenarioSetup(scenarioInfo);
-#line 14
+#line 17
  testRunner.Given("I have access to a new file", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
@@ -108,9 +112,9 @@ this.ScenarioSetup(scenarioInfo);
                         "100",
                         "1000",
                         "10000"});
-#line 15
- testRunner.And("is a new file there containing", ((string)(null)), table1, "And ");
 #line 18
+ testRunner.And("is a new file there containing", ((string)(null)), table1, "And ");
+#line 21
  testRunner.When("I process the file", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
@@ -125,7 +129,7 @@ this.ScenarioSetup(scenarioInfo);
                         "100",
                         "1000",
                         "10000"});
-#line 19
+#line 22
  testRunner.Then("I can store the values from the file", ((string)(null)), table2, "Then ");
 #line hidden
             this.ScenarioCleanup();

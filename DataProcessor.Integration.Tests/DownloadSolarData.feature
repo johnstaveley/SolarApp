@@ -3,6 +3,7 @@
 	As an automated system
 	I want to be able to download new solar data files	
 
+@Ignore
 Scenario: Add two numbers
 Given I have the credentials of the ftp site
 And there are files waiting there

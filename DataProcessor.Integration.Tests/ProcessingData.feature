@@ -3,6 +3,8 @@
 	As an automated system
 	I want to open files, understand their contents and save to the database
 
+
+@Ignore
 Scenario: Process the exception contents of a file
 	Given I have access to a new file
 	And is a new file there containing some unusual content
@@ -10,6 +12,7 @@ Scenario: Process the exception contents of a file
 	Then I can store the unusual content 
 	And raise a notification
 
+@Ignore
 Scenario: Process data from an incoming file
 	Given I have access to a new file
 	And is a new file there containing

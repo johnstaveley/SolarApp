@@ -91,6 +91,16 @@
       <LastGenOutput>ProcessingData.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataProcessor\DataProcessor.csproj">
+      <Project>{e66f9c23-201d-42c7-a8ee-d2a3f0b2e190}</Project>
+      <Name>DataProcessor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{4723ab29-155c-4eb8-a545-fc9187dfa4e9}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

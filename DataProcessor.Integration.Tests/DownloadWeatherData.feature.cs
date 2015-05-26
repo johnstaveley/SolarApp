@@ -11,7 +11,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace DataProcessor.Acceptance.Tests
+namespace DataProcessor.Integration.Tests
 {
     using TechTalk.SpecFlow;
     
@@ -32,8 +32,8 @@ namespace DataProcessor.Acceptance.Tests
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "DownloadWeatherData", "In order to better predict energy production\nAs an automated system\nI want to dow" +
-                    "nload a new weather forecast for the day", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "DownloadWeatherData", "In order to better predict energy production\r\nAs an automated system\r\nI want to d" +
+                    "ownload a new weather forecast for the day", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
