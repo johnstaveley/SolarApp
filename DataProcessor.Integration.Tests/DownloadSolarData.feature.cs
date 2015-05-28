@@ -67,22 +67,20 @@ namespace DataProcessor.Integration.Tests
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Download files locally")]
-        [NUnit.Framework.IgnoreAttribute()]
         public virtual void DownloadFilesLocally()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Download files locally", new string[] {
-                        "Ignore"});
-#line 7
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Download files locally", ((string[])(null)));
+#line 6
 this.ScenarioSetup(scenarioInfo);
-#line 8
+#line 7
 testRunner.Given("I have the credentials of the ftp site", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 9
+#line 8
 testRunner.And("there are files waiting there", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 10
+#line 9
 testRunner.When("I access the site", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 11
+#line 10
 testRunner.Then("I download the files to a local directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 12
+#line 11
 testRunner.And("Remove the files from the ftp site", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();

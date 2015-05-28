@@ -24,7 +24,7 @@ namespace DataProcessor.Utility
 
         private FtpWebRequest InitialiseConnection()
         {
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(_destinationUrl);
+            FtpWebRequest request = (FtpWebRequest) WebRequest.Create(_destinationUrl);
             request.Credentials = new NetworkCredential(_username, _password);
             return request;
         }
@@ -42,12 +42,12 @@ namespace DataProcessor.Utility
             }
         }
 
-        public void Download() {
+        public string Download() {
 
             FtpWebRequest request = InitialiseConnection();
-            request.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
+            request.Method = WebRequestMethods.Ftp.ListDirectory;
             var response = GetResponse(request);
-            Console.WriteLine(response);
+            return response;
         }
     }
 }
