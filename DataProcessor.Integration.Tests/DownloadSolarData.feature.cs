@@ -66,11 +66,11 @@ namespace DataProcessor.Integration.Tests
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Add two numbers")]
+        [NUnit.Framework.DescriptionAttribute("Download files locally")]
         [NUnit.Framework.IgnoreAttribute()]
-        public virtual void AddTwoNumbers()
+        public virtual void DownloadFilesLocally()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add two numbers", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Download files locally", new string[] {
                         "Ignore"});
 #line 7
 this.ScenarioSetup(scenarioInfo);
