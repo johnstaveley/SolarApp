@@ -43,8 +43,7 @@ namespace DataProcessor.Integration.Tests
         [Then(@"I download the files to a local directory")]
         public void ThenIDownloadTheFilesToALocalDirectory()
         {
-            var response = _ftp.Download();
-            var logFiles = response.Split(new string[] {"\r\n"}, StringSplitOptions.None);
+            var logFiles = _ftp.GetDirectoryListing();
             Assert.AreNotEqual(0, logFiles.Length);
             Assert.IsTrue(logFiles[0].Contains(string.Format("Log{0}", DateTime.Now.Year)));
             Assert.IsTrue(logFiles[0].Contains(".log"));

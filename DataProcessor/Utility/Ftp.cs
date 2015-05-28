@@ -45,9 +45,20 @@ namespace DataProcessor.Utility
         public string Download() {
 
             FtpWebRequest request = InitialiseConnection();
-            request.Method = WebRequestMethods.Ftp.ListDirectory;
+            request.Method = WebRequestMethods.Ftp.DownloadFile;
             var response = GetResponse(request);
             return response;
         }
+
+        public string[] GetDirectoryListing()
+        {
+
+            FtpWebRequest request = InitialiseConnection();
+            request.Method = WebRequestMethods.Ftp.ListDirectory;
+            var response = GetResponse(request);
+            return response.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+        }
+
+
     }
 }
