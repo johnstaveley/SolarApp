@@ -66,10 +66,10 @@ namespace DataProcessor.Integration.Tests
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Get a directory listing of at the data drop site")]
-        public virtual void GetADirectoryListingOfAtTheDataDropSite()
+        [NUnit.Framework.DescriptionAttribute("Get an ftp directory listing of at the data drop site")]
+        public virtual void GetAnFtpDirectoryListingOfAtTheDataDropSite()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get a directory listing of at the data drop site", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get an ftp directory listing of at the data drop site", ((string[])(null)));
 #line 6
 this.ScenarioSetup(scenarioInfo);
 #line 7
@@ -85,10 +85,10 @@ testRunner.And("There are files of the right format", ((string)(null)), ((TechTa
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Download files to a local receiving directory")]
-        public virtual void DownloadFilesToALocalReceivingDirectory()
+        [NUnit.Framework.DescriptionAttribute("Download files via ftp to a local receiving directory")]
+        public virtual void DownloadFilesViaFtpToALocalReceivingDirectory()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Download files to a local receiving directory", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Download files via ftp to a local receiving directory", ((string[])(null)));
 #line 12
 this.ScenarioSetup(scenarioInfo);
 #line 13
@@ -105,6 +105,33 @@ testRunner.When("I access the site", ((string)(null)), ((TechTalk.SpecFlow.Table
 testRunner.Then("I download the file \'Log20150520062000.log\' to a local directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 19
 testRunner.And("The file \'Log20150520062000.log\' is stored in the \'receiving\' directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Can delete a remote file via ftp")]
+        [NUnit.Framework.IgnoreAttribute()]
+        public virtual void CanDeleteARemoteFileViaFtp()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Can delete a remote file via ftp", new string[] {
+                        "Ignore"});
+#line 22
+this.ScenarioSetup(scenarioInfo);
+#line 23
+testRunner.Given("I have the credentials of the ftp site", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 24
+testRunner.And("I want to navigate to a subdirectory of the ftp site \'testdelete\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 25
+testRunner.And("there is a file \'Log20150520145001.log\' waiting in the \'testdelete\' subdirectory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 26
+testRunner.When("I access the site", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 27
+testRunner.And("I delete the file \'Log20150520145001.log\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 28
+testRunner.And("I do a directory listing", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 29
+testRunner.Then("The file list does not contain the file \'Log20150520145001.log\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
