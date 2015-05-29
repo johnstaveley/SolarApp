@@ -22,8 +22,13 @@ namespace DataProcessor.Utility
             _username = username;
         }
 
-        private FtpWebRequest InitialiseConnection()
+        private FtpWebRequest InitialiseConnection(string fileToDownload = null)
         {
+            if (!string.IsNullOrEmpty(_destinationUrl)) {
+                Uri baseUri = new Uri(_destinationUrl);
+                Uri modifiedUri = new Uri(baseUri, fileToDownload);
+                _destinationUrl = modifiedUri.AbsoluteUri.ToString();
+            }
             FtpWebRequest request = (FtpWebRequest) WebRequest.Create(_destinationUrl);
             request.Credentials = new NetworkCredential(_username, _password);
             return request;
@@ -42,12 +47,13 @@ namespace DataProcessor.Utility
             }
         }
 
-        public string Download() {
+        public void Download(string fileToDownload, string localStoragePath) {
 
-            FtpWebRequest request = InitialiseConnection();
+            FtpWebRequest request = InitialiseConnection(fileToDownload);
             request.Method = WebRequestMethods.Ftp.DownloadFile;
             var response = GetResponse(request);
-            return response;
+            var localFilePath = Path.Combine(localStoragePath, fileToDownload);
+            File.WriteAllText(localFilePath, response);
         }
 
         public string[] GetDirectoryListing()

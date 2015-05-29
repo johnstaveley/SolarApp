@@ -66,22 +66,45 @@ namespace DataProcessor.Integration.Tests
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Download files locally")]
-        public virtual void DownloadFilesLocally()
+        [NUnit.Framework.DescriptionAttribute("Get a directory listing of at the data drop site")]
+        public virtual void GetADirectoryListingOfAtTheDataDropSite()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Download files locally", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Get a directory listing of at the data drop site", ((string[])(null)));
 #line 6
 this.ScenarioSetup(scenarioInfo);
 #line 7
 testRunner.Given("I have the credentials of the ftp site", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 8
-testRunner.And("there are files waiting there", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 9
 testRunner.When("I access the site", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 9
+testRunner.Then("I do a directory listing", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 10
-testRunner.Then("I download the files to a local directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 11
-testRunner.And("Remove the files from the ftp site", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+testRunner.And("There are files of the right format", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Download files to a local receiving directory")]
+        public virtual void DownloadFilesToALocalReceivingDirectory()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Download files to a local receiving directory", ((string[])(null)));
+#line 12
+this.ScenarioSetup(scenarioInfo);
+#line 13
+testRunner.Given("I have the credentials of the ftp site", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 14
+testRunner.And("I want to navigate to a subdirectory of the ftp site \'test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 15
+testRunner.And("the local temp directory \'receiving\' is empty", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 16
+testRunner.And("there is a file \'Log20150520062000.log\' waiting in the \'test\' subdirectory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 17
+testRunner.When("I access the site", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 18
+testRunner.Then("I download the file \'Log20150520062000.log\' to a local directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 19
+testRunner.And("The file \'Log20150520062000.log\' is stored in the \'receiving\' directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
