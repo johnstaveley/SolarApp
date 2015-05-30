@@ -24,6 +24,8 @@ namespace Persistence
             Database = server.GetDatabase(databaseName);            
 		}
 
+        #region DataPoints
+
         public MongoCollection<DataPoint> DataPoints
 		{
 			get
@@ -31,6 +33,20 @@ namespace Persistence
                 return Database.GetCollection<DataPoint>("DataPoints");
 			}
 		}
+
+        public void InsertDataPoint(DataPoint dataPoint)
+        {
+            this.DataPoints.Insert(dataPoint);
+        }
+
+        public DataPoint FindDataPointById(string id)
+        {
+            return this.DataPoints.Find(Query.EQ("_id", BsonValue.Create(id))).FirstOrDefault();
+        }
+
+        #endregion
+
+        #region Settings
 
         public MongoCollection<Setting> Settings
         {
@@ -45,22 +61,19 @@ namespace Persistence
             this.Settings.Insert(setting);
         }
 
-        public List<Setting> FindSetting(string key)
+        public Setting FindSettingById(string id)
         {
-            return this.Settings.Find(Query.EQ("_id", BsonValue.Create(key))).ToList<Setting>();
+            return this.Settings.Find(Query.EQ("_id", BsonValue.Create(id))).FirstOrDefault();
         }
 
         public void DeleteSetting(Setting setting)
         {
             this.Settings.Remove(Query.EQ("_id", BsonValue.Create(setting._id)));
         }
+
+        #endregion
+
     }
 }
-
-
-
-
-
-
 
 

@@ -46,7 +46,7 @@ namespace DataProcessor.Integration.Tests
         [Then(@"the random value should be retrievable from the database")]
         public void ThenTheRandomValueShouldBeRetrievableFromTheDatabase()
         {
-            Assert.IsTrue(_context.FindSetting(_setting._id).Count == 1, string.Format("Could not find data value {0}", _setting._id));
+            Assert.IsTrue(_context.FindSettingById(_setting._id) != null, string.Format("Could not find data value {0}", _setting._id));
         }
 
         [AfterScenario]

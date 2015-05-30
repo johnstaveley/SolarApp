@@ -85,6 +85,53 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Store a data point in the database and retrieve it")]
+        [NUnit.Framework.IgnoreAttribute()]
+        public virtual void StoreADataPointInTheDatabaseAndRetrieveIt()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Store a data point in the database and retrieve it", new string[] {
+                        "Ignore"});
+#line 14
+this.ScenarioSetup(scenarioInfo);
+#line hidden
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Timestamp",
+                        "PAC",
+                        "Day Energy",
+                        "Year Energy",
+                        "Total Energy"});
+            table1.AddRow(new string[] {
+                        "[Now]",
+                        "321",
+                        "100",
+                        "1000",
+                        "10000"});
+#line 15
+ testRunner.Given("I have a data point with values:", ((string)(null)), table1, "Given ");
+#line 18
+ testRunner.When("I open a connection to the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 19
+ testRunner.And("I persist the value to the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Timestamp",
+                        "PAC",
+                        "Day Energy",
+                        "Year Energy",
+                        "Total Energy"});
+            table2.AddRow(new string[] {
+                        "[Now]",
+                        "321",
+                        "100",
+                        "1000",
+                        "10000"});
+#line 20
+ testRunner.Then("I can retrieve a data point with values:", ((string)(null)), table2, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore
