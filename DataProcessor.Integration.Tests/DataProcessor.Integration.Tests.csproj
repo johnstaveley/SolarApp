@@ -69,6 +69,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Persistence.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Persistence.feature</DependentUpon>
+    </Compile>
     <Compile Include="ProcessingData.feature.cs">
       <DependentUpon>ProcessingData.feature</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -90,6 +95,10 @@
       <LastGenOutput>DownloadWeatherData.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
+    <None Include="Persistence.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Persistence.feature.cs</LastGenOutput>
+    </None>
     <None Include="privateSettings.config">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

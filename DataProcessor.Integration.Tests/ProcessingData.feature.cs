@@ -72,17 +72,17 @@ namespace DataProcessor.Integration.Tests
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Process the exception contents of a file", new string[] {
                         "Ignore"});
-#line 8
+#line 7
 this.ScenarioSetup(scenarioInfo);
-#line 9
+#line 8
  testRunner.Given("I have access to a new file", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 10
+#line 9
  testRunner.And("is a new file there containing some unusual content", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 11
+#line 10
  testRunner.When("I process the file", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 12
+#line 11
  testRunner.Then("I can store the unusual content", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 13
+#line 12
  testRunner.And("raise a notification", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -95,10 +95,8 @@ this.ScenarioSetup(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Process data from an incoming file", new string[] {
                         "Ignore"});
-#line 16
+#line 15
 this.ScenarioSetup(scenarioInfo);
-#line 17
- testRunner.Given("I have access to a new file", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "Timestamp",
@@ -112,9 +110,9 @@ this.ScenarioSetup(scenarioInfo);
                         "100",
                         "1000",
                         "10000"});
-#line 18
- testRunner.And("is a new file there containing", ((string)(null)), table1, "And ");
-#line 21
+#line 16
+ testRunner.Given("An output file \'xyz.log\' exists", ((string)(null)), table1, "Given ");
+#line 19
  testRunner.When("I process the file", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
@@ -129,7 +127,7 @@ this.ScenarioSetup(scenarioInfo);
                         "100",
                         "1000",
                         "10000"});
-#line 22
+#line 20
  testRunner.Then("I can store the values from the file", ((string)(null)), table2, "Then ");
 #line hidden
             this.ScenarioCleanup();
