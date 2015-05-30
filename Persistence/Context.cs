@@ -49,6 +49,11 @@ namespace Persistence
         {
             return this.Settings.Find(Query.EQ("_id", BsonValue.Create(key))).ToList<Setting>();
         }
+
+        public void DeleteSetting(Setting setting)
+        {
+            this.Settings.Remove(Query.EQ("_id", BsonValue.Create(setting._id)));
+        }
     }
 }
 

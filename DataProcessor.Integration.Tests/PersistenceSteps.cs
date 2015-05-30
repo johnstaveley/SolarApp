@@ -48,5 +48,14 @@ namespace DataProcessor.Integration.Tests
         {
             Assert.IsTrue(_context.FindSetting(_setting._id).Count == 1, string.Format("Could not find data value {0}", _setting._id));
         }
+
+        [AfterScenario]
+        public void TearDown()
+        {
+            if (_context != null && _setting != null)
+            {
+                _context.DeleteSetting(_setting);
+            }
+        }
     }
 }
