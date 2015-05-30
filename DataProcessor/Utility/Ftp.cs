@@ -65,6 +65,11 @@ namespace DataProcessor.Utility
             return response.Split(new string[] { "\r\n" }, StringSplitOptions.None);
         }
 
-
+        public void Delete(string fileToDelete)
+        {
+            FtpWebRequest request = InitialiseConnection(fileToDelete);
+            request.Method = WebRequestMethods.Ftp.DeleteFile;
+            var response = GetResponse(request);
+        }
     }
 }

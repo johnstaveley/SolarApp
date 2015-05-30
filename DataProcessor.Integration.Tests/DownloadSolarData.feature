@@ -28,4 +28,3 @@ And I delete the file 'Log20150520145001.log'
 And I do a directory listing
 Then The file list does not contain the file 'Log20150520145001.log'
 
-

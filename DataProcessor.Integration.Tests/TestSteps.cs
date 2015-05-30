@@ -5,6 +5,7 @@ using NUnit.Framework;
 using System.Collections;
 using DataProcessor.Utility;
 using System.IO;
+using System.Linq;
 
 namespace DataProcessor.Integration.Tests
 {
@@ -35,6 +36,7 @@ namespace DataProcessor.Integration.Tests
             _ftp = new Ftp(_ftpUrl, _ftpUsername, _ftpPassword);
         }
 
+        [When(@"I do a directory listing")]
         [Then(@"I do a directory listing")]
         public void ThenIDoADirectoryListing()
         {
@@ -49,7 +51,6 @@ namespace DataProcessor.Integration.Tests
             Assert.AreNotEqual(0, logFiles.Length);
             Assert.IsTrue(logFiles[0].Contains(string.Format("Log{0}", DateTime.Now.Year)));
             Assert.IsTrue(logFiles[0].Contains(".log"));
-
         }
 
         [Given(@"I want to navigate to a subdirectory of the ftp site '(.*)'")]
@@ -89,6 +90,19 @@ namespace DataProcessor.Integration.Tests
             var filePath = Path.Combine(localStoragePath, fileToDownload);
             Assert.IsTrue(File.Exists(filePath), string.Format("File {0} does not exist", filePath));
             Assert.IsTrue(File.ReadAllText(filePath).Contains("TOTAL_ENERGY"), "File is not correct and does not contain the right text");
+        }
+
+        [When(@"I delete the file '(.*)'")]
+        public void WhenIDeleteTheFile(string fileToDelete)
+        {
+            _ftp.Delete(fileToDelete);
+        }
+
+        [Then(@"The file list does not contain the file '(.*)'")]
+        public void ThenTheFileListDoesNotContainTheFile(string fileToCheckFor)
+        {
+            var logFiles = ScenarioContext.Current.Get<string[]>("LogFileNames");
+            Assert.IsFalse(logFiles.ToList().Any(l => l.Contains(fileToCheckFor)), string.Format("File {0} has been found to exist", fileToCheckFor));
         }
 
 
