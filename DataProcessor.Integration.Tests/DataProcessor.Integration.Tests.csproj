@@ -35,8 +35,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ImpromptuInterface, Version=5.6.2.39073, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImpromptuInterface.5.6.2\lib\net40\ImpromptuInterface.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SpecFlow.Assist.Dynamic, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SpecFlow.Assist.Dynamic.1.0.2\lib\40\SpecFlow.Assist.Dynamic.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -110,6 +119,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataProcessor.Tests.Helper\DataProcessor.Tests.Helper.csproj">
+      <Project>{4702d0d1-f9be-4b93-9f82-8ac203ef6e16}</Project>
+      <Name>DataProcessor.Tests.Helper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataProcessor\DataProcessor.csproj">
       <Project>{e66f9c23-201d-42c7-a8ee-d2a3f0b2e190}</Project>
       <Name>DataProcessor</Name>

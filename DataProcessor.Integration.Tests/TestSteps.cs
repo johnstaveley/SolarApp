@@ -105,11 +105,13 @@ namespace DataProcessor.Integration.Tests
             Assert.IsFalse(logFiles.ToList().Any(l => l.Contains(fileToCheckFor)), string.Format("File {0} has been found to exist", fileToCheckFor));
         }
 
-
         private string GetLocalStoragePath(string subDirectory)
         {
             var tempPath = Path.GetTempPath();
             return Path.Combine(tempPath, subDirectory) + "/";
         }
+
+
+
     }
 }

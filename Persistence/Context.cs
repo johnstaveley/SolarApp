@@ -44,6 +44,11 @@ namespace Persistence
             return this.DataPoints.Find(Query.EQ("_id", BsonValue.Create(id))).FirstOrDefault();
         }
 
+		public void DeleteDataPoint(DataPoint dataPoint)
+		{
+			this.DataPoints.Remove(Query.EQ("_id", BsonValue.Create(dataPoint._id)));
+		}
+
         #endregion
 
         #region Settings
