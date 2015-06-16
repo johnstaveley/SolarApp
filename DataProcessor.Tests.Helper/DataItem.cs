@@ -21,7 +21,7 @@ namespace DataProcessor.Tests.Helper
 
 		public DataItem(DataPoint dataPoint)
 		{
-			this.Id = dataPoint._id;
+			this.Id = dataPoint.Id;
 			this.TableTypeKind = Helper.TableTypeKind.DataPoint;
 		}
 	}

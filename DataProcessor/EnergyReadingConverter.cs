@@ -27,7 +27,7 @@ namespace DataProcessor
 		{
 
 			DataPoint dataPoint = new DataPoint();
-			dataPoint._id = Guid.NewGuid().ToString();
+			dataPoint.Id = Guid.NewGuid().ToString();
 			dataPoint.Body = new Body()
 			{
 				CurrentReading = new FroniusEnergyReading()

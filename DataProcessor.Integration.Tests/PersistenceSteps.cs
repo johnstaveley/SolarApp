@@ -38,7 +38,7 @@ namespace DataProcessor.Integration.Tests
 				switch (dataItem.TableTypeKind)
 				{
 					case (TableTypeKind.DataPoint):
-						//_context.DeleteDataPointById(dataItem.Id);
+						_context.DeleteDataPointById(dataItem.Id);
 						break;
 					case (TableTypeKind.Setting):
 						_context.DeleteSettingById(dataItem.Id);
@@ -96,7 +96,7 @@ namespace DataProcessor.Integration.Tests
 		{
 			var energyReadingData = ScenarioContext.Current.Get<EnergyReadingData>("EnergyReadingData");
 			var dataPoint = energyReadingData.CreateDataPoint();
-			dataPoint._id = Guid.NewGuid().ToString();
+			dataPoint.Id = Guid.NewGuid().ToString();
 			_context.InsertDataPoint(dataPoint);
 			_dataItemsToTrack.Add(new DataItem(dataPoint));
 		}
@@ -120,7 +120,7 @@ namespace DataProcessor.Integration.Tests
 			var energyReadingData = table.CreateSet<EnergyReadingData>();
 			foreach (var energyReading in energyReadingData) {
 				var dataPoint = energyReading.CreateDataPoint();
-				dataPoint._id = Guid.NewGuid().ToString();
+				dataPoint.Id = Guid.NewGuid().ToString();
 				_context.InsertDataPoint(dataPoint);
 				_dataItemsToTrack.Add(new DataItem(dataPoint));
 			}
@@ -129,14 +129,14 @@ namespace DataProcessor.Integration.Tests
 		[When(@"I calculate the mean for hour (.*)")]
 		public void WhenICalculateTheMeanForHour(int hour)
 		{
-			decimal average = 0;
-			ScenarioContext.Current.Set<decimal>(average, "CalculatedAverage");
+			double average = _context.GetAverageOutputForHour(hour);
+			ScenarioContext.Current.Set<double>(average, "CalculatedAverage");
 		}
 
 		[Then(@"The calculated average value is (.*)")]
 		public void ThenTheCalculatedAverageValueIs(decimal average)
 		{
-			var result = ScenarioContext.Current.Get<decimal>("CalculatedAverage");
+			var result = ScenarioContext.Current.Get<double>("CalculatedAverage");
 			Assert.AreEqual(average, result);
 		}
 

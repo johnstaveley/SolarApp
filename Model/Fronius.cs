@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Model
 {
     [Serializable]
     public class DataPoint
     {
-        [JsonIgnore]
-        public string _id { get; set; }
+        [JsonIgnore, BsonElement("_id")]
+        public string Id { get; set; }
 
         [JsonProperty(Order = 1)]
         public Head Head { get; set; }
@@ -58,16 +58,16 @@ namespace Model
 
     public class Body
     {
-        [JsonProperty(Order = 1, PropertyName="PAC")]
+        [JsonProperty(Order = 1, PropertyName="PAC"), BsonElement("PAC")]
         public FroniusEnergyReading CurrentReading { get; set; }
 
-        [JsonProperty(Order = 2, PropertyName="DAY_ENERGY")]
+		[JsonProperty(Order = 2, PropertyName = "DAY_ENERGY"), BsonElement("DAY_ENERGY")]
         public FroniusEnergyReading DayEnergy { get; set; }
 
-        [JsonProperty(Order = 3, PropertyName="YEAR_ENERGY")]
+		[JsonProperty(Order = 3, PropertyName = "YEAR_ENERGY"), BsonElement("YEAR_ENERGY")]
         public FroniusEnergyReading YearEnergy { get; set; }
 
-        [JsonProperty(Order = 4, PropertyName="TOTAL_ENERGY")]
+		[JsonProperty(Order = 4, PropertyName = "TOTAL_ENERGY"), BsonElement("TOTAL_ENERGY")]
         public FroniusEnergyReading TotalEnergy { get; set; }
     }
 
@@ -83,7 +83,7 @@ namespace Model
     public class FroniusEnergyReadingItem
     {
 
-        [JsonProperty(PropertyName="1")]
+        [JsonProperty(PropertyName="1"), BsonElement("1")]
         public int Value { get; set; }
     }
 }
