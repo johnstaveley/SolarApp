@@ -38,7 +38,7 @@ namespace DataProcessor.Integration.Tests
 				switch (dataItem.TableTypeKind)
 				{
 					case (TableTypeKind.DataPoint):
-						_context.DeleteDataPointById(dataItem.Id);
+						//_context.DeleteDataPointById(dataItem.Id);
 						break;
 					case (TableTypeKind.Setting):
 						_context.DeleteSettingById(dataItem.Id);
@@ -129,8 +129,8 @@ namespace DataProcessor.Integration.Tests
 		[When(@"I calculate the mean for hour (.*)")]
 		public void WhenICalculateTheMeanForHour(int hour)
 		{
-			var average = null;
-			ScenarioContext.Current.Set("CalculatedAverage", average);
+			decimal average = 0;
+			ScenarioContext.Current.Set<decimal>(average, "CalculatedAverage");
 		}
 
 		[Then(@"The calculated average value is (.*)")]
