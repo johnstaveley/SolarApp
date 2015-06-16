@@ -65,7 +65,7 @@ namespace DataProcessor
 			};
 			dataPoint.Head = new Head()
 			{
-				Timestamp = DateTime.Now,
+				Timestamp = energyReading.Timestamp,
 				RequestArguments = new RequestArguments()
 				{
 					Query = "Inverter",

@@ -17,6 +17,10 @@ namespace DataProcessor.Tests.Helper
 				{
 					Timestamp = DateTime.Now;
 				}
+				else
+				{
+					Timestamp = DateTime.Parse(value);
+				}
 			}
 			get
 			{

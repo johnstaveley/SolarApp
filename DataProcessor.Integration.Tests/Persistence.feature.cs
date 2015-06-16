@@ -132,6 +132,48 @@ this.ScenarioSetup(scenarioInfo);
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Calculate the average reading for a specified hour across two days")]
+        public virtual void CalculateTheAverageReadingForASpecifiedHourAcrossTwoDays()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Calculate the average reading for a specified hour across two days", ((string[])(null)));
+#line 24
+this.ScenarioSetup(scenarioInfo);
+#line 25
+ testRunner.Given("I want to use a database \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 26
+ testRunner.And("I open a connection to the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Time",
+                        "CurrentReading",
+                        "Comment"});
+            table3.AddRow(new string[] {
+                        "2015-06-15 09:23:00",
+                        "100",
+                        "Included"});
+            table3.AddRow(new string[] {
+                        "2015-06-15 09:33:00",
+                        "200",
+                        "Included"});
+            table3.AddRow(new string[] {
+                        "2015-06-14 09:46:00",
+                        "300",
+                        "Included"});
+            table3.AddRow(new string[] {
+                        "2015-06-15 10:00:01",
+                        "2500",
+                        "Excluded"});
+#line 27
+ testRunner.And("I have a data points with values:", ((string)(null)), table3, "And ");
+#line 33
+ testRunner.When("I calculate the mean for hour 9", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 34
+ testRunner.Then("The calculated average value is 200", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore

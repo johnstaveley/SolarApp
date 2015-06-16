@@ -15,6 +15,7 @@ namespace Persistence
 
 	public class SolarAppContext
 	{
+
 		public MongoDatabase Database;
 
         public SolarAppContext(string connectionString, string databaseName)
@@ -44,9 +45,9 @@ namespace Persistence
             return this.DataPoints.Find(Query.EQ("_id", BsonValue.Create(id))).FirstOrDefault();
         }
 
-		public void DeleteDataPoint(DataPoint dataPoint)
+		public void DeleteDataPointById(string id)
 		{
-			this.DataPoints.Remove(Query.EQ("_id", BsonValue.Create(dataPoint._id)));
+			this.DataPoints.Remove(Query.EQ("_id", BsonValue.Create(id)));
 		}
 
         #endregion
@@ -71,9 +72,9 @@ namespace Persistence
             return this.Settings.Find(Query.EQ("_id", BsonValue.Create(id))).FirstOrDefault();
         }
 
-        public void DeleteSetting(Setting setting)
+        public void DeleteSettingById(string id)
         {
-            this.Settings.Remove(Query.EQ("_id", BsonValue.Create(setting._id)));
+            this.Settings.Remove(Query.EQ("_id", BsonValue.Create(id)));
         }
 
         #endregion
