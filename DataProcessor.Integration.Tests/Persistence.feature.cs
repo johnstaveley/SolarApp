@@ -66,20 +66,20 @@ namespace DataProcessor.Integration.Tests
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Store a random value in the database and retrieve it")]
-        public virtual void StoreARandomValueInTheDatabaseAndRetrieveIt()
+        [NUnit.Framework.DescriptionAttribute("Store a random value to a setting entry in the database and retrieve it")]
+        public virtual void StoreARandomValueToASettingEntryInTheDatabaseAndRetrieveIt()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Store a random value in the database and retrieve it", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Store a random value to a setting entry in the database and retrieve it", ((string[])(null)));
 #line 6
 this.ScenarioSetup(scenarioInfo);
 #line 7
- testRunner.And("I want to use a database \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Given("I want to use a database \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 8
  testRunner.And("I want to store some random value", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 9
  testRunner.When("I open a connection to the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 10
- testRunner.And("I persist the value to the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I persist the setting to the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 11
  testRunner.Then("the random value should be retrievable from the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -88,20 +88,20 @@ this.ScenarioSetup(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Store a data point in the database and retrieve it")]
-        [NUnit.Framework.IgnoreAttribute()]
         public virtual void StoreADataPointInTheDatabaseAndRetrieveIt()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Store a data point in the database and retrieve it", new string[] {
-                        "Ignore"});
-#line 14
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Store a data point in the database and retrieve it", ((string[])(null)));
+#line 13
 this.ScenarioSetup(scenarioInfo);
+#line 14
+ testRunner.Given("I want to use a database \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Timestamp",
-                        "PAC",
-                        "Day Energy",
-                        "Year Energy",
-                        "Total Energy"});
+                        "Time",
+                        "CurrentReading",
+                        "DayEnergy",
+                        "YearEnergy",
+                        "TotalEnergy"});
             table1.AddRow(new string[] {
                         "[Now]",
                         "321",
@@ -109,18 +109,18 @@ this.ScenarioSetup(scenarioInfo);
                         "1000",
                         "10000"});
 #line 15
- testRunner.Given("I have a data point with values:", ((string)(null)), table1, "Given ");
+ testRunner.And("I have a data point with values:", ((string)(null)), table1, "And ");
 #line 18
  testRunner.When("I open a connection to the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 19
- testRunner.And("I persist the value to the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I persist the data point to the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Timestamp",
-                        "PAC",
-                        "Day Energy",
-                        "Year Energy",
-                        "Total Energy"});
+                        "Time",
+                        "CurrentReading",
+                        "DayEnergy",
+                        "YearEnergy",
+                        "TotalEnergy"});
             table2.AddRow(new string[] {
                         "[Now]",
                         "321",
