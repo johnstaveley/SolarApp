@@ -45,6 +45,7 @@ namespace DataProcessor.Unit.Tests
         [TestCase(53,1006,53001,123456)]
         public void Given_SomeData_When_ISerializeADataPoint_Then_TheDataPointIsCreatedAsAStringWithTheCorrectValues(int pac, int dayEnergy, int yearEnergy, int totalEnergy)
         {
+            // Arrange
             DataPoint dataPoint = new DataPoint();
             dataPoint._id = Guid.NewGuid().ToString();
             dataPoint.Body = new Body(){
@@ -80,7 +81,11 @@ namespace DataProcessor.Unit.Tests
                     UserMessage = ""
                 }
             };
+
+            // Act
             var json = JsonConvert.SerializeObject(dataPoint);
+
+            // Assert 
             Assert.IsTrue(json.IndexOf("PAC") < json.IndexOf("DAY_ENERGY"), "PAC and DAY_ENERGY are out of order");
             Assert.IsTrue(json.IndexOf("DAY_ENERGY") < json.IndexOf("YEAR_ENERGY"), "DAY_ENERGY and YEAR_ENERGY are out of order");
             Assert.IsTrue(json.IndexOf("YEAR_ENERGY") < json.IndexOf("TOTAL_ENERGY"), "YEAR_ENERGY and TOTAL_ENERGY are out of order");
