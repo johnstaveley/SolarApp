@@ -16,7 +16,7 @@ namespace DataProcessor.Unit.Tests
         {
 
             // Arrange 
-            var json = Resources.SampleJsonData;   
+            var json = Resources.SampleJsonData;
 
             // Act
             var dataPoint = JsonConvert.DeserializeObject<DataPoint>(json);
