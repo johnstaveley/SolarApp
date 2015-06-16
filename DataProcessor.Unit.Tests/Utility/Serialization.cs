@@ -1,11 +1,13 @@
 ﻿using System;
 using NUnit.Framework;
 using Model;
+using DataProcessor.Utility;
+using Newtonsoft.Json;
 
 namespace DataProcessor.Unit.Tests
 {
     [TestFixture]
-    public class UnitTest1
+    public class Serialization
     {
         [Test]
         [TestCase(53,1006,53001,123456)]
@@ -46,8 +48,13 @@ namespace DataProcessor.Unit.Tests
                     UserMessage = ""
                 }
             };
-            Assert.True(true);
+            var json = JsonConvert.SerializeObject(dataPoint);
+            Assert.IsTrue(json.IndexOf("PAC") < json.IndexOf("DAY_ENERGY"), "PAC and DAY_ENERGY are out of order");
+            Assert.IsTrue(json.IndexOf("DAY_ENERGY") < json.IndexOf("YEAR_ENERGY"), "DAY_ENERGY and YEAR_ENERGY are out of order");
+            Assert.IsTrue(json.IndexOf("YEAR_ENERGY") < json.IndexOf("TOTAL_ENERGY"), "YEAR_ENERGY and TOTAL_ENERGY are out of order");
+            Assert.IsTrue(json.IndexOf("Head") < json.IndexOf("Body"), "Head and Body are out of order");
             
         }
+
     }
 }
