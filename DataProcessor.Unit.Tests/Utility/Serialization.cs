@@ -15,8 +15,8 @@ namespace DataProcessor.Unit.Tests
         public void Given_SomeTestData_When_IDeserializeADataPoint_Then_TheDataPointIsCreatedInAnObjectWithTheCorrectValues()
         {
 
-            // Arrange
-            var json = Resources.SampleJsonData;  
+            // Arrange 
+            var json = Resources.SampleJsonData;   
 
             // Act
             var dataPoint = JsonConvert.DeserializeObject<DataPoint>(json);
