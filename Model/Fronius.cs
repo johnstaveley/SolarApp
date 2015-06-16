@@ -58,17 +58,17 @@ namespace Model
 
     public class Body
     {
-        [JsonProperty(Order = 1)]
-        public FroniusEnergyReading PAC { get; set; }
+        [JsonProperty(Order = 1, PropertyName="PAC")]
+        public FroniusEnergyReading CurrentReading { get; set; }
 
-        [JsonProperty(Order = 2)]
-        public FroniusEnergyReading DAY_ENERGY { get; set; }
+        [JsonProperty(Order = 2, PropertyName="DAY_ENERGY")]
+        public FroniusEnergyReading DayEnergy { get; set; }
 
-        [JsonProperty(Order = 3)]
-        public FroniusEnergyReading YEAR_ENERGY { get; set; }
+        [JsonProperty(Order = 3, PropertyName="YEAR_ENERGY")]
+        public FroniusEnergyReading YearEnergy { get; set; }
 
-        [JsonProperty(Order = 4)]
-        public FroniusEnergyReading TOTAL_ENERGY { get; set; }
+        [JsonProperty(Order = 4, PropertyName="TOTAL_ENERGY")]
+        public FroniusEnergyReading TotalEnergy { get; set; }
     }
 
     public class FroniusEnergyReading

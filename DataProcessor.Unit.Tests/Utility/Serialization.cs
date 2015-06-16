@@ -3,35 +3,67 @@ using NUnit.Framework;
 using Model;
 using DataProcessor.Utility;
 using Newtonsoft.Json;
+using DataProcessor.Unit.Tests.Properties;
 
 namespace DataProcessor.Unit.Tests
 {
     [TestFixture]
     public class Serialization
     {
+
+        [Test]
+        public void Given_SomeTestData_When_IDeserializeADataPoint_Then_TheDataPointIsCreatedInAnObjectWithTheCorrectValues()
+        {
+
+            // Arrange
+            var json = Resources.SampleJsonData;
+
+            // Act
+            var dataPoint = JsonConvert.DeserializeObject<DataPoint>(json);
+
+            // Assert
+            Assert.IsNotNull(dataPoint);
+            var timeStamp = DateTime.Parse("2015-05-20T06:25:52+02:00");
+            Assert.AreEqual(timeStamp, dataPoint.Head.Timestamp);
+            Assert.AreEqual("Inverter", dataPoint.Head.RequestArguments.Query);
+            Assert.AreEqual("System", dataPoint.Head.RequestArguments.Scope);
+            Assert.AreEqual(0, dataPoint.Head.Status.Code);
+            Assert.AreEqual("", dataPoint.Head.Status.Reason);
+            Assert.AreEqual("", dataPoint.Head.Status.UserMessage);
+            Assert.AreEqual("W", dataPoint.Body.CurrentReading.Unit);
+            Assert.AreEqual(53, dataPoint.Body.CurrentReading.Values.Value);
+            Assert.AreEqual("Wh", dataPoint.Body.DayEnergy.Unit);
+            Assert.AreEqual(29, dataPoint.Body.DayEnergy.Values.Value);
+            Assert.AreEqual("Wh", dataPoint.Body.YearEnergy.Unit);
+            Assert.AreEqual(55022, dataPoint.Body.YearEnergy.Values.Value);
+            Assert.AreEqual("Wh", dataPoint.Body.TotalEnergy.Unit);
+            Assert.AreEqual(119233, dataPoint.Body.TotalEnergy.Values.Value);
+
+        }
+
         [Test]
         [TestCase(53,1006,53001,123456)]
-        public void Given_SomeData_When_ISerializeADataPoint_Then_TheDataPointIsCreatedWithTheCorrectValues(int pac, int dayEnergy, int yearEnergy, int totalEnergy)
+        public void Given_SomeData_When_ISerializeADataPoint_Then_TheDataPointIsCreatedAsAStringWithTheCorrectValues(int pac, int dayEnergy, int yearEnergy, int totalEnergy)
         {
             DataPoint dataPoint = new DataPoint();
             dataPoint._id = Guid.NewGuid().ToString();
             dataPoint.Body = new Body(){
-                PAC = new FroniusEnergyReading() {
+                CurrentReading = new FroniusEnergyReading() {
                     Unit = "W",
                     Values = new FroniusEnergyReadingItem() {
                         Value = pac
                     }},
-                DAY_ENERGY = new FroniusEnergyReading() {
+                DayEnergy = new FroniusEnergyReading() {
                     Unit = "Wh",
                     Values = new FroniusEnergyReadingItem() {
                         Value = dayEnergy
                     }},                    
-                    YEAR_ENERGY = new FroniusEnergyReading() {
+                    YearEnergy = new FroniusEnergyReading() {
                     Unit = "Wh",
                     Values = new FroniusEnergyReadingItem() {
                         Value = yearEnergy
                     }},
-                TOTAL_ENERGY = new FroniusEnergyReading() {
+                TotalEnergy = new FroniusEnergyReading() {
                     Unit = "Wh",
                     Values = new FroniusEnergyReadingItem() {
                         Value = totalEnergy
