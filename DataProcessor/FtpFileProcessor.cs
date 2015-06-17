@@ -33,7 +33,7 @@ namespace DataProcessor
 		/// <returns></returns>
 		public void Process()
 		{
-			// Download list of remote files
+
 			var filesToDownload = _ftp.GetDirectoryListing();
 			foreach (var fileToDownload in filesToDownload)
 			{
