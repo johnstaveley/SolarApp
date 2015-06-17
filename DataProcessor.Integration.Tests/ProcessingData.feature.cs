@@ -111,7 +111,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 15
  testRunner.Given("I have a data point with values:", ((string)(null)), table1, "Given ");
 #line 18
- testRunner.And("I save the contents to an output file \'fronius123.log\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I save the data point to an output file \'fronius123.log\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 19
  testRunner.And("I want to use a database \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 20

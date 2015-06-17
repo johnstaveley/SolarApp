@@ -151,8 +151,8 @@ namespace DataProcessor.Integration.Tests
 			ThenTheCalculatedAverageValueIs(null);
 		}
 
-		[Given(@"I save the contents to an output file '(.*)'")]
-		public void GivenISaveTheContentsToAnOutputFile(string fileName)
+		[Given(@"I save the data point to an output file '(.*)'")]
+		public void GivenISaveTheDataPointToAnOutputFile(string fileName)
 		{
 			var energyReadingData = ScenarioContext.Current.Get<EnergyReadingData>("EnergyReadingData");
 			var dataPoint = energyReadingData.CreateDataPoint();
