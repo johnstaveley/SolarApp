@@ -166,7 +166,7 @@ namespace DataProcessor.Integration.Tests
 		{
 			Utility.IConfiguration configuration = new Utility.Configuration();
 			configuration.NewFilePollPath = Path.GetTempPath();
-			FileProcessor fileProcessor = new FileProcessor(configuration, new Utility.FileSystem(), _context);
+			LocalFileProcessor fileProcessor = new LocalFileProcessor(configuration, new Utility.FileSystem(), _context);
 			var dataPointIds = fileProcessor.Process();
 			foreach (var dataPointId in dataPointIds)
 			{

@@ -52,7 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EnergyReadingConverter.cs" />
-    <Compile Include="FileProcessor.cs" />
+    <Compile Include="FtpFileProcessor.cs" />
+    <Compile Include="LocalFileProcessor.cs" />
     <Compile Include="Service1.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -66,6 +67,7 @@
     <Compile Include="Utility\Ftp.cs" />
     <Compile Include="Utility\IConfiguration.cs" />
     <Compile Include="Utility\IFileSystem.cs" />
+    <Compile Include="Utility\IFtp.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

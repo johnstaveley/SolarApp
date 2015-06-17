@@ -43,6 +43,10 @@
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <HintPath>..\packages\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="TechTalk.SpecFlow, Version=1.9.0.77, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
       <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
@@ -68,6 +72,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="FtpFileProcessor.cs" />
     <Compile Include="Utility\Serialization.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +87,10 @@
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{4723ab29-155c-4eb8-a545-fc9187dfa4e9}</Project>
       <Name>Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Persistence\Persistence.csproj">
+      <Project>{3c392a7b-fb2a-464c-82a2-e389646c705b}</Project>
+      <Name>Persistence</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -11,14 +11,14 @@ using DataProcessor.Utility;
 
 namespace DataProcessor
 {
-	public class FileProcessor
+	public class LocalFileProcessor
 	{
 
 		private IConfiguration _configuration { get; set; }
 		private IFileSystem _fileSystem { get; set; }
 		private ISolarAppContext _context { get; set; }
 
-		public FileProcessor(IConfiguration configuration, IFileSystem fileSystem, ISolarAppContext context)
+		public LocalFileProcessor(IConfiguration configuration, IFileSystem fileSystem, ISolarAppContext context)
 		{
 			_configuration = configuration;
 			_context = context;

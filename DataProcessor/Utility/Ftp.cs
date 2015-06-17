@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace DataProcessor.Utility
 {
-    public class Ftp
+    public class Ftp : DataProcessor.Utility.IFtp
     {
 
-        public string _destinationUrl { get; set; }
-        public string _username { get; set; }
-        public string _password { get; set; }
+        private string _destinationUrl { get; set; }
+		private string _username { get; set; }
+		private string _password { get; set; }
 
         public Ftp(string destinationUrl, string username, string password)
         {
