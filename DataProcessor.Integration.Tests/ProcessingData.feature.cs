@@ -89,46 +89,50 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Process data from an incoming file")]
-        [NUnit.Framework.IgnoreAttribute()]
-        public virtual void ProcessDataFromAnIncomingFile()
+        [NUnit.Framework.DescriptionAttribute("Can Process energy data from an incoming file and store it in the database")]
+        public virtual void CanProcessEnergyDataFromAnIncomingFileAndStoreItInTheDatabase()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Process data from an incoming file", new string[] {
-                        "Ignore"});
-#line 15
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Can Process energy data from an incoming file and store it in the database", ((string[])(null)));
+#line 14
 this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Timestamp",
-                        "PAC",
-                        "Day Energy",
-                        "Year Energy",
-                        "Total Energy"});
+                        "Time",
+                        "CurrentReading",
+                        "DayEnergy",
+                        "YearEnergy",
+                        "TotalEnergy"});
             table1.AddRow(new string[] {
                         "[Now]",
                         "321",
                         "100",
                         "1000",
                         "10000"});
-#line 16
- testRunner.Given("An output file \'xyz.log\' exists", ((string)(null)), table1, "Given ");
+#line 15
+ testRunner.Given("I have a data point with values:", ((string)(null)), table1, "Given ");
+#line 18
+ testRunner.And("I save the contents to an output file \'fronius123.log\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 19
+ testRunner.And("I want to use a database \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 20
+ testRunner.And("I open a connection to the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 21
  testRunner.When("I process the file", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Timestamp",
-                        "PAC",
-                        "Day Energy",
-                        "Year Energy",
-                        "Total Energy"});
+                        "Time",
+                        "CurrentReading",
+                        "DayEnergy",
+                        "YearEnergy",
+                        "TotalEnergy"});
             table2.AddRow(new string[] {
-                        "[Recent]",
+                        "[Now]",
                         "321",
                         "100",
                         "1000",
                         "10000"});
-#line 20
- testRunner.Then("I can store the values from the file", ((string)(null)), table2, "Then ");
+#line 22
+ testRunner.Then("I can retrieve a data point with values:", ((string)(null)), table2, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

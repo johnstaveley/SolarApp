@@ -9,6 +9,7 @@ using DataProcessor;
 using Model;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 namespace DataProcessor.Integration.Tests
 {
@@ -148,6 +149,31 @@ namespace DataProcessor.Integration.Tests
 		public void ThenTheCalculatedAverageValueIsNull()
 		{
 			ThenTheCalculatedAverageValueIs(null);
+		}
+
+		[Given(@"I save the contents to an output file '(.*)'")]
+		public void GivenISaveTheContentsToAnOutputFile(string fileName)
+		{
+			var energyReadingData = ScenarioContext.Current.Get<EnergyReadingData>("EnergyReadingData");
+			var dataPoint = energyReadingData.CreateDataPoint();
+			dataPoint.Id = Guid.NewGuid().ToString();
+			var filePath = Path.Combine(Path.GetTempPath(), fileName);
+			dataPoint.SaveAsJson(filePath);
+		}
+
+		[When(@"I process the file")]
+		public void WhenIProcessTheFile()
+		{
+			Utility.IConfiguration configuration = new Utility.Configuration();
+			configuration.NewFilePollPath = Path.GetTempPath();
+			FileProcessor fileProcessor = new FileProcessor(configuration, new Utility.FileSystem(), _context);
+			var dataPointIds = fileProcessor.Process();
+			foreach (var dataPointId in dataPointIds)
+			{
+				var dataPoint = new DataPoint();
+				dataPoint.Id = dataPointId;
+				_dataItemsToTrack.Add(new DataItem(dataPoint));
+			}
 		}
 
     }

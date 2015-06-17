@@ -6,6 +6,7 @@ using System.Collections;
 using DataProcessor.Utility;
 using System.IO;
 using System.Linq;
+using DataProcessor.Tests.Helper;
 
 namespace DataProcessor.Integration.Tests
 {
@@ -110,8 +111,6 @@ namespace DataProcessor.Integration.Tests
             var tempPath = Path.GetTempPath();
             return Path.Combine(tempPath, subDirectory) + "/";
         }
-
-
 
     }
 }

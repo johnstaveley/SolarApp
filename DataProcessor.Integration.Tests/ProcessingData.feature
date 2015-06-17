@@ -11,13 +11,15 @@ Scenario: Process the exception contents of a file
 	Then I can store the unusual content 
 	And raise a notification
 
-@Ignore
-Scenario: Process data from an incoming file
-	Given An output file 'xyz.log' exists
-	| Timestamp | PAC | Day Energy | Year Energy | Total Energy |
-	| [Now] | 321 | 100 | 1000 | 10000 |
+Scenario: Can Process energy data from an incoming file and store it in the database
+	Given I have a data point with values:
+	| Time		| CurrentReading | DayEnergy | YearEnergy  | TotalEnergy  |
+	| [Now]     | 321			 | 100       | 1000        | 10000        |
+	And I save the contents to an output file 'fronius123.log'
+	And I want to use a database 'Test'
+	And I open a connection to the database
 	When I process the file
-	Then I can store the values from the file
-	| Timestamp | PAC | Day Energy | Year Energy | Total Energy |
-	| [Recent] | 321 | 100 | 1000 | 10000 |
+	Then I can retrieve a data point with values:
+	| Time		| CurrentReading | DayEnergy  | YearEnergy | TotalEnergy  |
+	| [Now]		| 321			 | 100        | 1000       | 10000        |
 

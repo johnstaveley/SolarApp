@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 namespace Persistence
 {
 
-	public class SolarAppContext
+	public class SolarAppContext : Persistence.ISolarAppContext
 	{
 
 		public MongoDatabase Database;
