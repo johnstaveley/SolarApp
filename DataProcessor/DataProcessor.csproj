@@ -54,11 +54,11 @@
     <Compile Include="EnergyReadingConverter.cs" />
     <Compile Include="FtpFileProcessor.cs" />
     <Compile Include="LocalFileProcessor.cs" />
-    <Compile Include="Service1.cs">
+    <Compile Include="SolarAppService.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Service1.Designer.cs">
-      <DependentUpon>Service1.cs</DependentUpon>
+    <Compile Include="SolarAppService.Designer.cs">
+      <DependentUpon>SolarAppService.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -68,6 +68,8 @@
     <Compile Include="Utility\IConfiguration.cs" />
     <Compile Include="Utility\IFileSystem.cs" />
     <Compile Include="Utility\IFtp.cs" />
+    <Compile Include="Utility\ITimer.cs" />
+    <Compile Include="Utility\ReliableTimer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -1,6 +1,6 @@
 ﻿namespace DataProcessor
 {
-    partial class Service1
+    partial class SolarAppService
     {
         /// <summary> 
         /// Required designer variable.

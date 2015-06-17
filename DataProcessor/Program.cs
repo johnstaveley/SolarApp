@@ -23,7 +23,7 @@ namespace DataProcessor
 			Bootstrap();
             ServicesToRun = new ServiceBase[] 
             { 
-                new Service1() 
+                new SolarAppService(new ReliableTimer()) 
             };
             ServiceBase.Run(ServicesToRun);
         }
@@ -34,6 +34,7 @@ namespace DataProcessor
 			container.RegisterSingle<IConfiguration, Configuration>();
 			container.Register<IFileSystem, FileSystem>();
 			container.Register<ISolarAppContext, SolarAppContext>();
+			container.Register<ITimer, ReliableTimer>();
 			container.Verify();
 		}
     }
