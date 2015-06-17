@@ -32,8 +32,8 @@ namespace DataProcessor
 		{
 			container = new Container();
 			container.RegisterSingle<IConfiguration, Configuration>();
-			container.RegisterSingle<IFileSystem, FileSystem>();
-			container.RegisterSingle<ISolarAppContext, SolarAppContext>();
+			container.Register<IFileSystem, FileSystem>();
+			container.Register<ISolarAppContext, SolarAppContext>();
 			container.Verify();
 		}
     }
