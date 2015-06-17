@@ -129,15 +129,25 @@ namespace DataProcessor.Integration.Tests
 		[When(@"I calculate the mean for hour (.*)")]
 		public void WhenICalculateTheMeanForHour(int hour)
 		{
-			double average = _context.GetAverageOutputForHour(hour);
-			ScenarioContext.Current.Set<double>(average, "CalculatedAverage");
+			double? average = _context.GetAverageOutputForHour(hour);
+			ScenarioContext.Current.Set<double?>(average, "CalculatedAverage");
 		}
 
-		[Then(@"The calculated average value is (.*)")]
-		public void ThenTheCalculatedAverageValueIs(decimal average)
+		[Then(@"The calculated average value is ([0-9]+)")]
+		public void ThenTheCalculatedAverageValueIs(double? average)
 		{
-			var result = ScenarioContext.Current.Get<double>("CalculatedAverage");
+			double? result = null;
+			if (ScenarioContext.Current["CalculatedAverage"] != null)
+			{
+				result = ScenarioContext.Current.Get<double?>("CalculatedAverage");
+			}
 			Assert.AreEqual(average, result);
+		}
+
+		[Then(@"The calculated average value is null")]
+		public void ThenTheCalculatedAverageValueIsNull()
+		{
+			ThenTheCalculatedAverageValueIs(null);
 		}
 
     }

@@ -46,9 +46,9 @@ namespace Persistence
             return this.DataPoints.Find(Query.EQ("_id", BsonValue.Create(id))).FirstOrDefault();
         }
 
-		public double GetAverageOutputForHour(int hour)
+		public double? GetAverageOutputForHour(int hour)
 		{
-			var scope = new BsonDocument("criteria", new BsonDocument("hour", 9));
+			var scope = new BsonDocument("criteria", new BsonDocument("hour", hour));
 			string map = @"
 				function (){
 				var key = 'CurrentReading';
@@ -73,7 +73,9 @@ namespace Persistence
 				OutputMode = MapReduceOutputMode.Inline
 			};
 			var bsonResults = this.DataPoints.MapReduce(args).GetResults();
-			var jsonResult = bsonResults.ToList().First().ToJson();
+			var bsonResult = bsonResults.ToList().FirstOrDefault();
+			if (bsonResult == null) return null;
+			var jsonResult = bsonResult.ToJson();
 			var mapReduceOutput = new
 			{
 				_id = "",
@@ -85,6 +87,8 @@ namespace Persistence
 
 			mapReduceOutput = JsonConvert.DeserializeAnonymousType(jsonResult, mapReduceOutput);
 
+			if (mapReduceOutput == null) return null;
+			if (mapReduceOutput.value == null) return null;
 			return mapReduceOutput.value.average;
 		}
 

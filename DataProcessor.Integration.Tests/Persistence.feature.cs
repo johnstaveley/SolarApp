@@ -134,10 +134,12 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Calculate the average reading for a specified hour across two days")]
-        public virtual void CalculateTheAverageReadingForASpecifiedHourAcrossTwoDays()
+        [NUnit.Framework.DescriptionAttribute("Calculates the average reading for a specified hour across two days where data is" +
+            " provided")]
+        public virtual void CalculatesTheAverageReadingForASpecifiedHourAcrossTwoDaysWhereDataIsProvided()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Calculate the average reading for a specified hour across two days", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Calculates the average reading for a specified hour across two days where data is" +
+                    " provided", ((string[])(null)));
 #line 24
 this.ScenarioSetup(scenarioInfo);
 #line 25
@@ -171,6 +173,50 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.When("I calculate the mean for hour 9", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 34
  testRunner.Then("The calculated average value is 200", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Calculates the average reading as null for a specified hour across two days where" +
+            " no data")]
+        public virtual void CalculatesTheAverageReadingAsNullForASpecifiedHourAcrossTwoDaysWhereNoData()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Calculates the average reading as null for a specified hour across two days where" +
+                    " no data", ((string[])(null)));
+#line 36
+this.ScenarioSetup(scenarioInfo);
+#line 37
+ testRunner.Given("I want to use a database \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 38
+ testRunner.And("I open a connection to the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Time",
+                        "CurrentReading",
+                        "Comment"});
+            table4.AddRow(new string[] {
+                        "2015-06-15 09:23:00",
+                        "100",
+                        "Included"});
+            table4.AddRow(new string[] {
+                        "2015-06-15 09:33:00",
+                        "200",
+                        "Included"});
+            table4.AddRow(new string[] {
+                        "2015-06-14 09:46:00",
+                        "300",
+                        "Included"});
+            table4.AddRow(new string[] {
+                        "2015-06-15 10:00:01",
+                        "2500",
+                        "Excluded"});
+#line 39
+ testRunner.And("I have a data points with values:", ((string)(null)), table4, "And ");
+#line 45
+ testRunner.When("I calculate the mean for hour 11", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 46
+ testRunner.Then("The calculated average value is null", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
