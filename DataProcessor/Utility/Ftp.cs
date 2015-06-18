@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using DataProcessor.Utility.Interfaces;
 
 namespace DataProcessor.Utility
 {
@@ -15,11 +16,12 @@ namespace DataProcessor.Utility
 		private string _username { get; set; }
 		private string _password { get; set; }
 
-        public Ftp(string destinationUrl, string username, string password)
+        public Ftp(IConfiguration configuration)
         {
-            _destinationUrl = destinationUrl;
-            _password = password;
-            _username = username;
+
+			_destinationUrl = configuration.FtpDestinationUrl;
+			_password = configuration.FtpPassword;
+			_username = configuration.FtpUsername;
         }
 
         private FtpWebRequest InitialiseConnection(string fileToDownload = null)

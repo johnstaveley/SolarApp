@@ -9,6 +9,7 @@ using DataProcessor.Utility;
 using DataProcessor.Utility.Interfaces;
 using DataProcessor.Utility.Classes;
 using Persistence;
+using System.Threading;
 
 namespace DataProcessor
 {
@@ -23,8 +24,13 @@ namespace DataProcessor
         {
 			Bootstrap();
 #if DEBUG
-			var service = new SolarAppService(new ReliableTimer());
-			service.Init(); // Init() is pretty much any code you would have in OnStart().
+			var service = new SolarAppService(container.GetInstance<IConfiguration>(), container.GetInstance<IFileSystem>(), 
+				container.GetInstance<IFtp>(), container.GetInstance<ISolarAppContext>(), container.GetInstance<ITimer>());
+			service.Init();
+			while (true)
+			{
+				Thread.Sleep(50000);
+			}
 #else
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[] 
@@ -40,6 +46,7 @@ namespace DataProcessor
 			container = new Container();
 			container.RegisterSingle<IConfiguration, Configuration>();
 			container.Register<IFileSystem, FileSystem>();
+			container.Register<IFtp, Ftp>();
 			container.Register<ISolarAppContext, SolarAppContext>();
 			container.Register<ITimer, ReliableTimer>();
 			container.Verify();

@@ -7,6 +7,7 @@ using DataProcessor.Utility;
 using System.IO;
 using System.Linq;
 using DataProcessor.Tests.Helper;
+using DataProcessor.Utility.Interfaces;
 
 namespace DataProcessor.Integration.Tests
 {
@@ -14,27 +15,22 @@ namespace DataProcessor.Integration.Tests
     public class DownloadingDataFromTheDropPointSteps
     {
 
-        private string _ftpPassword { get; set; }
-        private string _ftpUsername { get; set; }
-        private string _ftpUrl { get; set; }
+		private IConfiguration configuration;
         private Ftp _ftp { get; set; }
 
         [Given(@"I have the credentials of the ftp site")]
         public void GivenIHaveTheCredentialsOfTheFtpSite()
         {
-            var privateSettings = (IDictionary) ConfigurationManager.GetSection("privateSettings");
-            _ftpUsername = (string) privateSettings["FtpUsername"];
-            _ftpPassword = (string) privateSettings["FtpPassword"];
-            _ftpUrl = (string) privateSettings["FtpUrl"];
-        }
+			configuration = new DataProcessor.Utility.Classes.Configuration();
+			if (string.IsNullOrEmpty(configuration.FtpUsername)) { Assert.Inconclusive("ftp username not set"); }
+			if (string.IsNullOrEmpty(configuration.FtpPassword)) { Assert.Inconclusive("ftp password not set"); }
+			if (string.IsNullOrEmpty(configuration.FtpDestinationUrl)) { Assert.Inconclusive("ftp url not set"); }
+		}
         
         [When(@"I access the site")]
         public void WhenIAccessTheSite()
         {
-            if (string.IsNullOrEmpty(_ftpUsername)) { Assert.Inconclusive("ftp username not set"); }
-            if (string.IsNullOrEmpty(_ftpPassword)) { Assert.Inconclusive("ftp password not set"); }
-            if (string.IsNullOrEmpty(_ftpUrl)) { Assert.Inconclusive("ftp url not set"); }
-            _ftp = new Ftp(_ftpUrl, _ftpUsername, _ftpPassword);
+			_ftp = new Ftp(configuration);
         }
 
         [When(@"I do a directory listing")]
@@ -57,9 +53,9 @@ namespace DataProcessor.Integration.Tests
         [Given(@"I want to navigate to a subdirectory of the ftp site '(.*)'")]
         public void GivenIWantToNavigateToASubdirectoryOfTheFtpSite(string ftpSubDirectory)
         {
-            Uri baseUri = new Uri(_ftpUrl);
+			Uri baseUri = new Uri(configuration.FtpDestinationUrl);
             Uri uriWithSubDirectory = new Uri(baseUri, ftpSubDirectory + "/");
-            _ftpUrl = uriWithSubDirectory.AbsoluteUri.ToString();
+			configuration.FtpDestinationUrl = uriWithSubDirectory.AbsoluteUri.ToString();
         }
 
         [Given(@"the local temp directory '(.*)' is empty")]
