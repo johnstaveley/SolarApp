@@ -188,3 +188,4 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 DataProcessor.Integration.Tests/privateSettings.config
+DataProcessor/privateSettings.config
