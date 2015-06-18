@@ -8,6 +8,7 @@ using Persistence;
 using Newtonsoft.Json;
 using Model;
 using DataProcessor.Utility;
+using DataProcessor.Utility.Interfaces;
 
 namespace DataProcessor
 {

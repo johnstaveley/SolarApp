@@ -62,10 +62,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utility\Configuration.cs" />
     <Compile Include="Utility\FileSystem.cs" />
     <Compile Include="Utility\Ftp.cs" />
-    <Compile Include="Utility\IConfiguration.cs" />
     <Compile Include="Utility\IFileSystem.cs" />
     <Compile Include="Utility\IFtp.cs" />
     <Compile Include="Utility\ITimer.cs" />
@@ -76,6 +74,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataProcessor.Utility\DataProcessor.Utility.csproj">
+      <Project>{e28ad1bd-7f9e-48d5-8e18-f9f1eb9ac5d9}</Project>
+      <Name>DataProcessor.Utility</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{4723ab29-155c-4eb8-a545-fc9187dfa4e9}</Project>
       <Name>Model</Name>

@@ -10,6 +10,7 @@ using Model;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using DataProcessor.Utility.Interfaces;
 
 namespace DataProcessor.Integration.Tests
 {
@@ -17,16 +18,15 @@ namespace DataProcessor.Integration.Tests
     public class PersistenceSteps
     {
 
-        private string _databaseName { get; set; }
         private Setting _setting { get; set; }
         private SolarAppContext _context { get; set; }
-		private string _mongoDbConnectionString { get; set; }
+		private IConfiguration _configuration { get; set; }
 		private List<DataItem> _dataItemsToTrack { get; set; }
 
 		[BeforeScenario]
 		public void ScenarioSetup()
 		{
-			_mongoDbConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MongoDb"].ConnectionString;
+			_configuration = new DataProcessor.Utility.Classes.Configuration();
 			_dataItemsToTrack = new List<DataItem>();
 		}
 
@@ -62,14 +62,14 @@ namespace DataProcessor.Integration.Tests
         [Given(@"I want to use a database '(.*)'")]
         public void GivenIWantToUseADatabase(string databaseName)
         {
-            _databaseName = databaseName;
+			_configuration.MongoDatabaseName = databaseName;
         }
 
 		[Given(@"I open a connection to the database")]
 		[When(@"I open a connection to the database")]
         public void WhenIOpenAConnectionToTheDatabase()
         {
-			_context = new SolarAppContext(_mongoDbConnectionString, _databaseName);
+			_context = new SolarAppContext(_configuration);
         }
 
         [When(@"I persist the setting to the database")]
@@ -135,7 +135,18 @@ namespace DataProcessor.Integration.Tests
 		}
 
 		[Then(@"The calculated average value is ([0-9]+)")]
-		public void ThenTheCalculatedAverageValueIs(double? average)
+		public void ThenTheCalculatedAverageValueIs(double average)
+		{
+			AssertAverage(average);
+		}
+
+		[Then(@"The calculated average value is null")]
+		public void ThenTheCalculatedAverageValueIsNull()
+		{
+			AssertAverage(null);
+		}
+
+		public void AssertAverage(double? average)
 		{
 			double? result = null;
 			if (ScenarioContext.Current["CalculatedAverage"] != null)
@@ -143,12 +154,6 @@ namespace DataProcessor.Integration.Tests
 				result = ScenarioContext.Current.Get<double?>("CalculatedAverage");
 			}
 			Assert.AreEqual(average, result);
-		}
-
-		[Then(@"The calculated average value is null")]
-		public void ThenTheCalculatedAverageValueIsNull()
-		{
-			ThenTheCalculatedAverageValueIs(null);
 		}
 
 		[Given(@"I save the data point to an output file '(.*)'")]
@@ -164,7 +169,7 @@ namespace DataProcessor.Integration.Tests
 		[When(@"I process the file")]
 		public void WhenIProcessTheFile()
 		{
-			Utility.IConfiguration configuration = new Utility.Configuration();
+			IConfiguration configuration = new DataProcessor.Utility.Classes.Configuration();
 			configuration.NewFilePollPath = Path.GetTempPath();
 			LocalFileProcessor fileProcessor = new LocalFileProcessor(configuration, new Utility.FileSystem(), _context);
 			var dataPointIds = fileProcessor.Process();

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataProcessor.Utility;
 using Persistence;
+using DataProcessor.Utility.Interfaces;
 
 namespace DataProcessor
 {
@@ -30,11 +31,18 @@ namespace DataProcessor
 
         protected override void OnStart(string[] args)
         {
-			// TODO: Start timer that triggers events
+			Init();
         }
+
+		public void Init()
+		{
+			// TODO: Start timer that triggers events
+			_timer.Start();
+		}
 
         protected override void OnStop()
         {
+			_timer.Stop();
         }
 
 		public void TimerTick(object state)

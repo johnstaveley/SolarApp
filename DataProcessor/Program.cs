@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using SimpleInjector;
 using DataProcessor.Utility;
+using DataProcessor.Utility.Interfaces;
+using DataProcessor.Utility.Classes;
 using Persistence;
 
 namespace DataProcessor
@@ -19,14 +21,19 @@ namespace DataProcessor
         /// </summary>
         static void Main()
         {
-            ServiceBase[] ServicesToRun;
 			Bootstrap();
+#if DEBUG
+			var service = new SolarAppService(new ReliableTimer());
+			service.Init(); // Init() is pretty much any code you would have in OnStart().
+#else
+            ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[] 
             { 
                 new SolarAppService(new ReliableTimer()) 
             };
             ServiceBase.Run(ServicesToRun);
-        }
+#endif
+		}
 
 		private static void Bootstrap()
 		{

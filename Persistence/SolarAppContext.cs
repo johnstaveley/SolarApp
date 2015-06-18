@@ -10,6 +10,7 @@ using MongoDB.Bson;
 using Model;
 using MongoDB.Driver.Builders;
 using Newtonsoft.Json;
+using DataProcessor.Utility.Interfaces;
 
 namespace Persistence
 {
@@ -18,12 +19,14 @@ namespace Persistence
 	{
 
 		public MongoDatabase Database;
+		private IConfiguration _configuration;
 
-        public SolarAppContext(string connectionString, string databaseName)
+        public SolarAppContext(IConfiguration configuration)
 		{
-            var client = new MongoClient(connectionString);
+			_configuration = configuration;
+            var client = new MongoClient(configuration.MongoConnectionString);
 			var server = client.GetServer();
-            Database = server.GetDatabase(databaseName);            
+			Database = server.GetDatabase(configuration.MongoDatabaseName);
 		}
 
         #region DataPoints

@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using Model;
 using DataProcessor.Utility;
+using DataProcessor.Utility.Interfaces;
 using Newtonsoft.Json;
 using DataProcessor.Unit.Tests.Properties;
 using Rhino.Mocks;

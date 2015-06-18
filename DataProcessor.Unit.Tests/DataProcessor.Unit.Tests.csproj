@@ -81,6 +81,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataProcessor.Utility\DataProcessor.Utility.csproj">
+      <Project>{e28ad1bd-7f9e-48d5-8e18-f9f1eb9ac5d9}</Project>
+      <Name>DataProcessor.Utility</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataProcessor\DataProcessor.csproj">
       <Project>{e66f9c23-201d-42c7-a8ee-d2a3f0b2e190}</Project>
       <Name>DataProcessor</Name>
