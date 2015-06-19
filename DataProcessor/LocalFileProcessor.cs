@@ -34,7 +34,7 @@ namespace DataProcessor
 			if (!_fileSystem.Directory_Exists(archivePath)) { 
 				_fileSystem.CreateDirectory(archivePath);
 			}
-			var filesToProcess = _fileSystem.Directory_GetFiles(pollPath, "fronius*.log");
+			var filesToProcess = _fileSystem.Directory_GetFiles(pollPath, "Log*.log");
 			foreach (string fileToProcess in filesToProcess)
 			{
 				string fileText = _fileSystem.File_ReadAllText(fileToProcess);

@@ -59,8 +59,8 @@ namespace DataProcessor
 
 			try
 			{
-				var ftpFileProcessor = new FtpFileProcessor(_configuration, _context, _fileSystem, _ftp);
-				ftpFileProcessor.Process();
+                //var ftpFileProcessor = new FtpFileProcessor(_configuration, _context, _fileSystem, _ftp);
+                //ftpFileProcessor.Process();
 
 				var localFileProcessor = new LocalFileProcessor(_configuration, _fileSystem, _context);
 				localFileProcessor.Process();

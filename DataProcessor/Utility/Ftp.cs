@@ -15,13 +15,15 @@ namespace DataProcessor.Utility
         private string _destinationUrl { get; set; }
 		private string _username { get; set; }
 		private string _password { get; set; }
+        private IFileSystem _fileSystem { get; set; }
 
-        public Ftp(IConfiguration configuration)
+        public Ftp(IConfiguration configuration, IFileSystem fileSystem)
         {
 
 			_destinationUrl = configuration.FtpDestinationUrl;
 			_password = configuration.FtpPassword;
 			_username = configuration.FtpUsername;
+            _fileSystem = fileSystem;
         }
 
         private FtpWebRequest InitialiseConnection(string fileToDownload = null)
@@ -54,6 +56,7 @@ namespace DataProcessor.Utility
             FtpWebRequest request = InitialiseConnection(fileToDownload);
             request.Method = WebRequestMethods.Ftp.DownloadFile;
             var response = GetResponse(request);
+            if (!_fileSystem.Directory_Exists(localStoragePath)) { _fileSystem.CreateDirectory(localStoragePath); }
             var localFilePath = Path.Combine(localStoragePath, fileToDownload);
             File.WriteAllText(localFilePath, response);
         }
@@ -64,7 +67,7 @@ namespace DataProcessor.Utility
             FtpWebRequest request = InitialiseConnection();
             request.Method = WebRequestMethods.Ftp.ListDirectory;
             var response = GetResponse(request);
-            return response.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+            return response.Split(new string[] { "\r\n" }, StringSplitOptions.None).Where(s => s != String.Empty).ToArray();
         }
 
         public void Delete(string fileToDelete)

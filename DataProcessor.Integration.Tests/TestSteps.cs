@@ -15,22 +15,23 @@ namespace DataProcessor.Integration.Tests
     public class DownloadingDataFromTheDropPointSteps
     {
 
-		private IConfiguration configuration;
+		private IConfiguration _configuration;
+        private IFileSystem _fileSystem = new FileSystem();
         private Ftp _ftp { get; set; }
 
         [Given(@"I have the credentials of the ftp site")]
         public void GivenIHaveTheCredentialsOfTheFtpSite()
         {
-			configuration = new DataProcessor.Utility.Classes.Configuration();
-			if (string.IsNullOrEmpty(configuration.FtpUsername)) { Assert.Inconclusive("ftp username not set"); }
-			if (string.IsNullOrEmpty(configuration.FtpPassword)) { Assert.Inconclusive("ftp password not set"); }
-			if (string.IsNullOrEmpty(configuration.FtpDestinationUrl)) { Assert.Inconclusive("ftp url not set"); }
+			_configuration = new DataProcessor.Utility.Classes.Configuration();
+			if (string.IsNullOrEmpty(_configuration.FtpUsername)) { Assert.Inconclusive("ftp username not set"); }
+			if (string.IsNullOrEmpty(_configuration.FtpPassword)) { Assert.Inconclusive("ftp password not set"); }
+			if (string.IsNullOrEmpty(_configuration.FtpDestinationUrl)) { Assert.Inconclusive("ftp url not set"); }
 		}
         
         [When(@"I access the site")]
         public void WhenIAccessTheSite()
         {
-			_ftp = new Ftp(configuration);
+			_ftp = new Ftp(_configuration, _fileSystem);
         }
 
         [When(@"I do a directory listing")]
@@ -53,9 +54,9 @@ namespace DataProcessor.Integration.Tests
         [Given(@"I want to navigate to a subdirectory of the ftp site '(.*)'")]
         public void GivenIWantToNavigateToASubdirectoryOfTheFtpSite(string ftpSubDirectory)
         {
-			Uri baseUri = new Uri(configuration.FtpDestinationUrl);
+			Uri baseUri = new Uri(_configuration.FtpDestinationUrl);
             Uri uriWithSubDirectory = new Uri(baseUri, ftpSubDirectory + "/");
-			configuration.FtpDestinationUrl = uriWithSubDirectory.AbsoluteUri.ToString();
+			_configuration.FtpDestinationUrl = uriWithSubDirectory.AbsoluteUri.ToString();
         }
 
         [Given(@"the local temp directory '(.*)' is empty")]
