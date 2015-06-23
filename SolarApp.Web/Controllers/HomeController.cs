@@ -23,7 +23,7 @@ namespace SolarApp.Web.Controllers
 
 		public ActionResult Index()
 		{
-
+			ViewBag.LatestMeterReading = _context.GetLatestEnergyReading();
 			return View();
 		}
 

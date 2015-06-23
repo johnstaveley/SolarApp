@@ -25,9 +25,12 @@ namespace SolarApp.DataProcessor.Utility.Classes
 			NewFilePollPath = System.Configuration.ConfigurationManager.AppSettings["NewFilePollPath"];
 			MongoConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MongoDb"].ConnectionString;
 			var privateSettings = (IDictionary)ConfigurationManager.GetSection("privateSettings");
-			FtpUsername = (string)privateSettings["FtpUsername"];
-			FtpPassword = (string)privateSettings["FtpPassword"];
-			FtpDestinationUrl = (string)privateSettings["FtpUrl"];
+			if (privateSettings != null)
+			{
+				FtpUsername = (string)privateSettings["FtpUsername"];
+				FtpPassword = (string)privateSettings["FtpPassword"];
+				FtpDestinationUrl = (string)privateSettings["FtpUrl"];
+			}
 		}
 
 	}
