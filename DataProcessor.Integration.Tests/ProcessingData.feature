@@ -13,9 +13,9 @@ Scenario: Process the exception contents of a file
 
 Scenario: Can Process energy data from an incoming file and store it in the database
 	Given I have a data point with values:
-	| Time		| CurrentReading | DayEnergy | YearEnergy  | TotalEnergy  |
-	| [Now]     | 321			 | 100       | 1000        | 10000        |
-	And I save the data point to an output file 'fronius123.log'
+	| Time  | CurrentReading | DayEnergy | YearEnergy | TotalEnergy | FileName |
+	| [Now] | 321            | 100       | 1000       | 10000       | [Random] |
+	And I save the data point to a file
 	And I want to use a database 'Test'
 	And I open a connection to the database
 	When I process the file

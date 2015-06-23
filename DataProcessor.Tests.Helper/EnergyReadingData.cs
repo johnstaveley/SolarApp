@@ -28,6 +28,28 @@ namespace DataProcessor.Tests.Helper
 			}
 		}
 
+		private string _fileName;
+
+		public string FileName
+		{
+			set
+			{
+				if (value == "[Random]")
+				{
+					_fileName = string.Format("Log{0}.log", Guid.NewGuid().ToString());
+				}
+				else
+				{
+					_fileName = value;
+				}
+			}
+			get
+			{
+				return _fileName;
+			}
+
+		}
+
 
     }
 }

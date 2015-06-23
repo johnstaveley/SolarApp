@@ -13,8 +13,8 @@ Scenario: Store a random value to a setting entry in the database and retrieve i
 Scenario: Store a data point in the database and retrieve it
 	Given I want to use a database 'Test'
 	And I have a data point with values:
-	| Time		| CurrentReading | DayEnergy | YearEnergy  | TotalEnergy  |
-	| [Now]     | 321			 | 100       | 1000        | 10000        |
+	| Time  | CurrentReading | DayEnergy | YearEnergy | TotalEnergy | FileName |
+	| [Now] | 321            | 100       | 1000       | 10000       | [Random] |
 	When I open a connection to the database
 	And I persist the data point to the database
 	Then I can retrieve a data point with values:

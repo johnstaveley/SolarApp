@@ -97,7 +97,7 @@ namespace DataProcessor.Integration.Tests
 		{
 			var energyReadingData = ScenarioContext.Current.Get<EnergyReadingData>("EnergyReadingData");
 			var dataPoint = energyReadingData.CreateDataPoint();
-			dataPoint.Id = Guid.NewGuid().ToString();
+			dataPoint.Id = energyReadingData.FileName;
 			_context.InsertDataPoint(dataPoint);
 			_dataItemsToTrack.Add(new DataItem(dataPoint));
 		}
@@ -156,13 +156,13 @@ namespace DataProcessor.Integration.Tests
 			Assert.AreEqual(average, result);
 		}
 
-		[Given(@"I save the data point to an output file '(.*)'")]
-		public void GivenISaveTheDataPointToAnOutputFile(string fileName)
+		[Given(@"I save the data point to a file")]
+		public void GivenISaveTheDataPointToAFile()
 		{
 			var energyReadingData = ScenarioContext.Current.Get<EnergyReadingData>("EnergyReadingData");
 			var dataPoint = energyReadingData.CreateDataPoint();
-			dataPoint.Id = Guid.NewGuid().ToString();
-			var filePath = Path.Combine(Path.GetTempPath(), fileName);
+			dataPoint.Id = energyReadingData.FileName;
+			var filePath = Path.Combine(_configuration.NewFilePollPath, energyReadingData.FileName);
 			dataPoint.SaveAsJson(filePath);
 		}
 
@@ -170,7 +170,6 @@ namespace DataProcessor.Integration.Tests
 		public void WhenIProcessTheFile()
 		{
 			IConfiguration configuration = new DataProcessor.Utility.Classes.Configuration();
-			configuration.NewFilePollPath = Path.GetTempPath();
 			LocalFileProcessor fileProcessor = new LocalFileProcessor(configuration, new Utility.FileSystem(), _context);
 			var dataPointIds = fileProcessor.Process();
 			foreach (var dataPointId in dataPointIds)

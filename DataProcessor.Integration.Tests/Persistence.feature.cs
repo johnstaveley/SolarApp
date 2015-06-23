@@ -101,13 +101,15 @@ this.ScenarioSetup(scenarioInfo);
                         "CurrentReading",
                         "DayEnergy",
                         "YearEnergy",
-                        "TotalEnergy"});
+                        "TotalEnergy",
+                        "FileName"});
             table1.AddRow(new string[] {
                         "[Now]",
                         "321",
                         "100",
                         "1000",
-                        "10000"});
+                        "10000",
+                        "[Random]"});
 #line 15
  testRunner.And("I have a data point with values:", ((string)(null)), table1, "And ");
 #line 18
