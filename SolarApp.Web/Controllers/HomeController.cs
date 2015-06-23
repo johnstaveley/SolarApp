@@ -17,7 +17,7 @@ namespace SolarApp.Web.Controllers
 
 		public HomeController()
 		{
-			_configuration = new Configuration();
+			_configuration = new SolarApp.DataProcessor.Utility.Classes.Configuration();
 			_context = new SolarAppContext(_configuration);
 		}
 
