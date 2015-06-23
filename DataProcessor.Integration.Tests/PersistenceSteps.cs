@@ -50,6 +50,23 @@ namespace DataProcessor.Integration.Tests
 			}
 		}
 
+		[When(@"I calculate the latest date")]
+		public void WhenICalculateTheLatestDate()
+		{
+			DateTime? latestReading = _context.GetLatestEnergyReading();
+			ScenarioContext.Current.Set<DateTime?>(latestReading, "LatestEnergyReading");
+		}
+
+		[Then(@"The calculated latest date is '(.*)'")]
+		public void ThenTheCalculatedAverageValueIs(DateTime latestReading)
+		{
+			DateTime? result = null;
+			if (ScenarioContext.Current["LatestEnergyReading"] != null)
+			{
+				result = ScenarioContext.Current.Get<DateTime?>("LatestEnergyReading");
+			}
+			Assert.AreEqual(latestReading, result);
+		}
 
         [Given(@"I want to store some random value")]
         public void GivenIWantToStoreSomeRandomValue()

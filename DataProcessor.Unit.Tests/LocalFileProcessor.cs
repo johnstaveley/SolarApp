@@ -4,7 +4,7 @@ using Model;
 using DataProcessor.Utility;
 using DataProcessor.Utility.Interfaces;
 using Newtonsoft.Json;
-using DataProcessor.Unit.Tests.Properties;
+using SolarApp.DataProcessor.Unit.Tests.Properties;
 using Rhino.Mocks;
 using Persistence;
 using System.Linq;
@@ -31,7 +31,7 @@ namespace DataProcessor.Unit.Tests
 			foreach(var fileToProcess in filesToProcess){
 				fileSystem.Expect(f => f.File_ReadAllText(Arg<string>.Is.Equal(fileToProcess))).Return("{}");
 				fileSystem.Expect(f => f.GetFileNameFromFullPath(Arg<string>.Is.Equal(fileToProcess))).Return("A.log");
-				fileSystem.Expect(f => f.File_Move(Arg<string>.Is.Equal(fileToProcess), Arg<string>.Is.Anything));
+				fileSystem.Expect(f => f.File_Move(Arg<string>.Is.Equal(fileToProcess), Arg<string>.Is.Anything));				
 			}
 			solarAppContext.Expect(c => c.InsertDataPoint(Arg<DataPoint>.Is.Anything)).Repeat.Times(filesToProcess.Length);
 

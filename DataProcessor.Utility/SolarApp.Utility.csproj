@@ -7,8 +7,8 @@
     <ProjectGuid>{E28AD1BD-7F9E-48D5-8E18-F9F1EB9AC5D9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DataProcessor.Utility</RootNamespace>
-    <AssemblyName>DataProcessor.Utility</AssemblyName>
+    <RootNamespace>SolarApp.Utility</RootNamespace>
+    <AssemblyName>SolarApp.Utility</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

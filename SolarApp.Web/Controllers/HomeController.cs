@@ -1,0 +1,44 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using Persistence;
+using DataProcessor.Utility.Interfaces;
+using DataProcessor.Utility.Classes;
+
+namespace SolarApp.Web.Controllers
+{
+
+	public class HomeController : Controller
+	{
+		private ISolarAppContext _context { get; set; }
+		private IConfiguration _configuration { get; set; }
+
+		public HomeController()
+		{
+			_configuration = new Configuration();
+			_context = new SolarAppContext(_configuration);
+		}
+
+		public ActionResult Index()
+		{
+
+			return View();
+		}
+
+		public ActionResult About()
+		{
+			ViewBag.Message = "Your application description page.";
+
+			return View();
+		}
+
+		public ActionResult Contact()
+		{
+			ViewBag.Message = "Your contact page.";
+
+			return View();
+		}
+	}
+}

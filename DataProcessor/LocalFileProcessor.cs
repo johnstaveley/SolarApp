@@ -46,7 +46,7 @@ namespace DataProcessor
 				}
 				_fileSystem.File_Move(fileToProcess, archiveFileName);
 				DataPoint dataPoint = JsonConvert.DeserializeObject<DataPoint>(fileText);
-				dataPoint.Id = _fileSystem.GetFileNameFromFullPath(fileName);
+				dataPoint.Id = fileName;
 				dataPointIds.Add(dataPoint.Id);
 				_context.InsertDataPoint(dataPoint);
 			}

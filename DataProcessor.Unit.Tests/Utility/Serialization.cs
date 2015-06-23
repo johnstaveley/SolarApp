@@ -3,9 +3,9 @@ using NUnit.Framework;
 using Model;
 using DataProcessor.Utility;
 using Newtonsoft.Json;
-using DataProcessor.Unit.Tests.Properties;
+using SolarApp.DataProcessor.Unit.Tests.Properties;
 
-namespace DataProcessor.Unit.Tests
+namespace SolarApp.DataProcessor.Unit.Tests
 {
     [TestFixture]
     public class Serialization

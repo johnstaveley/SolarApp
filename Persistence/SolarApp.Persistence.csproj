@@ -7,8 +7,8 @@
     <ProjectGuid>{3C392A7B-FB2A-464C-82A2-E389646C705B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Persistence</RootNamespace>
-    <AssemblyName>Persistence</AssemblyName>
+    <RootNamespace>SolarApp.Persistence</RootNamespace>
+    <AssemblyName>SolarApp.Persistence</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -69,13 +69,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DataProcessor.Utility\DataProcessor.Utility.csproj">
+    <ProjectReference Include="..\DataProcessor.Utility\SolarApp.Utility.csproj">
       <Project>{e28ad1bd-7f9e-48d5-8e18-f9f1eb9ac5d9}</Project>
-      <Name>DataProcessor.Utility</Name>
+      <Name>SolarApp.Utility</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Model\Model.csproj">
+    <ProjectReference Include="..\Model\SolarApp.Model.csproj">
       <Project>{4723ab29-155c-4eb8-a545-fc9187dfa4e9}</Project>
-      <Name>Model</Name>
+      <Name>SolarApp.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

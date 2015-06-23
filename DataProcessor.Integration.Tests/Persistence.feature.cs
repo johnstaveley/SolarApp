@@ -11,7 +11,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace DataProcessor.Integration.Tests
+namespace SolarApp.DataProcessor.Integration.Tests
 {
     using TechTalk.SpecFlow;
     
@@ -219,6 +219,43 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.When("I calculate the mean for hour 11", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 46
  testRunner.Then("The calculated average value is null", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Calculates the latest reading across two days where data is provided")]
+        public virtual void CalculatesTheLatestReadingAcrossTwoDaysWhereDataIsProvided()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Calculates the latest reading across two days where data is provided", ((string[])(null)));
+#line 48
+this.ScenarioSetup(scenarioInfo);
+#line 49
+ testRunner.Given("I want to use a database \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 50
+ testRunner.And("I open a connection to the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Time",
+                        "CurrentReading"});
+            table5.AddRow(new string[] {
+                        "2018-06-15 09:23:00",
+                        "100"});
+            table5.AddRow(new string[] {
+                        "2018-06-15 09:33:00",
+                        "200"});
+            table5.AddRow(new string[] {
+                        "2018-06-14 09:46:00",
+                        "300"});
+            table5.AddRow(new string[] {
+                        "2018-06-15 10:00:01",
+                        "2500"});
+#line 51
+ testRunner.And("I have a data points with values:", ((string)(null)), table5, "And ");
+#line 57
+ testRunner.When("I calculate the latest date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 58
+ testRunner.Then("The calculated latest date is \'2018-06-15 10:00:01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

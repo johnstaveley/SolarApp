@@ -11,6 +11,9 @@ using Model;
 using MongoDB.Driver.Builders;
 using Newtonsoft.Json;
 using DataProcessor.Utility.Interfaces;
+using Newtonsoft.Json.Linq;
+using MongoDB.Bson.IO;
+using MongoDB.Bson.Serialization;
 
 namespace Persistence
 {
@@ -48,6 +51,44 @@ namespace Persistence
         {
             return this.DataPoints.Find(Query.EQ("_id", BsonValue.Create(id))).FirstOrDefault();
         }
+
+		public DateTime? GetLatestEnergyReading()
+		{
+			var aggregate = new AggregateArgs
+			{
+				Pipeline = new[] {
+					new BsonDocument("$group", new BsonDocument
+						{
+							{"_id", "all" },
+							{"latest_reading", new BsonDocument("$max" , "$Head.Timestamp")}
+						}),
+					new BsonDocument("$project", new BsonDocument
+						{
+							{"latest_reading", new BsonDocument("$dateToString", new BsonDocument {
+								new BsonDocument("format", "%Y-%m-%d %H:%M:%S:%L") ,
+								new BsonDocument("date", "$latest_reading")
+							})}
+						})
+				}
+			};
+			var bsonResults = this.DataPoints.Aggregate(aggregate);
+			var bsonResult = bsonResults.ToList().FirstOrDefault();
+			if (bsonResult == null) return null;
+			var jsonWriterSettings = new JsonWriterSettings { OutputMode = JsonOutputMode.Strict };
+			var jsonResult = bsonResult.ToJson(jsonWriterSettings);
+			JObject output = JObject.Parse(jsonResult);
+			if (output == null) return null;
+			if (output["latest_reading"] == null) return null;
+			var latestReadingString = output["latest_reading"].ToString();
+			DateTime latestReading;
+			if (DateTime.TryParseExact(latestReadingString, "yyyy-MM-dd hh:mm:ss:fff", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AssumeUniversal, out latestReading))
+			{
+				return latestReading;
+			}
+			return null;
+
+		}
+
 
 		public double? GetAverageOutputForHour(int hour)
 		{

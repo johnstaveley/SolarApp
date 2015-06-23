@@ -8,6 +8,7 @@ namespace Persistence
 		void DeleteSettingById(string id);
 		Model.DataPoint FindDataPointById(string id);
 		Model.Setting FindSettingById(string id);
+		DateTime? GetLatestEnergyReading();
 		double? GetAverageOutputForHour(int hour);
 		void InsertDataPoint(Model.DataPoint dataPoint);
 		void InsertSetting(Model.Setting setting);

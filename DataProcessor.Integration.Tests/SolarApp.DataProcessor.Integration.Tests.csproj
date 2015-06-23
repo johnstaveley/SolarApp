@@ -6,8 +6,8 @@
     <ProjectGuid>{5836006B-7B6D-4810-BFF2-0435B51C60E7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DataProcessor.Integration.Tests</RootNamespace>
-    <AssemblyName>DataProcessor.Integration.Tests</AssemblyName>
+    <RootNamespace>SolarApp.DataProcessor.Integration.Tests</RootNamespace>
+    <AssemblyName>SolarApp.DataProcessor.Integration.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -119,25 +119,25 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DataProcessor.Tests.Helper\DataProcessor.Tests.Helper.csproj">
+    <ProjectReference Include="..\DataProcessor.Tests.Helper\SolarApp.DataProcessor.Tests.Helper.csproj">
       <Project>{4702d0d1-f9be-4b93-9f82-8ac203ef6e16}</Project>
-      <Name>DataProcessor.Tests.Helper</Name>
+      <Name>SolarApp.DataProcessor.Tests.Helper</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DataProcessor.Utility\DataProcessor.Utility.csproj">
+    <ProjectReference Include="..\DataProcessor.Utility\SolarApp.Utility.csproj">
       <Project>{e28ad1bd-7f9e-48d5-8e18-f9f1eb9ac5d9}</Project>
-      <Name>DataProcessor.Utility</Name>
+      <Name>SolarApp.Utility</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DataProcessor\DataProcessor.csproj">
+    <ProjectReference Include="..\DataProcessor\SolarApp.DataProcessor.csproj">
       <Project>{e66f9c23-201d-42c7-a8ee-d2a3f0b2e190}</Project>
-      <Name>DataProcessor</Name>
+      <Name>SolarApp.DataProcessor</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Model\Model.csproj">
+    <ProjectReference Include="..\Model\SolarApp.Model.csproj">
       <Project>{4723ab29-155c-4eb8-a545-fc9187dfa4e9}</Project>
-      <Name>Model</Name>
+      <Name>SolarApp.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Persistence\Persistence.csproj">
+    <ProjectReference Include="..\Persistence\SolarApp.Persistence.csproj">
       <Project>{3c392a7b-fb2a-464c-82a2-e389646c705b}</Project>
-      <Name>Persistence</Name>
+      <Name>SolarApp.Persistence</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

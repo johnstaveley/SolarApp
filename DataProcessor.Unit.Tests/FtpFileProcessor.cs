@@ -4,7 +4,7 @@ using Model;
 using DataProcessor.Utility;
 using DataProcessor.Utility.Interfaces;
 using Newtonsoft.Json;
-using DataProcessor.Unit.Tests.Properties;
+using SolarApp.DataProcessor.Unit.Tests.Properties;
 using Rhino.Mocks;
 using Persistence;
 

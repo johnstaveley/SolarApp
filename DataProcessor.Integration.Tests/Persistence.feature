@@ -44,3 +44,15 @@ Scenario: Calculates the average reading as null for a specified hour across two
 	| 2015-06-15 10:00:01 | 2500           | Excluded |
 	When I calculate the mean for hour 11
 	Then The calculated average value is null
+
+Scenario: Calculates the latest reading across two days where data is provided
+	Given I want to use a database 'Test'
+	And I open a connection to the database
+	And I have a data points with values:
+	| Time                | CurrentReading |
+	| 2018-06-15 09:23:00 | 100            |
+	| 2018-06-15 09:33:00 | 200            |
+	| 2018-06-14 09:46:00 | 300            |
+	| 2018-06-15 10:00:01 | 2500           |
+	When I calculate the latest date
+	Then The calculated latest date is '2018-06-15 10:00:01'

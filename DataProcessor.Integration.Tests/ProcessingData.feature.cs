@@ -11,7 +11,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace DataProcessor.Integration.Tests
+namespace SolarApp.DataProcessor.Integration.Tests
 {
     using TechTalk.SpecFlow;
     
