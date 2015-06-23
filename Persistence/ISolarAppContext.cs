@@ -1,5 +1,6 @@
 ﻿using System;
-namespace Persistence
+
+namespace SolarApp.Persistence
 {
 	public interface ISolarAppContext
 	{

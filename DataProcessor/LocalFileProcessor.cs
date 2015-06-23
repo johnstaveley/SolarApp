@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using Persistence;
+using SolarApp.Persistence;
 using Newtonsoft.Json;
-using Model;
-using DataProcessor.Utility;
-using DataProcessor.Utility.Interfaces;
+using SolarApp.Model;
+using SolarApp.DataProcessor.Utility;
+using SolarApp.DataProcessor.Utility.Interfaces;
 
-namespace DataProcessor
+namespace SolarApp.DataProcessor
 {
 	public class LocalFileProcessor
 	{

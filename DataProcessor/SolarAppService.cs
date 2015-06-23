@@ -7,12 +7,12 @@ using System.Linq;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
-using DataProcessor.Utility;
-using Persistence;
-using DataProcessor.Utility.Interfaces;
+using SolarApp.DataProcessor.Utility;
+using SolarApp.Persistence;
+using SolarApp.DataProcessor.Utility.Interfaces;
 using System.Threading;
 
-namespace DataProcessor
+namespace SolarApp.DataProcessor
 {
     public partial class SolarAppService : ServiceBase
     {

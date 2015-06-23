@@ -1,5 +1,6 @@
 ﻿using System;
-namespace DataProcessor.Utility.Interfaces
+
+namespace SolarApp.DataProcessor.Utility.Interfaces
 {
 	public interface IConfiguration
 	{

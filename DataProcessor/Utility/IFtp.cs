@@ -1,5 +1,6 @@
 ﻿using System;
-namespace DataProcessor.Utility
+
+namespace SolarApp.DataProcessor.Utility
 {
 	public interface IFtp
 	{

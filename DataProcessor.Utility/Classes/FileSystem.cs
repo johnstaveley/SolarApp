@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace DataProcessor.Utility
+namespace SolarApp.DataProcessor.Utility.Classes
 {
-	public class FileSystem : DataProcessor.Utility.IFileSystem
+	public class FileSystem : SolarApp.DataProcessor.Utility.Interfaces.IFileSystem
 	{
 
 		public void CreateDirectory(string path)

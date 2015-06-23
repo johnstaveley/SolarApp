@@ -1,16 +1,16 @@
 ﻿using System;
 using TechTalk.SpecFlow;
 using System.Configuration;
-using Persistence;
+using SolarApp.Persistence;
 using NUnit.Framework;
 using TechTalk.SpecFlow.Assist;
 using DataProcessor.Tests.Helper;
-using DataProcessor;
-using Model;
+using SolarApp.DataProcessor;
+using SolarApp.Model;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
-using DataProcessor.Utility.Interfaces;
+using SolarApp.DataProcessor.Utility.Interfaces;
 
 namespace DataProcessor.Integration.Tests
 {
@@ -26,7 +26,7 @@ namespace DataProcessor.Integration.Tests
 		[BeforeScenario]
 		public void ScenarioSetup()
 		{
-			_configuration = new DataProcessor.Utility.Classes.Configuration();
+			_configuration = new SolarApp.DataProcessor.Utility.Classes.Configuration();
 			_dataItemsToTrack = new List<DataItem>();
 		}
 
@@ -186,8 +186,8 @@ namespace DataProcessor.Integration.Tests
 		[When(@"I process the file")]
 		public void WhenIProcessTheFile()
 		{
-			IConfiguration configuration = new DataProcessor.Utility.Classes.Configuration();
-			LocalFileProcessor fileProcessor = new LocalFileProcessor(configuration, new Utility.FileSystem(), _context);
+			IConfiguration configuration = new SolarApp.DataProcessor.Utility.Classes.Configuration();
+			LocalFileProcessor fileProcessor = new LocalFileProcessor(configuration, new SolarApp.DataProcessor.Utility.Classes.FileSystem(), _context);
 			var dataPointIds = fileProcessor.Process();
 			foreach (var dataPointId in dataPointIds)
 			{

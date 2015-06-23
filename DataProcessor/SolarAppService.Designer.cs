@@ -1,4 +1,4 @@
-﻿namespace DataProcessor
+﻿namespace SolarApp.DataProcessor
 {
     partial class SolarAppService
     {

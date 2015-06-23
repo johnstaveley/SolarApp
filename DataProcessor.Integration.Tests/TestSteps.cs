@@ -3,11 +3,12 @@ using TechTalk.SpecFlow;
 using System.Configuration;
 using NUnit.Framework;
 using System.Collections;
-using DataProcessor.Utility;
+using SolarApp.DataProcessor.Utility;
 using System.IO;
 using System.Linq;
 using DataProcessor.Tests.Helper;
-using DataProcessor.Utility.Interfaces;
+using SolarApp.DataProcessor.Utility.Interfaces;
+using SolarApp.DataProcessor.Utility.Classes;
 
 namespace DataProcessor.Integration.Tests
 {
@@ -22,7 +23,7 @@ namespace DataProcessor.Integration.Tests
         [Given(@"I have the credentials of the ftp site")]
         public void GivenIHaveTheCredentialsOfTheFtpSite()
         {
-			_configuration = new DataProcessor.Utility.Classes.Configuration();
+			_configuration = new SolarApp.DataProcessor.Utility.Classes.Configuration();
 			if (string.IsNullOrEmpty(_configuration.FtpUsername)) { Assert.Inconclusive("ftp username not set"); }
 			if (string.IsNullOrEmpty(_configuration.FtpPassword)) { Assert.Inconclusive("ftp password not set"); }
 			if (string.IsNullOrEmpty(_configuration.FtpDestinationUrl)) { Assert.Inconclusive("ftp url not set"); }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Persistence;
-using DataProcessor.Utility.Interfaces;
-using DataProcessor.Utility.Classes;
+using SolarApp.Persistence;
+using SolarApp.DataProcessor.Utility.Interfaces;
+using SolarApp.DataProcessor.Utility.Classes;
 
 namespace SolarApp.Web.Controllers
 {

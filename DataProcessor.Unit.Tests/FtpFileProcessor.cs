@@ -1,12 +1,12 @@
 ﻿using System;
 using NUnit.Framework;
-using Model;
-using DataProcessor.Utility;
-using DataProcessor.Utility.Interfaces;
+using SolarApp.Model;
+using SolarApp.DataProcessor.Utility;
+using SolarApp.DataProcessor.Utility.Interfaces;
 using Newtonsoft.Json;
 using SolarApp.DataProcessor.Unit.Tests.Properties;
 using Rhino.Mocks;
-using Persistence;
+using SolarApp.Persistence;
 
 namespace DataProcessor.Unit.Tests
 {

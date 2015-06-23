@@ -62,12 +62,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utility\FileSystem.cs" />
     <Compile Include="Utility\Ftp.cs" />
-    <Compile Include="Utility\IFileSystem.cs" />
     <Compile Include="Utility\IFtp.cs" />
-    <Compile Include="Utility\ITimer.cs" />
-    <Compile Include="Utility\ReliableTimer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

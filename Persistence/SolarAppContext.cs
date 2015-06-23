@@ -7,18 +7,18 @@ using MongoDB.Driver;
 using MongoDB;
 using MongoDB.Shared;
 using MongoDB.Bson;
-using Model;
+using SolarApp.Model;
 using MongoDB.Driver.Builders;
 using Newtonsoft.Json;
-using DataProcessor.Utility.Interfaces;
+using SolarApp.DataProcessor.Utility.Interfaces;
 using Newtonsoft.Json.Linq;
 using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization;
 
-namespace Persistence
+namespace SolarApp.Persistence
 {
 
-	public class SolarAppContext : Persistence.ISolarAppContext
+	public class SolarAppContext : ISolarAppContext
 	{
 
 		public MongoDatabase Database;

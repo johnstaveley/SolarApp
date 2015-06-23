@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Model
+namespace SolarApp.Model
 {
     [Serializable]
     public class DataPoint

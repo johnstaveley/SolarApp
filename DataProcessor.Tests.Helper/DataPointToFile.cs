@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Model;
+using SolarApp.Model;
 using Newtonsoft.Json;
 
 namespace DataProcessor.Tests.Helper

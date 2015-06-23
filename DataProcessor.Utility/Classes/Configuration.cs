@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
-using DataProcessor.Utility.Interfaces;
+using SolarApp.DataProcessor.Utility.Interfaces;
 using System.Collections;
 
-namespace DataProcessor.Utility.Classes
+namespace SolarApp.DataProcessor.Utility.Classes
 {
 	public class Configuration : IConfiguration
 	{

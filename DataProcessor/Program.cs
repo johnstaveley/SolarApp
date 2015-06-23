@@ -5,13 +5,13 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 using SimpleInjector;
-using DataProcessor.Utility;
-using DataProcessor.Utility.Interfaces;
-using DataProcessor.Utility.Classes;
-using Persistence;
+using SolarApp.DataProcessor.Utility;
+using SolarApp.DataProcessor.Utility.Interfaces;
+using SolarApp.DataProcessor.Utility.Classes;
+using SolarApp.Persistence;
 using System.Threading;
 
-namespace DataProcessor
+namespace SolarApp.DataProcessor
 {
     static class Program
     {

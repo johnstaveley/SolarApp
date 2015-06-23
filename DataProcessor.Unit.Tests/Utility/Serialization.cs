@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
-using Model;
-using DataProcessor.Utility;
+using SolarApp.Model;
+using SolarApp.DataProcessor.Utility;
 using Newtonsoft.Json;
 using SolarApp.DataProcessor.Unit.Tests.Properties;
 

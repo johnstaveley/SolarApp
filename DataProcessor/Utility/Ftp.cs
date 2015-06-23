@@ -5,11 +5,11 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using DataProcessor.Utility.Interfaces;
+using SolarApp.DataProcessor.Utility.Interfaces;
 
-namespace DataProcessor.Utility
+namespace SolarApp.DataProcessor.Utility
 {
-    public class Ftp : DataProcessor.Utility.IFtp
+	public class Ftp : SolarApp.DataProcessor.Utility.IFtp
     {
 
         private string _destinationUrl { get; set; }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading;
 
-namespace DataProcessor.Utility
+namespace SolarApp.DataProcessor.Utility.Classes
 {
-	public class ReliableTimer : DataProcessor.Utility.ITimer
+	public class ReliableTimer : SolarApp.DataProcessor.Utility.Interfaces.ITimer
 	{
 		private Timer _timer;
 		private int _interval = Timeout.Infinite;
