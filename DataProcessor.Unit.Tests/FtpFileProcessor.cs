@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using SolarApp.Model;
+using SolarApp.DataProcessor;
 using SolarApp.DataProcessor.Utility;
 using SolarApp.DataProcessor.Utility.Interfaces;
 using Newtonsoft.Json;

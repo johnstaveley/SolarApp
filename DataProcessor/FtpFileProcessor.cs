@@ -10,7 +10,7 @@ using SolarApp.Model;
 using SolarApp.DataProcessor.Utility;
 using SolarApp.DataProcessor.Utility.Interfaces;
 
-namespace DataProcessor
+namespace SolarApp.DataProcessor
 {
 	public class FtpFileProcessor
 	{
