@@ -84,6 +84,11 @@
       <DependentUpon>Persistence.feature</DependentUpon>
     </Compile>
     <Compile Include="PersistenceSteps.cs" />
+    <Compile Include="Prediction.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Prediction.feature</DependentUpon>
+    </Compile>
     <Compile Include="ProcessingData.feature.cs">
       <DependentUpon>ProcessingData.feature</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -108,6 +113,10 @@
     <None Include="Persistence.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Persistence.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Prediction.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Prediction.feature.cs</LastGenOutput>
     </None>
     <None Include="privateSettings.config">
       <SubType>Designer</SubType>
