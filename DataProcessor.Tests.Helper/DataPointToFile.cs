@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using SolarApp.Model;
 using Newtonsoft.Json;
 
-namespace DataProcessor.Tests.Helper
+namespace SolarApp.DataProcessor.Tests.Helper
 {
 	public static class DataPointToFile
 	{

@@ -6,11 +6,11 @@ using System.Collections;
 using SolarApp.DataProcessor.Utility;
 using System.IO;
 using System.Linq;
-using DataProcessor.Tests.Helper;
+using SolarApp.DataProcessor.Tests.Helper;
 using SolarApp.DataProcessor.Utility.Interfaces;
 using SolarApp.DataProcessor.Utility.Classes;
 
-namespace DataProcessor.Integration.Tests
+namespace SolarApp.DataProcessor.Integration.Tests
 {
     [Binding]
     public class DownloadingDataFromTheDropPointSteps

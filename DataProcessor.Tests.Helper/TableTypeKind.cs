@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DataProcessor.Tests.Helper
+namespace SolarApp.DataProcessor.Tests.Helper
 {
 	public enum TableTypeKind
 	{

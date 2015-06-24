@@ -9,7 +9,7 @@ using SolarApp.DataProcessor.Unit.Tests.Properties;
 using Rhino.Mocks;
 using SolarApp.Persistence;
 
-namespace DataProcessor.Unit.Tests
+namespace SolarApp.DataProcessor.Unit.Tests
 {
 	[TestFixture]
 	public class FtpFileProcessorTest

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SolarApp.Model;
 
-namespace DataProcessor
+namespace SolarApp.DataProcessor
 {
 	public static class EnergyReadingConverter
 	{

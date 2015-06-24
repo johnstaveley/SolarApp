@@ -4,7 +4,7 @@ using System.Configuration;
 using SolarApp.Persistence;
 using NUnit.Framework;
 using TechTalk.SpecFlow.Assist;
-using DataProcessor.Tests.Helper;
+using SolarApp.DataProcessor.Tests.Helper;
 using SolarApp.DataProcessor;
 using SolarApp.Model;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using System.Linq;
 using System.IO;
 using SolarApp.DataProcessor.Utility.Interfaces;
 
-namespace DataProcessor.Integration.Tests
+namespace SolarApp.DataProcessor.Integration.Tests
 {
     [Binding]
     public class PersistenceSteps
@@ -28,6 +28,10 @@ namespace DataProcessor.Integration.Tests
 		{
 			_configuration = new SolarApp.DataProcessor.Utility.Classes.Configuration();
 			_dataItemsToTrack = new List<DataItem>();
+            if (!Directory.Exists(_configuration.NewFilePollPath))
+            {
+                Directory.CreateDirectory(_configuration.NewFilePollPath);
+            }
 		}
 
 		[AfterScenario]
