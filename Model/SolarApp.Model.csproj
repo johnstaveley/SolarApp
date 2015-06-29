@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EnergyReading.cs" />
+    <Compile Include="FailedData.cs" />
     <Compile Include="Fronius.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Setting.cs" />

@@ -1,18 +1,23 @@
 ﻿using System;
+using SolarApp.Model;
 
 namespace SolarApp.Persistence
 {
 	public interface ISolarAppContext
 	{
-		MongoDB.Driver.MongoCollection<Model.DataPoint> DataPoints { get; }
+		MongoDB.Driver.MongoCollection<DataPoint> DataPoints { get; }
 		void DeleteDataPointById(string id);
+		void DeleteFailedDataById(string id);
 		void DeleteSettingById(string id);
-		Model.DataPoint FindDataPointById(string id);
-		Model.Setting FindSettingById(string id);
+		MongoDB.Driver.MongoCollection<FailedData> FailedData { get; }
+		FailedData FindFailedDataById(string id);
+		DataPoint FindDataPointById(string id);
+		Setting FindSettingById(string id);
 		DateTime? GetLatestEnergyReading();
 		double? GetAverageOutputForHour(int hour);
-		void InsertDataPoint(Model.DataPoint dataPoint);
-		void InsertSetting(Model.Setting setting);
-		MongoDB.Driver.MongoCollection<Model.Setting> Settings { get; }
+		void InsertDataPoint(DataPoint dataPoint);
+		void InsertFailedData(FailedData failedData);
+		void InsertSetting(Setting setting);
+		MongoDB.Driver.MongoCollection<Setting> Settings { get; }
 	}
 }

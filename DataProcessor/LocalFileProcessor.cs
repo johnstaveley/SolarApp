@@ -48,7 +48,15 @@ namespace SolarApp.DataProcessor
 				DataPoint dataPoint = JsonConvert.DeserializeObject<DataPoint>(fileText);
 				dataPoint.Id = fileName;
 				dataPointIds.Add(dataPoint.Id);
-				_context.InsertDataPoint(dataPoint);
+				if (dataPoint.Head.Status.Code == 0 && dataPoint.Head.Status.Reason == "" && dataPoint.Head.Status.UserMessage == "" && 
+					dataPoint.Head.RequestArguments.Query == "Inverter" && dataPoint.Head.RequestArguments.Scope == "System")
+				{
+					_context.InsertDataPoint(dataPoint);
+				}
+				else
+				{
+					_context.InsertFailedData(new FailedData() { Id = fileName, Data = fileText });
+				}
 			}
 			return dataPointIds;
 

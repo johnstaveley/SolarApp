@@ -15,6 +15,11 @@ namespace SolarApp.DataProcessor
 
 			var energyReading = new EnergyReading();
 			energyReading.Timestamp = dataPoint.Head.Timestamp;
+			energyReading.RequestArgumentsQuery = dataPoint.Head.RequestArguments.Query;
+			energyReading.RequestArgumentsScope = dataPoint.Head.RequestArguments.Scope;
+			energyReading.StatusCode = dataPoint.Head.Status.Code;
+			energyReading.StatusReason = dataPoint.Head.Status.Reason;
+			energyReading.StatusUserMessage = dataPoint.Head.Status.UserMessage;
 			energyReading.CurrentReading = dataPoint.Body.CurrentReading.Values.Value;
 			energyReading.DayEnergy = dataPoint.Body.DayEnergy.Values.Value;
 			energyReading.YearEnergy = dataPoint.Body.YearEnergy.Values.Value;
@@ -68,14 +73,14 @@ namespace SolarApp.DataProcessor
 				Timestamp = energyReading.Timestamp,
 				RequestArguments = new RequestArguments()
 				{
-					Query = "Inverter",
-					Scope = "System"
+					Query = energyReading.RequestArgumentsQuery,
+					Scope = energyReading.RequestArgumentsScope
 				},
 				Status = new Status()
 				{
-					Code = 0,
-					Reason = "",
-					UserMessage = ""
+					Code = energyReading.StatusCode,
+					Reason = energyReading.StatusReason,
+					UserMessage = energyReading.StatusUserMessage
 				}
 			};
 			return dataPoint;

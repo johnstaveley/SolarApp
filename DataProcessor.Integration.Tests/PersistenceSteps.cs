@@ -44,6 +44,7 @@ namespace SolarApp.DataProcessor.Integration.Tests
 				{
 					case (TableTypeKind.DataPoint):
 						_context.DeleteDataPointById(dataItem.Id);
+						_context.DeleteFailedDataById(dataItem.Id);
 						break;
 					case (TableTypeKind.Setting):
 						_context.DeleteSettingById(dataItem.Id);
@@ -121,6 +122,21 @@ namespace SolarApp.DataProcessor.Integration.Tests
 			dataPoint.Id = energyReadingData.FileName;
 			_context.InsertDataPoint(dataPoint);
 			_dataItemsToTrack.Add(new DataItem(dataPoint));
+		}
+
+		[Then(@"I cannot retrieve a data point")]
+		public void ThenICannotRetrieveADataPoint()
+		{
+			var dataPoint = _context.FindDataPointById(_dataItemsToTrack.First().Id);
+			Assert.IsNull(dataPoint, "Data point has been found in the database");
+		}
+
+		[Then(@"I can retrieve failed data with text: '(.*)'")]
+		public void ThenICanRetrieveFailedDataWithText(string dataToFind)
+		{
+			var failedData = _context.FindFailedDataById(_dataItemsToTrack.First().Id);
+			Assert.IsNotNull(failedData, "Failed data has not been found");
+			Assert.IsTrue(failedData.Data.Contains(dataToFind), string.Format("Failed data did not contained expected value {0}", dataToFind));
 		}
 
 		[Then(@"I can retrieve a data point with values:")]

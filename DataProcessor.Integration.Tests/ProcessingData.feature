@@ -3,14 +3,6 @@
 	As an automated system
 	I want to open files, understand their contents and save to the database
 
-@Ignore
-Scenario: Process the exception contents of a file
-	Given I have access to a new file
-	And is a new file there containing some unusual content
-	When I process the file
-	Then I can store the unusual content 
-	And raise a notification
-
 Scenario: Can Process energy data from an incoming file and store it in the database
 	Given I have a data point with values:
 	| Time  | CurrentReading | DayEnergy | YearEnergy | TotalEnergy | FileName |
@@ -23,3 +15,24 @@ Scenario: Can Process energy data from an incoming file and store it in the data
 	| Time		| CurrentReading | DayEnergy  | YearEnergy | TotalEnergy  |
 	| [Now]		| 321			 | 100        | 1000       | 10000        |
 
+Scenario: Failed Data - Reject file with invalid status code
+	Given I have a data point with values:
+	| Time  | FileName | StatusCode |
+	| [Now] | [Random] | 1          |
+	And I save the data point to a file
+	And I want to use a database 'Test'
+	And I open a connection to the database
+	When I process the file
+	Then I cannot retrieve a data point
+	Then I can retrieve failed data with text: '"Code":1'
+
+Scenario: Failed Data - Reject file with invalid status reason
+	Given I have a data point with values:
+	| Time  | FileName | StatusUserMessage |
+	| [Now] | [Random] | Rhubarb           |
+	And I save the data point to a file
+	And I want to use a database 'Test'
+	And I open a connection to the database
+	When I process the file
+	Then I cannot retrieve a data point
+	Then I can retrieve failed data with text: '"UserMessage":"Rhubarb"'

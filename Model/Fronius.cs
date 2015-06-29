@@ -20,6 +20,11 @@ namespace SolarApp.Model
         [JsonProperty(Order = 2)]
         public Body Body { get; set; }
 
+		public DataPoint()
+		{
+			Head = new Head();
+			Body = new Body();
+		}
     }
 
     public class Head
@@ -32,6 +37,12 @@ namespace SolarApp.Model
 
         [JsonProperty(Order = 3)]
         public Status Status { get; set; }
+
+		public Head()
+		{
+			RequestArguments = new RequestArguments();
+			Status = new Status();
+		}
     }
 
     public class Status
@@ -45,6 +56,11 @@ namespace SolarApp.Model
         [JsonProperty(Order = 3)]
         public string UserMessage { get; set; }
 
+		public Status()
+		{
+			Reason = "";
+			UserMessage = "";
+		}
     }
 
     public class RequestArguments
@@ -54,6 +70,12 @@ namespace SolarApp.Model
 
         [JsonProperty(Order = 2)]
         public string Scope { get; set; }
+
+		public RequestArguments()
+		{
+			Query = "Inverter";
+			Scope = "System";
+		}
     }
 
     public class Body
@@ -69,6 +91,14 @@ namespace SolarApp.Model
 
 		[JsonProperty(Order = 4, PropertyName = "TOTAL_ENERGY"), BsonElement("TOTAL_ENERGY")]
         public FroniusEnergyReading TotalEnergy { get; set; }
+
+		public Body()
+		{
+			CurrentReading = new FroniusEnergyReading();
+			DayEnergy = new FroniusEnergyReading();
+			YearEnergy = new FroniusEnergyReading();
+			TotalEnergy = new FroniusEnergyReading();
+		}
     }
 
     public class FroniusEnergyReading

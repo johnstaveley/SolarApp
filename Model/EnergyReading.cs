@@ -19,5 +19,22 @@ namespace SolarApp.Model
 
 		public int TotalEnergy { get; set; }
 
+		public string RequestArgumentsQuery { get; set; }
+
+		public string RequestArgumentsScope { get; set; }
+
+		public int StatusCode { get; set; }
+
+		public string StatusReason { get; set; }
+
+		public string StatusUserMessage { get; set; }
+
+		public EnergyReading()
+		{
+			RequestArgumentsQuery = "Inverter";
+			RequestArgumentsScope = "System";
+			StatusReason = "";
+			StatusUserMessage = "";
+		}
 	}
 }

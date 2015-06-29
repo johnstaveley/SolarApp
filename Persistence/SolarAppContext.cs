@@ -170,7 +170,33 @@ namespace SolarApp.Persistence
 
         #endregion
 
-    }
+		#region FailedData
+
+		public MongoCollection<FailedData> FailedData
+		{
+			get
+			{
+				return Database.GetCollection<FailedData>("FailedData");
+			}
+		}
+
+		public FailedData FindFailedDataById(string id)
+		{
+			return this.FailedData.Find(Query.EQ("_id", BsonValue.Create(id))).FirstOrDefault();
+		}
+
+		public void InsertFailedData(FailedData failedData)
+		{
+			this.FailedData.Insert(failedData);
+		}
+
+		public void DeleteFailedDataById(string id)
+		{
+			this.FailedData.Remove(Query.EQ("_id", BsonValue.Create(id)));
+		}
+
+		#endregion
+	}
 }
 
 
