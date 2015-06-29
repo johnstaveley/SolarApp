@@ -133,7 +133,7 @@ namespace SolarApp.Persistence
 							{"day_energy", "$Body.DAY_ENERGY.Values.1"},
 							{"total_energy", "$Body.TOTAL_ENERGY.Values.1"}
 						}),
-					new BsonDocument("$match", new BsonDocument("$hour", hour)),
+					new BsonDocument("$match", new BsonDocument("hour", hour)),
 					new BsonDocument("$group", new BsonDocument
 						{
 							{"_id", "$hour"},
