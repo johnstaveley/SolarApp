@@ -168,6 +168,13 @@ namespace SolarApp.Persistence
             this.Settings.Remove(Query.EQ("_id", BsonValue.Create(id)));
         }
 
+		public void UpdateSetting(Setting newSetting)
+		{
+			var setting = this.FindSettingById(newSetting.Id);
+			setting = newSetting;
+			this.Settings.Save(setting);
+		}
+
         #endregion
 
 		#region FailedData
@@ -216,8 +223,11 @@ namespace SolarApp.Persistence
 			{
 				Database.CreateCollection("Settings");
 			// TODO: Put in settings 
-			}			
-
+			}
+			var setting = new Setting();
+			setting.Id = "LastRunDate";
+			setting.Value = DateTime.Now.ToString();
+			this.UpdateSetting(setting);
 		}
 	}
 }

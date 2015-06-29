@@ -15,7 +15,7 @@ namespace SolarApp.DataProcessor.Tests.Helper
 
 		public DataItem(Setting setting)
 		{
-			this.Id = setting._id;
+			this.Id = setting.Id;
 			this.TableTypeKind = Helper.TableTypeKind.Setting;
 		}
 

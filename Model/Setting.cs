@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 
 namespace SolarApp.Model
 {
     public class Setting
     {
-        public string _id { get; set; }
+		[JsonIgnore, BsonElement("_id")]
+		public string Id { get; set; }
+
         public string Value { get; set; }
     }
 }

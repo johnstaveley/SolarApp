@@ -20,5 +20,6 @@ namespace SolarApp.Persistence
 		void InsertSetting(Setting setting);
 		void SeedDatabase();
 		MongoDB.Driver.MongoCollection<Setting> Settings { get; }
+		void UpdateSetting(Setting setting);
 	}
 }

@@ -78,7 +78,7 @@ namespace SolarApp.DataProcessor.Integration.Tests
         {
             _setting = new Setting();
             _setting.Value = "Test";
-            _setting._id = Guid.NewGuid().ToString();
+            _setting.Id = Guid.NewGuid().ToString();
         }
 
         [Given(@"I want to use a database '(.*)'")]
@@ -104,7 +104,7 @@ namespace SolarApp.DataProcessor.Integration.Tests
         [Then(@"the random value should be retrievable from the database")]
         public void ThenTheRandomValueShouldBeRetrievableFromTheDatabase()
         {
-            Assert.IsTrue(_context.FindSettingById(_setting._id) != null, string.Format("Could not find data value {0}", _setting._id));
+            Assert.IsTrue(_context.FindSettingById(_setting.Id) != null, string.Format("Could not find data value {0}", _setting.Id));
         }
 
 		[Given(@"I have a data point with values:")]
