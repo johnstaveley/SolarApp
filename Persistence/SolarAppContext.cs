@@ -24,13 +24,43 @@ namespace SolarApp.Persistence
 		public MongoDatabase Database;
 		private IConfiguration _configuration;
 
-        public SolarAppContext(IConfiguration configuration)
+		#region Setup
+
+		public SolarAppContext(IConfiguration configuration)
 		{
 			_configuration = configuration;
-            var client = new MongoClient(configuration.MongoConnectionString);
+			var client = new MongoClient(configuration.MongoConnectionString);
 			var server = client.GetServer();
 			Database = server.GetDatabase(configuration.MongoDatabaseName);
 		}
+
+		public void SeedDatabase()
+		{
+
+			if (!Database.CollectionExists("DataPoints"))
+			{
+				Database.CreateCollection("DataPoints");
+			}
+			if (!Database.GetCollection("DataPoints").IndexExistsByName("HeadTimestampIndex"))
+			{
+				Database.GetCollection("DataPoints").CreateIndex(IndexKeys.Ascending("Head.Timestamp"), IndexOptions.SetName("HeadTimestampIndex"));
+			}
+			if (!Database.CollectionExists("FailedData"))
+			{
+				Database.CreateCollection("FailedData");
+			}
+			if (!Database.CollectionExists("Settings"))
+			{
+				Database.CreateCollection("Settings");
+				// TODO: Put in settings 
+			}
+			var setting = new Setting();
+			setting.Id = "LastRunDate";
+			setting.Value = DateTime.Now.ToString();
+			this.UpdateSetting(setting);
+		}
+
+		#endregion
 
         #region DataPoints
 
@@ -204,31 +234,7 @@ namespace SolarApp.Persistence
 
 		#endregion
 
-		public void SeedDatabase()
-		{
 
-			if (!Database.CollectionExists("DataPoints"))
-			{
-				Database.CreateCollection("DataPoints");
-			}
-			if (!Database.GetCollection("DataPoints").IndexExistsByName("HeadTimestampIndex"))
-			{
-				Database.GetCollection("DataPoints").CreateIndex(IndexKeys.Ascending("Head.Timestamp"), IndexOptions.SetName("HeadTimestampIndex"));
-			}
-			if (!Database.CollectionExists("FailedData"))
-			{
-				Database.CreateCollection("FailedData");
-			}
-			if (!Database.CollectionExists("Settings"))
-			{
-				Database.CreateCollection("Settings");
-			// TODO: Put in settings 
-			}
-			var setting = new Setting();
-			setting.Id = "LastRunDate";
-			setting.Value = DateTime.Now.ToString();
-			this.UpdateSetting(setting);
-		}
 	}
 }
 
