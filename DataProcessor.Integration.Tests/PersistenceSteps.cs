@@ -203,6 +203,13 @@ namespace SolarApp.DataProcessor.Integration.Tests
 			dataPoint.SaveAsJson(filePath);
 		}
 
+        [Given(@"I have a file containing garbage: '(.*)'")]
+        public void GivenIHaveAFileContainingGarbage(string text)
+        {
+            var filePath = Path.Combine(_configuration.NewFilePollPath, string.Format("Log{0}.log", Guid.NewGuid().ToString()));
+            File.WriteAllText(filePath, text);
+        }
+
 		[When(@"I process the file")]
 		public void WhenIProcessTheFile()
 		{

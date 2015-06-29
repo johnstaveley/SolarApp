@@ -39,24 +39,32 @@ namespace SolarApp.DataProcessor
 			{
 				string fileText = _fileSystem.File_ReadAllText(fileToProcess);
 				string fileName = _fileSystem.GetFileNameFromFullPath(fileToProcess);
-				string archiveFileName = Path.Combine(archivePath, fileName);
-				if (_fileSystem.File_Exists(archiveFileName))
-				{
-					_fileSystem.File_Delete(archiveFileName);
-				}
-				_fileSystem.File_Move(fileToProcess, archiveFileName);
-				DataPoint dataPoint = JsonConvert.DeserializeObject<DataPoint>(fileText);
-				dataPoint.Id = fileName;
-				dataPointIds.Add(dataPoint.Id);
-				if (dataPoint.Head.Status.Code == 0 && dataPoint.Head.Status.Reason == "" && dataPoint.Head.Status.UserMessage == "" && 
-					dataPoint.Head.RequestArguments.Query == "Inverter" && dataPoint.Head.RequestArguments.Scope == "System")
-				{
-					_context.InsertDataPoint(dataPoint);
-				}
-				else
-				{
-					_context.InsertFailedData(new FailedData() { Id = fileName, Data = fileText });
-				}
+                try
+                {
+                    string archiveFileName = Path.Combine(archivePath, fileName);
+                    if (_fileSystem.File_Exists(archiveFileName))
+                    {
+                        _fileSystem.File_Delete(archiveFileName);
+                    }
+                    _fileSystem.File_Move(fileToProcess, archiveFileName);
+                    DataPoint dataPoint = JsonConvert.DeserializeObject<DataPoint>(fileText);
+                    dataPoint.Id = fileName;
+                    dataPointIds.Add(dataPoint.Id);
+                    if (dataPoint.Head.Status.Code == 0 && dataPoint.Head.Status.Reason == "" && dataPoint.Head.Status.UserMessage == "" &&
+                        dataPoint.Head.RequestArguments.Query == "Inverter" && dataPoint.Head.RequestArguments.Scope == "System")
+                    {
+                        _context.InsertDataPoint(dataPoint);
+                    }
+                    else
+                    {
+                        _context.InsertFailedData(new FailedData() { Id = fileName, Data = fileText });
+                    }
+                }
+                catch (Exception exception)
+                {
+                    _context.InsertFailedData(new FailedData() { Id = fileName, Data = fileText });
+                    dataPointIds.Add(fileName);
+                }
 			}
 			return dataPointIds;
 

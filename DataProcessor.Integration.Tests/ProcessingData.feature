@@ -36,3 +36,11 @@ Scenario: Failed Data - Reject file with invalid status reason
 	When I process the file
 	Then I cannot retrieve a data point
 	Then I can retrieve failed data with text: '"UserMessage":"Rhubarb"'
+
+Scenario: Failed Data - Reject file and move to failed data
+	Given I have a file containing garbage: 'fuubar'
+	And I want to use a database 'Test'
+	And I open a connection to the database
+	When I process the file
+	Then I cannot retrieve a data point
+	Then I can retrieve failed data with text: 'fuubar'
