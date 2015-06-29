@@ -45,6 +45,7 @@ namespace SolarApp.DataProcessor
 			// TODO: Start timer that triggers events
 			_timer.Interval = 10000;
 			_timer.Start();
+			_context.SeedDatabase();
 		}
 
         protected override void OnStop()

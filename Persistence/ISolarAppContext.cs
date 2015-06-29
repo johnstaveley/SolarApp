@@ -18,6 +18,7 @@ namespace SolarApp.Persistence
 		void InsertDataPoint(DataPoint dataPoint);
 		void InsertFailedData(FailedData failedData);
 		void InsertSetting(Setting setting);
+		void SeedDatabase();
 		MongoDB.Driver.MongoCollection<Setting> Settings { get; }
 	}
 }

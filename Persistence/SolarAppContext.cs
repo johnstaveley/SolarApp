@@ -196,6 +196,29 @@ namespace SolarApp.Persistence
 		}
 
 		#endregion
+
+		public void SeedDatabase()
+		{
+
+			if (!Database.CollectionExists("DataPoints"))
+			{
+				Database.CreateCollection("DataPoints");
+			}
+			if (!Database.GetCollection("DataPoints").IndexExistsByName("HeadTimestampIndex"))
+			{
+				Database.GetCollection("DataPoints").CreateIndex(IndexKeys.Ascending("Head.Timestamp"), IndexOptions.SetName("HeadTimestampIndex"));
+			}
+			if (!Database.CollectionExists("FailedData"))
+			{
+				Database.CreateCollection("FailedData");
+			}
+			if (!Database.CollectionExists("Settings"))
+			{
+				Database.CreateCollection("Settings");
+			// TODO: Put in settings 
+			}			
+
+		}
 	}
 }
 
