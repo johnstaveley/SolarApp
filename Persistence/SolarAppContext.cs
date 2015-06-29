@@ -62,25 +62,25 @@ namespace SolarApp.Persistence
 
 		#endregion
 
-        #region DataPoints
+		#region DataPoints
 
-        public MongoCollection<DataPoint> DataPoints
+		public MongoCollection<DataPoint> DataPoints
 		{
 			get
 			{
-                return Database.GetCollection<DataPoint>("DataPoints");
+				return Database.GetCollection<DataPoint>("DataPoints");
 			}
 		}
 
-        public void InsertDataPoint(DataPoint dataPoint)
-        {
-            this.DataPoints.Insert(dataPoint);
-        }
+		public void InsertDataPoint(DataPoint dataPoint)
+		{
+			this.DataPoints.Insert(dataPoint);
+		}
 
-        public DataPoint FindDataPointById(string id)
-        {
-            return this.DataPoints.Find(Query.EQ("_id", BsonValue.Create(id))).FirstOrDefault();
-        }
+		public DataPoint FindDataPointById(string id)
+		{
+			return this.DataPoints.Find(Query.EQ("_id", BsonValue.Create(id))).FirstOrDefault();
+		}
 
 		public DateTime? GetLatestEnergyReading()
 		{
@@ -119,51 +119,48 @@ namespace SolarApp.Persistence
 
 		}
 
-
 		public double? GetAverageOutputForHour(int hour)
 		{
-			var scope = new BsonDocument("criteria", new BsonDocument("hour", hour));
-			string map = @"
-				function (){
-				var key = 'CurrentReading';
-				var timestamp = new Date(this.Head.Timestamp);
-				if (timestamp.getHours() === criteria.hour) {
-					var value = this.Body.PAC.Values['1'];
-					emit(key,value);
-				}
-			}";
-			string reduce = @"
-				function (key, values){
-					var reducedValue = {
-					'average': Array.avg(values),
-					'count': values.length
-					};
-				return reducedValue;
-			}";
-			var args = new MapReduceArgs()
+
+			var aggregate = new AggregateArgs
 			{
-				MapFunction = new BsonJavaScriptWithScope(map, scope),
-				ReduceFunction = new BsonJavaScript(reduce),
-				OutputMode = MapReduceOutputMode.Inline
+				Pipeline = new[] {
+					new BsonDocument("$project", new BsonDocument
+						{
+							{"date", "$Head.Timestamp"},
+							{"hour", new BsonDocument("$hour", "$Head.Timestamp")},
+							{"current_energy", "$Body.PAC.Values.1"},
+							{"day_energy", "$Body.DAY_ENERGY.Values.1"},
+							{"total_energy", "$Body.TOTAL_ENERGY.Values.1"}
+						}),
+					new BsonDocument("$match", new BsonDocument("$hour", hour)),
+					new BsonDocument("$group", new BsonDocument
+						{
+							{"_id", "$hour"},
+							{"average", new BsonDocument("$avg", "$current_energy")},
+							{"maximum", new BsonDocument("$max", "$current_energy")},
+							{"minimum", new BsonDocument("$min", "$current_energy")},
+							{"count", new BsonDocument("$sum", 1)}
+						}),
+					new BsonDocument("$sort", new BsonDocument("_id", 1)),
+				}
 			};
-			var bsonResults = this.DataPoints.MapReduce(args).GetResults();
+
+			var bsonResults = this.DataPoints.Aggregate(aggregate);
 			var bsonResult = bsonResults.ToList().FirstOrDefault();
 			if (bsonResult == null) return null;
-			var jsonResult = bsonResult.ToJson();
-			var mapReduceOutput = new
+			var jsonWriterSettings = new JsonWriterSettings { OutputMode = JsonOutputMode.Strict };
+			var jsonResult = bsonResult.ToJson(jsonWriterSettings);
+			JObject output = JObject.Parse(jsonResult);
+			if (output == null) return null;
+			if (output["average"] == null) return null;
+			var averageString = output["average"].ToString();
+			double average;
+			if (double.TryParse(averageString, out average))
 			{
-				_id = "",
-				value = new { 
-					average = 0.0,
-					count = 0.0
-				}
-			};
-
-			mapReduceOutput = JsonConvert.DeserializeAnonymousType(jsonResult, mapReduceOutput);
-
-			if (mapReduceOutput == null) return null;
-			if (mapReduceOutput.value == null) return null;
-			return mapReduceOutput.value.average;
+				return average;
+			}
+			return null;
 		}
 
 		public void DeleteDataPointById(string id)
@@ -171,32 +168,32 @@ namespace SolarApp.Persistence
 			this.DataPoints.Remove(Query.EQ("_id", BsonValue.Create(id)));
 		}
 
-        #endregion
+		#endregion
 
-        #region Settings
+		#region Settings
 
-        public MongoCollection<Setting> Settings
-        {
-            get
-            {
-                return Database.GetCollection<Setting>("Settings");
-            }
-        }
+		public MongoCollection<Setting> Settings
+		{
+			get
+			{
+				return Database.GetCollection<Setting>("Settings");
+			}
+		}
 
-        public void InsertSetting(Setting setting)
-        {
-            this.Settings.Insert(setting);
-        }
+		public void InsertSetting(Setting setting)
+		{
+			this.Settings.Insert(setting);
+		}
 
-        public Setting FindSettingById(string id)
-        {
-            return this.Settings.Find(Query.EQ("_id", BsonValue.Create(id))).FirstOrDefault();
-        }
+		public Setting FindSettingById(string id)
+		{
+			return this.Settings.Find(Query.EQ("_id", BsonValue.Create(id))).FirstOrDefault();
+		}
 
-        public void DeleteSettingById(string id)
-        {
-            this.Settings.Remove(Query.EQ("_id", BsonValue.Create(id)));
-        }
+		public void DeleteSettingById(string id)
+		{
+			this.Settings.Remove(Query.EQ("_id", BsonValue.Create(id)));
+		}
 
 		public void UpdateSetting(Setting newSetting)
 		{
@@ -205,7 +202,7 @@ namespace SolarApp.Persistence
 			this.Settings.Save(setting);
 		}
 
-        #endregion
+		#endregion
 
 		#region FailedData
 
