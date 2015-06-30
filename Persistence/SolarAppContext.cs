@@ -121,7 +121,6 @@ namespace SolarApp.Persistence
 
 		public double? GetAverageOutputForHour(int hour)
 		{
-
 			var aggregate = new AggregateArgs
 			{
 				Pipeline = new[] {

@@ -70,7 +70,7 @@ namespace SolarApp.DataProcessor
 			};
 			dataPoint.Head = new Head()
 			{
-				Timestamp = energyReading.Timestamp,
+				Timestamp = energyReading.Timestamp.ToUniversalTime(),
 				RequestArguments = new RequestArguments()
 				{
 					Query = energyReading.RequestArgumentsQuery,

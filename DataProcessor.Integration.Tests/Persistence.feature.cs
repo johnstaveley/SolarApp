@@ -166,7 +166,7 @@ this.ScenarioSetup(scenarioInfo);
                         "300",
                         "Included"});
             table3.AddRow(new string[] {
-                        "2015-06-15 10:00:01",
+                        "2015-06-15 10:02:01",
                         "2500",
                         "Excluded"});
 #line 27
@@ -216,7 +216,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 39
  testRunner.And("I have a data points with values:", ((string)(null)), table4, "And ");
 #line 45
- testRunner.When("I calculate the mean for hour 11", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I calculate the mean for hour 10", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 46
  testRunner.Then("The calculated average value is null", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
