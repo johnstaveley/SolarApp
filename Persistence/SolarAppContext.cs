@@ -52,7 +52,10 @@ namespace SolarApp.Persistence
 			if (!Database.CollectionExists("Settings"))
 			{
 				Database.CreateCollection("Settings");
-				// TODO: Put in settings 
+				var requestWeatherForecastSetting = new Setting();
+				requestWeatherForecastSetting.Id = "RequestWeatherForecast";
+				requestWeatherForecastSetting.Value = "0";
+				this.InsertSetting(requestWeatherForecastSetting);
 			}
 			var setting = new Setting();
 			setting.Id = "LastRunDate";

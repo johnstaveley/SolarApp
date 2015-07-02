@@ -17,30 +17,35 @@ namespace SolarApp.DataProcessor
 	{
 
 		private IConfiguration _configuration { get; set; }
-		private IFileSystem _fileSystem { get; set; }
 		private ISolarAppContext _context { get; set; }
 
-		public WeatherProcessor(IConfiguration configuration, IFileSystem fileSystem, ISolarAppContext context)
+		public WeatherProcessor(IConfiguration configuration, ISolarAppContext context)
 		{
 			_configuration = configuration;
 			_context = context;
-			_fileSystem = fileSystem;
 		}
 
-		public void Process()
+		public List<string> Process()
 		{
-			var metOfficeLocationForecastUrl = string.Format("{0}{1}?res=3hourly&key={2}", _configuration.MetOfficeUrl, _configuration.MetOfficeLocationId, _configuration.MetOfficeApiKey);
-			var request = WebRequest.Create(metOfficeLocationForecastUrl);
-			request.ContentType = "application/json; charset=utf-8";
-			string weatherForecastJson;
-			var response = (HttpWebResponse) request.GetResponse();
 
-			using (var sr = new StreamReader(response.GetResponseStream()))
+			var requestWeatherForecast = _context.FindSettingById("RequestWeatherForecast");
+			var forecastsDownloaded = new List<string>();
+			if (requestWeatherForecast != null && requestWeatherForecast.Value == "1")
 			{
-				weatherForecastJson = sr.ReadToEnd();
+				var metOfficeLocationForecastUrl = string.Format("{0}{1}?res=3hourly&key={2}", _configuration.MetOfficeUrl, _configuration.MetOfficeLocationId, _configuration.MetOfficeApiKey);
+				var request = WebRequest.Create(metOfficeLocationForecastUrl);
+				request.ContentType = "application/json; charset=utf-8";
+				string weatherForecastJson;
+				var response = (HttpWebResponse)request.GetResponse();
+				using (var sr = new StreamReader(response.GetResponseStream()))
+				{
+					weatherForecastJson = sr.ReadToEnd();
+				}
+				var id = string.Format("{0:ddMMyyyy-HHmmss}", DateTime.Now);
+				_context.InsertWeatherForecast(new WeatherForecast() { Id = id, Data = weatherForecastJson });
+				forecastsDownloaded.Add(id);
 			}
-			var id = string.Format("{0:ddMMyyyy-HHmmss}", DateTime.Now);
-			_context.InsertWeatherForecast(new WeatherForecast() {Id = id , Data = weatherForecastJson});
+			return forecastsDownloaded;
 		}
 
 	}
