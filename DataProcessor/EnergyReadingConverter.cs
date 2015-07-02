@@ -14,16 +14,42 @@ namespace SolarApp.DataProcessor
 		{
 
 			var energyReading = new EnergyReading();
-			energyReading.Timestamp = dataPoint.Head.Timestamp;
-			energyReading.RequestArgumentsQuery = dataPoint.Head.RequestArguments.Query;
-			energyReading.RequestArgumentsScope = dataPoint.Head.RequestArguments.Scope;
-			energyReading.StatusCode = dataPoint.Head.Status.Code;
-			energyReading.StatusReason = dataPoint.Head.Status.Reason;
-			energyReading.StatusUserMessage = dataPoint.Head.Status.UserMessage;
-			energyReading.CurrentReading = dataPoint.Body.CurrentReading.Values.Value;
-			energyReading.DayEnergy = dataPoint.Body.DayEnergy.Values.Value;
-			energyReading.YearEnergy = dataPoint.Body.YearEnergy.Values.Value;
-			energyReading.TotalEnergy = dataPoint.Body.TotalEnergy.Values.Value;
+			if (dataPoint.Head != null)
+			{
+				energyReading.Timestamp = dataPoint.Head.Timestamp;
+				if (dataPoint.Head.RequestArguments != null)
+				{
+
+					energyReading.RequestArgumentsQuery = dataPoint.Head.RequestArguments.Query;
+					energyReading.RequestArgumentsScope = dataPoint.Head.RequestArguments.Scope;
+				}
+				if (dataPoint.Head.Status != null)
+				{
+
+					energyReading.StatusCode = dataPoint.Head.Status.Code;
+					energyReading.StatusReason = dataPoint.Head.Status.Reason;
+					energyReading.StatusUserMessage = dataPoint.Head.Status.UserMessage;
+				}
+			}
+			if (dataPoint.Body != null)
+			{
+				if (dataPoint.Body.CurrentReading != null && dataPoint.Body.CurrentReading.Values != null)
+				{
+					energyReading.CurrentReading = dataPoint.Body.CurrentReading.Values.Value;
+				}
+				if (dataPoint.Body.DayEnergy != null && dataPoint.Body.DayEnergy.Values != null)
+				{
+					energyReading.DayEnergy = dataPoint.Body.DayEnergy.Values.Value;
+				}
+				if (dataPoint.Body.YearEnergy != null && dataPoint.Body.YearEnergy.Values != null)
+				{
+					energyReading.YearEnergy = dataPoint.Body.YearEnergy.Values.Value;
+				}
+				if (dataPoint.Body.TotalEnergy != null && dataPoint.Body.TotalEnergy.Values != null)
+				{
+					energyReading.TotalEnergy = dataPoint.Body.TotalEnergy.Values.Value;
+				}
+			}
 			return energyReading;
 
 		}
@@ -37,7 +63,7 @@ namespace SolarApp.DataProcessor
 			{
 				CurrentReading = new FroniusEnergyReading()
 				{
-					Unit = "W",
+					Unit = energyReading.CurrentReadingUnit,
 					Values = new FroniusEnergyReadingItem()
 					{
 						Value = energyReading.CurrentReading
@@ -45,7 +71,7 @@ namespace SolarApp.DataProcessor
 				},
 				DayEnergy = new FroniusEnergyReading()
 				{
-					Unit = "Wh",
+					Unit = energyReading.DayEnergyUnit,
 					Values = new FroniusEnergyReadingItem()
 					{
 						Value = energyReading.DayEnergy
@@ -53,7 +79,7 @@ namespace SolarApp.DataProcessor
 				},
 				YearEnergy = new FroniusEnergyReading()
 				{
-					Unit = "Wh",
+					Unit = energyReading.YearEnergyUnit,
 					Values = new FroniusEnergyReadingItem()
 					{
 						Value = energyReading.YearEnergy
@@ -61,7 +87,7 @@ namespace SolarApp.DataProcessor
 				},
 				TotalEnergy = new FroniusEnergyReading()
 				{
-					Unit = "Wh",
+					Unit = energyReading.TotalEnergyUnit,
 					Values = new FroniusEnergyReadingItem()
 					{
 						Value = energyReading.TotalEnergy

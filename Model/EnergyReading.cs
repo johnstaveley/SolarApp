@@ -13,11 +13,19 @@ namespace SolarApp.Model
 
 		public int CurrentReading { get; set; }
 
+		public string CurrentReadingUnit { get; set; }
+
 		public int DayEnergy { get; set; }
+
+		public string DayEnergyUnit { get; set; }
 
 		public int YearEnergy { get; set; }
 
+		public string YearEnergyUnit { get; set; }
+
 		public int TotalEnergy { get; set; }
+
+		public string TotalEnergyUnit { get; set; }
 
 		public string RequestArgumentsQuery { get; set; }
 
@@ -31,10 +39,14 @@ namespace SolarApp.Model
 
 		public EnergyReading()
 		{
+			CurrentReadingUnit = "W";
+			DayEnergyUnit = "Wh";
 			RequestArgumentsQuery = "Inverter";
 			RequestArgumentsScope = "System";
 			StatusReason = "";
 			StatusUserMessage = "";
+			TotalEnergyUnit = "Wh";
+			YearEnergyUnit = "Wh";
 		}
 	}
 }
