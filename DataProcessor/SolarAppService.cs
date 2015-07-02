@@ -22,6 +22,7 @@ namespace SolarApp.DataProcessor
 		private IFileSystem _fileSystem { get; set; }
 		private IFtp _ftp { get; set; }
 		private ISolarAppContext _context { get; set; }
+		private IServices _services { get; set; }
 
 		public SolarAppService(IConfiguration configuration, IFileSystem fileSystem, IFtp ftp, ISolarAppContext context, ITimer timer)
         {
@@ -66,7 +67,7 @@ namespace SolarApp.DataProcessor
 				var localFileProcessor = new LocalFileProcessor(_configuration, _fileSystem, _context);
 				localFileProcessor.Process();
 
-				var weatherProcessor = new WeatherProcessor(_configuration, _context);
+				var weatherProcessor = new WeatherProcessor(_configuration, _context, _services);
 				weatherProcessor.Process();
 
 			}

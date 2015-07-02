@@ -47,6 +47,7 @@ namespace SolarApp.DataProcessor
 			container.RegisterSingle<IConfiguration, Configuration>();
 			container.Register<IFileSystem, FileSystem>();
 			container.Register<IFtp, Ftp>();
+			container.Register<IServices, Services>();
 			container.Register<ISolarAppContext, SolarAppContext>();
 			container.Register<ITimer, ReliableTimer>();
 			container.Verify();

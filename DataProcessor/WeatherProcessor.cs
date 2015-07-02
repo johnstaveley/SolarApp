@@ -18,11 +18,13 @@ namespace SolarApp.DataProcessor
 
 		private IConfiguration _configuration { get; set; }
 		private ISolarAppContext _context { get; set; }
+		private IServices _services { get; set; }
 
-		public WeatherProcessor(IConfiguration configuration, ISolarAppContext context)
+		public WeatherProcessor(IConfiguration configuration, ISolarAppContext context, IServices services)
 		{
 			_configuration = configuration;
 			_context = context;
+			_services = services;
 		}
 
 		public List<string> Process()
@@ -33,20 +35,17 @@ namespace SolarApp.DataProcessor
 			if (requestWeatherForecast != null && requestWeatherForecast.Value == "1")
 			{
 				var metOfficeLocationForecastUrl = string.Format("{0}{1}?res=3hourly&key={2}", _configuration.MetOfficeUrl, _configuration.MetOfficeLocationId, _configuration.MetOfficeApiKey);
-				var request = WebRequest.Create(metOfficeLocationForecastUrl);
-				request.ContentType = "application/json; charset=utf-8";
-				string weatherForecastJson;
-				var response = (HttpWebResponse)request.GetResponse();
-				using (var sr = new StreamReader(response.GetResponseStream()))
-				{
-					weatherForecastJson = sr.ReadToEnd();
-				}
 				var id = string.Format("{0:ddMMyyyy-HHmmss}", DateTime.Now);
+				var weatherForecastJson = _services.WebRequestForJson(metOfficeLocationForecastUrl);
 				_context.InsertWeatherForecast(new WeatherForecast() { Id = id, Data = weatherForecastJson });
 				forecastsDownloaded.Add(id);
+				requestWeatherForecast.Value = "0";
+				_context.UpdateSetting(requestWeatherForecast);
 			}
 			return forecastsDownloaded;
 		}
+
+
 
 	}
 }
