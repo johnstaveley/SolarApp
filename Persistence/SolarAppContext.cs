@@ -230,6 +230,32 @@ namespace SolarApp.Persistence
 
 		#endregion
 
+		#region WeatherForecast
+
+		public MongoCollection<WeatherForecast> WeatherForecast
+		{
+			get
+			{
+				return Database.GetCollection<WeatherForecast>("WeatherForecast");
+			}
+		}
+
+		public WeatherForecast FindWeatherForecastById(string id)
+		{
+			return this.WeatherForecast.Find(Query.EQ("_id", BsonValue.Create(id))).FirstOrDefault();
+		}
+
+		public void InsertWeatherForecast(WeatherForecast weatherForecast)
+		{
+			this.WeatherForecast.Insert(weatherForecast);
+		}
+
+		public void DeleteWeatherForecastById(string id)
+		{
+			this.WeatherForecast.Remove(Query.EQ("_id", BsonValue.Create(id)));
+		}
+
+		#endregion
 
 	}
 }

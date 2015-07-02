@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="EnergyReadingConverter.cs" />
     <Compile Include="FtpFileProcessor.cs" />
+    <Compile Include="WeatherProcessor.cs" />
     <Compile Include="LocalFileProcessor.cs" />
     <Compile Include="SolarAppService.cs">
       <SubType>Component</SubType>
@@ -66,7 +67,9 @@
     <Compile Include="Utility\IFtp.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="privateSettings.config">
       <SubType>Designer</SubType>

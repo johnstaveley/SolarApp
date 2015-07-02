@@ -5,6 +5,9 @@ namespace SolarApp.DataProcessor.Utility.Interfaces
 	public interface IConfiguration
 	{
 		string NewFilePollPath { get; set; }
+		string MetOfficeApiKey { get; set; }
+		string MetOfficeLocationId { get; set; }
+		string MetOfficeUrl { get; set; }
 		string MongoDatabaseName { get; set; }
 		string MongoConnectionString { get; set; }
 		string FtpDestinationUrl { get; set; }

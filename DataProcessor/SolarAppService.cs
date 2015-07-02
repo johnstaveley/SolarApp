@@ -63,8 +63,11 @@ namespace SolarApp.DataProcessor
                 //var ftpFileProcessor = new FtpFileProcessor(_configuration, _context, _fileSystem, _ftp);
                 //ftpFileProcessor.Process();
 
-				var localFileProcessor = new LocalFileProcessor(_configuration, _fileSystem, _context);
-				localFileProcessor.Process();
+				//var localFileProcessor = new LocalFileProcessor(_configuration, _fileSystem, _context);
+				//localFileProcessor.Process();
+
+				var weatherProcessor = new WeatherProcessor(_configuration, _fileSystem, _context);
+				weatherProcessor.Process();
 
 			}
 			catch (Exception ex)

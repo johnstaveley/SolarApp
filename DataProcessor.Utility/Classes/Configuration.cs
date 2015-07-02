@@ -13,6 +13,9 @@ namespace SolarApp.DataProcessor.Utility.Classes
 	{
 
 		public string NewFilePollPath { get; set; }
+		public string MetOfficeApiKey { get; set; }
+		public string MetOfficeLocationId { get; set; }
+		public string MetOfficeUrl { get; set; }
 		public string MongoDatabaseName { get; set; }
 		public string MongoConnectionString { get; set; }
 		public string FtpDestinationUrl { get; set; }
@@ -23,13 +26,30 @@ namespace SolarApp.DataProcessor.Utility.Classes
 		{
 			MongoDatabaseName = System.Configuration.ConfigurationManager.AppSettings["DatabaseName"];
 			NewFilePollPath = System.Configuration.ConfigurationManager.AppSettings["NewFilePollPath"];
+			MetOfficeUrl = System.Configuration.ConfigurationManager.AppSettings["MetOfficeUrl"];
 			MongoConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MongoDb"].ConnectionString;
 			var privateSettings = (IDictionary)ConfigurationManager.GetSection("privateSettings");
 			if (privateSettings != null)
 			{
-				FtpUsername = (string)privateSettings["FtpUsername"];
-				FtpPassword = (string)privateSettings["FtpPassword"];
-				FtpDestinationUrl = (string)privateSettings["FtpUrl"];
+				if (privateSettings["FtpUsername"] != null) {
+					FtpUsername = (string) privateSettings["FtpUsername"];
+				}
+				if (privateSettings["FtpPassword"] != null)
+				{
+					FtpPassword = (string) privateSettings["FtpPassword"];
+				}
+				if (privateSettings["FtpUrl"] != null)
+				{
+					FtpDestinationUrl = (string) privateSettings["FtpUrl"];
+				}
+				if (privateSettings["MetOfficeApiKey"] != null)
+				{
+					MetOfficeApiKey = (string) privateSettings["MetOfficeApiKey"];
+				}
+				if (privateSettings["MetOfficeLocationId"] != null)
+				{
+					MetOfficeLocationId = (string) privateSettings["MetOfficeLocationId"];
+				}
 			}
 		}
 
