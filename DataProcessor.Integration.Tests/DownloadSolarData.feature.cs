@@ -98,9 +98,9 @@ testRunner.And("I want to navigate to a subdirectory of the ftp site \'test\'", 
 #line 15
 testRunner.And("the local temp directory \'receiving\' is empty", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 16
-testRunner.And("there is a file \'Log20150520062000.log\' waiting in the \'test\' subdirectory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 17
 testRunner.When("I access the site", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 17
+testRunner.And("there is a file \'Log20150520062000.log\' waiting with text \'test download file\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 18
 testRunner.Then("I download the file \'Log20150520062000.log\' to a local directory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 19
@@ -111,26 +111,24 @@ testRunner.And("The file \'Log20150520062000.log\' is stored in the \'receiving\
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Can delete a remote file via ftp")]
-        [NUnit.Framework.IgnoreAttribute()]
         public virtual void CanDeleteARemoteFileViaFtp()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Can delete a remote file via ftp", new string[] {
-                        "Ignore"});
-#line 22
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Can delete a remote file via ftp", ((string[])(null)));
+#line 21
 this.ScenarioSetup(scenarioInfo);
-#line 23
+#line 22
 testRunner.Given("I have the credentials of the ftp site", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 24
+#line 23
 testRunner.And("I want to navigate to a subdirectory of the ftp site \'testdelete\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 25
-testRunner.And("there is a file \'Log20150520145001.log\' waiting in the \'testdelete\' subdirectory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 26
+#line 24
 testRunner.When("I access the site", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 27
+#line 25
+testRunner.And("there is a file \'Log20150520145001.log\' waiting with text \'test delete file\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 26
 testRunner.And("I delete the file \'Log20150520145001.log\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 28
+#line 27
 testRunner.And("I do a directory listing", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 29
+#line 28
 testRunner.Then("The file list does not contain the file \'Log20150520145001.log\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

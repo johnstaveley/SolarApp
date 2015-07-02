@@ -26,11 +26,11 @@ namespace SolarApp.DataProcessor.Utility
             _fileSystem = fileSystem;
         }
 
-        private FtpWebRequest InitialiseConnection(string fileToDownload = null)
+        private FtpWebRequest InitialiseConnection(string remoteFileName = null)
         {
             if (!string.IsNullOrEmpty(_destinationUrl)) {
                 Uri baseUri = new Uri(_destinationUrl);
-                Uri modifiedUri = new Uri(baseUri, fileToDownload);
+                Uri modifiedUri = new Uri(baseUri, remoteFileName);
                 _destinationUrl = modifiedUri.AbsoluteUri.ToString();
             }
             FtpWebRequest request = (FtpWebRequest) WebRequest.Create(_destinationUrl);
@@ -76,5 +76,21 @@ namespace SolarApp.DataProcessor.Utility
             request.Method = WebRequestMethods.Ftp.DeleteFile;
             var response = GetResponse(request);
         }
+
+        public void Upload(string fileName, string contents)
+        {
+            FtpWebRequest request = InitialiseConnection(fileName);
+            request.Method = WebRequestMethods.Ftp.UploadFile;
+
+            byte[] fileContents = Encoding.UTF8.GetBytes(contents);
+            request.ContentLength = fileContents.Length;
+
+            Stream requestStream = request.GetRequestStream();
+            requestStream.Write(fileContents, 0, fileContents.Length);
+            requestStream.Close();
+            var response = GetResponse(request);
+
+        }
+
     }
 }

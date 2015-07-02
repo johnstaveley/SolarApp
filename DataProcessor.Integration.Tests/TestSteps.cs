@@ -69,10 +69,10 @@ namespace SolarApp.DataProcessor.Integration.Tests
             ScenarioContext.Current.Add("LocalStoragePath", localStoragePath);
         }
 
-        [Given(@"there is a file '(.*)' waiting in the '(.*)' subdirectory")]
-        public void GivenThereIsAFileWaitingInTheSubdirectory(string fileToDownload, string ftpSubDirectory)
+        [When(@"there is a file '(.*)' waiting with text '(.*)'")]
+        public void GivenThereIsAFileWaiting(string fileName, string contents)
         {
-            // TODO: Assumed the file is present
+            _ftp.Upload(fileName, contents);
         }
 
         [Then(@"I download the file '(.*)' to a local directory")]
@@ -88,7 +88,7 @@ namespace SolarApp.DataProcessor.Integration.Tests
             var localStoragePath = GetLocalStoragePath(localTempDirectory);
             var filePath = Path.Combine(localStoragePath, fileToDownload);
             Assert.IsTrue(File.Exists(filePath), string.Format("File {0} does not exist", filePath));
-            Assert.IsTrue(File.ReadAllText(filePath).Contains("TOTAL_ENERGY"), "File is not correct and does not contain the right text");
+            Assert.IsTrue(File.ReadAllText(filePath).Contains("test download file"), "File is not correct and does not contain the right text");
         }
 
         [When(@"I delete the file '(.*)'")]
