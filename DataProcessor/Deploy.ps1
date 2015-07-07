@@ -1,0 +1,1 @@
+Copy-Item App.Config SolarApp.DataProcessor.exe.config
