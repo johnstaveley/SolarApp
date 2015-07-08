@@ -35,11 +35,12 @@ namespace SolarApp.DataProcessor
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[] 
             { 
-                new SolarAppService(new ReliableTimer()) 
+                new SolarAppService(container.GetInstance<IConfiguration>(), container.GetInstance<IFileSystem>(), 
+				container.GetInstance<IFtp>(), container.GetInstance<ISolarAppContext>(), container.GetInstance<ITimer>()) 
             };
             ServiceBase.Run(ServicesToRun);
 #endif
-		}
+        }
 
 		private static void Bootstrap()
 		{
