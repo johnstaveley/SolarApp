@@ -56,6 +56,10 @@ namespace SolarApp.Persistence
 				requestWeatherForecastSetting.Id = "RequestWeatherForecast";
 				requestWeatherForecastSetting.Value = "0";
 				this.InsertSetting(requestWeatherForecastSetting);
+				var requestWeatherObservationSetting = new Setting();
+				requestWeatherObservationSetting.Id = "RequestWeatherObservation";
+				requestWeatherObservationSetting.Value = "0";
+				this.InsertSetting(requestWeatherObservationSetting);
 			}
 			var setting = new Setting();
 			setting.Id = "LastRunDate";
@@ -260,6 +264,32 @@ namespace SolarApp.Persistence
 
 		#endregion
 
+		#region WeatherObservation
+
+		public MongoCollection<WeatherObservation> WeatherObservation
+		{
+			get
+			{
+				return Database.GetCollection<WeatherObservation>("WeatherObservation");
+			}
+		}
+
+		public WeatherObservation FindWeatherObservationById(string id)
+		{
+			return this.WeatherObservation.Find(Query.EQ("_id", BsonValue.Create(id))).FirstOrDefault();
+		}
+
+		public void InsertWeatherObservation(WeatherObservation weatherObservation)
+		{
+			this.WeatherObservation.Insert(weatherObservation);
+		}
+
+		public void DeleteWeatherObservationById(string id)
+		{
+			this.WeatherObservation.Remove(Query.EQ("_id", BsonValue.Create(id)));
+		}
+
+		#endregion
 	}
 }
 

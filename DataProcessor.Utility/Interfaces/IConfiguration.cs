@@ -6,7 +6,8 @@ namespace SolarApp.DataProcessor.Utility.Interfaces
 	{
 		string NewFilePollPath { get; set; }
 		string MetOfficeApiKey { get; set; }
-		string MetOfficeLocationId { get; set; }
+		string MetOfficeForecastLocationId { get; set; }
+		string MetOfficeObservationLocationId { get; set; }
 		string MetOfficeUrl { get; set; }
 		string MongoDatabaseName { get; set; }
 		string MongoConnectionString { get; set; }

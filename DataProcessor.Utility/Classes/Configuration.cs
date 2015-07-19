@@ -14,7 +14,8 @@ namespace SolarApp.DataProcessor.Utility.Classes
 
 		public string NewFilePollPath { get; set; }
 		public string MetOfficeApiKey { get; set; }
-		public string MetOfficeLocationId { get; set; }
+		public string MetOfficeForecastLocationId { get; set; }
+		public string MetOfficeObservationLocationId { get; set; }
 		public string MetOfficeUrl { get; set; }
 		public string MongoDatabaseName { get; set; }
 		public string MongoConnectionString { get; set; }
@@ -52,9 +53,13 @@ namespace SolarApp.DataProcessor.Utility.Classes
 				{
 					MetOfficeApiKey = (string) privateSettings["MetOfficeApiKey"];
 				}
-				if (privateSettings["MetOfficeLocationId"] != null)
+				if (privateSettings["MetOfficeForecastLocationId"] != null)
 				{
-					MetOfficeLocationId = (string) privateSettings["MetOfficeLocationId"];
+					MetOfficeForecastLocationId = (string) privateSettings["MetOfficeForecastLocationId"];
+				}
+				if (privateSettings["MetOfficeObservationLocationId"] != null)
+				{
+					MetOfficeObservationLocationId = (string)privateSettings["MetOfficeObservationLocationId"];
 				}
 			}
 		}

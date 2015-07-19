@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EnergyReading.cs" />
+    <Compile Include="WeatherObservation.cs" />
     <Compile Include="WeatherForecast.cs" />
     <Compile Include="FailedData.cs" />
     <Compile Include="Fronius.cs" />

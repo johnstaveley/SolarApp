@@ -22,7 +22,7 @@ namespace SolarApp.DataProcessor.Unit.Tests
 
 			// Act
 			var weatherProcessor = new WeatherProcessor(configuration, solarAppContext, services);
-			var results = weatherProcessor.Process();
+			var results = weatherProcessor.GetWeatherForecast();
 
 			// Assert
 			Assert.AreEqual(0, results.Count);
@@ -43,7 +43,7 @@ namespace SolarApp.DataProcessor.Unit.Tests
 
 			// Act
 			var weatherProcessor = new WeatherProcessor(configuration, solarAppContext, services);
-			var results = weatherProcessor.Process();
+			var results = weatherProcessor.GetWeatherForecast();
 
 			// Assert
 			Assert.AreEqual(1, results.Count);

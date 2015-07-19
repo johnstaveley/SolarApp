@@ -69,7 +69,8 @@ namespace SolarApp.DataProcessor
 				localFileProcessor.Process();
 
 				var weatherProcessor = new WeatherProcessor(_configuration, _context, _services);
-				weatherProcessor.Process();
+				weatherProcessor.GetWeatherForecast();
+				weatherProcessor.GetWeatherObservation();
 
 			}
 			catch (Exception ex)
