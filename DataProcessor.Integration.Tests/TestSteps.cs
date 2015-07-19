@@ -27,13 +27,59 @@ namespace SolarApp.DataProcessor.Integration.Tests
 			{
 				Directory.CreateDirectory(configuration.NewFilePollPath);
 			}
+			ScenarioContext.Current.Set<IServices>(new Services());
 			ScenarioContext.Current.Set<IConfiguration>(configuration);
 			ScenarioContext.Current.Set<List<DataItem>>(new List<DataItem>(), "DataItemsToTrack");
 			var fileSystem = new FileSystem();
 			ScenarioContext.Current.Set<IFileSystem>(fileSystem);
 			ScenarioContext.Current.Set<IFtp>(new Ftp(configuration, fileSystem));
-			ScenarioContext.Current.Set<ISolarAppContext>(new SolarAppContext(configuration));
+			var context = new SolarAppContext(configuration);
+			ScenarioContext.Current.Set<ISolarAppContext>(context);
+			var forecastRequestSetting = context.FindSettingById("RequestWeatherForecast");
+			if (forecastRequestSetting == null)
+			{
+				forecastRequestSetting = new Model.Setting();
+				forecastRequestSetting.Id = "RequestWeatherForecast";
+				forecastRequestSetting.Value = "0";
+				context.InsertSetting(forecastRequestSetting);
+			}
+			var observationRequestSetting = context.FindSettingById("RequestWeatherObservation");
+			if (observationRequestSetting == null)
+			{
+				observationRequestSetting = new Model.Setting();
+				observationRequestSetting.Id = "RequestWeatherObservation";
+				observationRequestSetting.Value = "0";
+				context.InsertSetting(observationRequestSetting);
+			}
+		}
 
+		[AfterScenario]
+		public void ScenarioCleanup()
+		{
+			// Remove tracked items from the database
+			var dataItemsToTrack = ScenarioContext.Current.Get<List<DataItem>>("DataItemsToTrack");
+			var context = ScenarioContext.Current.Get<ISolarAppContext>();
+			foreach (var dataItem in dataItemsToTrack)
+			{
+				switch (dataItem.TableTypeKind)
+				{
+					case (TableTypeKind.DataPoint):
+						context.DeleteDataPointById(dataItem.Id);
+						context.DeleteFailedDataById(dataItem.Id);
+						break;
+					case (TableTypeKind.Setting):
+						context.DeleteSettingById(dataItem.Id);
+						break;
+					case (TableTypeKind.WeatherForecast):
+						context.DeleteWeatherForecastById(dataItem.Id);
+						break;
+					case (TableTypeKind.WeatherObservation):
+						context.DeleteWeatherObservationById(dataItem.Id);
+						break;
+					default:
+						throw new Exception(string.Format("Unable to determine type of artifact to delete for id ", dataItem.Id));
+				}
+			}
 		}
 
         [Given(@"I have the credentials of the ftp site")]

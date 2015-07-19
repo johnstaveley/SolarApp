@@ -22,10 +22,10 @@ namespace SolarApp.DataProcessor.Unit.Tests
 
 			// Act
 			var weatherProcessor = new WeatherProcessor(configuration, solarAppContext, services);
-			var results = weatherProcessor.GetWeatherForecast();
+			var result = weatherProcessor.GetWeatherForecast();
 
 			// Assert
-			Assert.AreEqual(0, results.Count);
+			Assert.IsNull(result, "No weather download should have taken place");
 			configuration.VerifyAllExpectations();
 			solarAppContext.VerifyAllExpectations();
 
@@ -43,10 +43,10 @@ namespace SolarApp.DataProcessor.Unit.Tests
 
 			// Act
 			var weatherProcessor = new WeatherProcessor(configuration, solarAppContext, services);
-			var results = weatherProcessor.GetWeatherForecast();
+			var weatherForecastId = weatherProcessor.GetWeatherForecast();
 
 			// Assert
-			Assert.AreEqual(1, results.Count);
+			Assert.IsTrue(!string.IsNullOrEmpty(weatherForecastId), "Forecast should have been downloaded");
 			//TODO: Assert database changes
 			configuration.VerifyAllExpectations();
 			services.VerifyAllExpectations();

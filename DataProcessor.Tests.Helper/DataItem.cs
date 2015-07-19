@@ -24,5 +24,18 @@ namespace SolarApp.DataProcessor.Tests.Helper
 			this.Id = dataPoint.Id;
 			this.TableTypeKind = Helper.TableTypeKind.DataPoint;
 		}
+
+		public DataItem(WeatherForecast weatherForecast)
+		{
+			this.Id = weatherForecast.Id;
+			this.TableTypeKind = Helper.TableTypeKind.WeatherForecast;
+		}
+
+		public DataItem(WeatherObservation weatherObservation)
+		{
+			this.Id = weatherObservation.Id;
+			this.TableTypeKind = Helper.TableTypeKind.WeatherObservation;
+		}
+
 	}
 }

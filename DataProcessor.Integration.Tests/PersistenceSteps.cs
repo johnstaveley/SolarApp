@@ -19,34 +19,6 @@ namespace SolarApp.DataProcessor.Integration.Tests
     public class PersistenceSteps
     {
 
-		[AfterScenario]
-		public void ScenarioCleanup()
-		{
-			// Remove tracked items from the database
-			var dataItemsToTrack = ScenarioContext.Current.Get<List<DataItem>>("DataItemsToTrack");
-			var context = ScenarioContext.Current.Get<ISolarAppContext>();
-			foreach (var dataItem in dataItemsToTrack)
-			{
-				switch (dataItem.TableTypeKind)
-				{
-					case (TableTypeKind.DataPoint):
-						context.DeleteDataPointById(dataItem.Id);
-						context.DeleteFailedDataById(dataItem.Id);
-						break;
-					case (TableTypeKind.Setting):
-						context.DeleteSettingById(dataItem.Id);
-						break;
-					case (TableTypeKind.WeatherForecast):
-						context.DeleteWeatherForecastById(dataItem.Id);
-						break;
-					case (TableTypeKind.WeatherObservation):
-						context.DeleteWeatherObservationById(dataItem.Id);
-						break;
-					default:
-						throw new Exception(string.Format("Unable to determine type of artifact to delete for id ", dataItem.Id));
-				}
-			}
-		}
 
 		[When(@"I calculate the latest date")]
 		public void WhenICalculateTheLatestDate()

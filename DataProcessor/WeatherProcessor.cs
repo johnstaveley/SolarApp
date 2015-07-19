@@ -27,41 +27,37 @@ namespace SolarApp.DataProcessor
 			_services = services;
 		}
 
-		public List<string> GetWeatherForecast()
+		public string GetWeatherForecast()
 		{
-
 			var requestWeatherForecast = _context.FindSettingById("RequestWeatherForecast");
-			var forecastsDownloaded = new List<string>();
+			string forecastDownloaded = null;
 			if (requestWeatherForecast != null && requestWeatherForecast.Value == "1")
 			{
 				var metOfficeLocationForecastUrl = string.Format("{0}wxfcs/all/json/{1}?res=3hourly&key={2}", _configuration.MetOfficeUrl, _configuration.MetOfficeForecastLocationId, _configuration.MetOfficeApiKey);
-				var id = string.Format("{0:ddMMyyyy-HHmmss}", DateTime.Now);
+				forecastDownloaded = string.Format("{0:ddMMyyyy-HHmmss}", DateTime.Now);
 				var weatherForecastJson = _services.WebRequestForJson(metOfficeLocationForecastUrl);
-				_context.InsertWeatherForecast(new WeatherForecast() { Id = id, Data = weatherForecastJson });
-				forecastsDownloaded.Add(id);
+				_context.InsertWeatherForecast(new WeatherForecast() { Id = forecastDownloaded, Data = weatherForecastJson });
 				requestWeatherForecast.Value = "0";
 				_context.UpdateSetting(requestWeatherForecast);
 			}
-			return forecastsDownloaded;
+			return forecastDownloaded;
 		}
 
-		public List<string> GetWeatherObservation()
+		public string GetWeatherObservation()
 		{
 
 			var requestWeatherObservation = _context.FindSettingById("RequestWeatherObservation");
-			var observationsDownloaded = new List<string>();
+			string observationDownloaded = null;
 			if (requestWeatherObservation != null && requestWeatherObservation.Value == "1")
 			{
-
 				var metOfficeLocationObservationUrl = string.Format("{0}wxobs/all/json/{1}?res=hourly&key={2}", _configuration.MetOfficeUrl, _configuration.MetOfficeObservationLocationId, _configuration.MetOfficeApiKey);
-				var id = string.Format("{0:ddMMyyyy-HHmmss}", DateTime.Now);
+				observationDownloaded = string.Format("{0:ddMMyyyy-HHmmss}", DateTime.Now);
 				var weatherObservationJson = _services.WebRequestForJson(metOfficeLocationObservationUrl);
-				_context.InsertWeatherObservation(new WeatherObservation() { Id = id, Data = weatherObservationJson });
-				observationsDownloaded.Add(id);
+				_context.InsertWeatherObservation(new WeatherObservation() { Id = observationDownloaded, Data = weatherObservationJson });
 				requestWeatherObservation.Value = "0";
 				_context.UpdateSetting(requestWeatherObservation);
 			}
-			return observationsDownloaded;
+			return observationDownloaded;
 		}
 
 	}
