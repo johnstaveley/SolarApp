@@ -10,6 +10,7 @@ using SolarApp.DataProcessor.Tests.Helper;
 using SolarApp.DataProcessor.Utility.Interfaces;
 using SolarApp.DataProcessor.Utility.Classes;
 using System.Collections.Generic;
+using SolarApp.Persistence;
 
 namespace SolarApp.DataProcessor.Integration.Tests
 {
@@ -21,6 +22,7 @@ namespace SolarApp.DataProcessor.Integration.Tests
 		public void ScenarioSetup()
 		{
 			IConfiguration configuration = new SolarApp.DataProcessor.Utility.Classes.Configuration();
+			configuration.MongoDatabaseName = "Test";
 			if (!Directory.Exists(configuration.NewFilePollPath))
 			{
 				Directory.CreateDirectory(configuration.NewFilePollPath);
@@ -30,6 +32,7 @@ namespace SolarApp.DataProcessor.Integration.Tests
 			var fileSystem = new FileSystem();
 			ScenarioContext.Current.Set<IFileSystem>(fileSystem);
 			ScenarioContext.Current.Set<IFtp>(new Ftp(configuration, fileSystem));
+			ScenarioContext.Current.Set<ISolarAppContext>(new SolarAppContext(configuration));
 
 		}
 

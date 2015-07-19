@@ -92,10 +92,6 @@ this.ScenarioSetup(scenarioInfo);
 #line 10
  testRunner.And("I save the data point to a file", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 11
- testRunner.And("I want to use a database \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 12
- testRunner.And("I open a connection to the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 13
  testRunner.When("I process the file", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
@@ -110,7 +106,7 @@ this.ScenarioSetup(scenarioInfo);
                         "100",
                         "1000",
                         "10000"});
-#line 14
+#line 12
  testRunner.Then("I can retrieve a data point with values:", ((string)(null)), table2, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -121,7 +117,7 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void FailedData_RejectFileWithInvalidStatusCode()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Failed Data - Reject file with invalid status code", ((string[])(null)));
-#line 18
+#line 16
 this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
@@ -132,19 +128,15 @@ this.ScenarioSetup(scenarioInfo);
                         "[Now]",
                         "[Random]",
                         "1"});
-#line 19
+#line 17
  testRunner.Given("I have a data point with values:", ((string)(null)), table3, "Given ");
-#line 22
+#line 20
  testRunner.And("I save the data point to a file", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 23
- testRunner.And("I want to use a database \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 24
- testRunner.And("I open a connection to the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 25
+#line 21
  testRunner.When("I process the file", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 26
+#line 22
  testRunner.Then("I cannot retrieve a data point", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 27
+#line 23
  testRunner.Then("I can retrieve failed data with text: \'\"Code\":1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -155,7 +147,7 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void FailedData_RejectFileWithInvalidStatusReason()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Failed Data - Reject file with invalid status reason", ((string[])(null)));
-#line 29
+#line 25
 this.ScenarioSetup(scenarioInfo);
 #line hidden
             TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
@@ -166,19 +158,15 @@ this.ScenarioSetup(scenarioInfo);
                         "[Now]",
                         "[Random]",
                         "Rhubarb"});
-#line 30
+#line 26
  testRunner.Given("I have a data point with values:", ((string)(null)), table4, "Given ");
-#line 33
+#line 29
  testRunner.And("I save the data point to a file", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 34
- testRunner.And("I want to use a database \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 35
- testRunner.And("I open a connection to the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 36
+#line 30
  testRunner.When("I process the file", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 37
+#line 31
  testRunner.Then("I cannot retrieve a data point", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 38
+#line 32
  testRunner.Then("I can retrieve failed data with text: \'\"UserMessage\":\"Rhubarb\"\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -189,19 +177,15 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void FailedData_RejectFileAndMoveToFailedData()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Failed Data - Reject file and move to failed data", ((string[])(null)));
-#line 40
+#line 34
 this.ScenarioSetup(scenarioInfo);
-#line 41
+#line 35
  testRunner.Given("I have a file containing garbage: \'fuubar\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 42
- testRunner.And("I want to use a database \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 43
- testRunner.And("I open a connection to the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 44
+#line 36
  testRunner.When("I process the file", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 45
+#line 37
  testRunner.Then("I cannot retrieve a data point", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 46
+#line 38
  testRunner.Then("I can retrieve failed data with text: \'fuubar\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

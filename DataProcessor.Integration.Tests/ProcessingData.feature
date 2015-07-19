@@ -8,8 +8,6 @@ Scenario: Can Process energy data from an incoming file and store it in the data
 	| Time  | CurrentReading | DayEnergy | YearEnergy | TotalEnergy | FileName |
 	| [Now] | 321            | 100       | 1000       | 10000       | [Random] |
 	And I save the data point to a file
-	And I want to use a database 'Test'
-	And I open a connection to the database
 	When I process the file
 	Then I can retrieve a data point with values:
 	| Time		| CurrentReading | DayEnergy  | YearEnergy | TotalEnergy  |
@@ -20,8 +18,6 @@ Scenario: Failed Data - Reject file with invalid status code
 	| Time  | FileName | StatusCode |
 	| [Now] | [Random] | 1          |
 	And I save the data point to a file
-	And I want to use a database 'Test'
-	And I open a connection to the database
 	When I process the file
 	Then I cannot retrieve a data point
 	Then I can retrieve failed data with text: '"Code":1'
@@ -31,16 +27,12 @@ Scenario: Failed Data - Reject file with invalid status reason
 	| Time  | FileName | StatusUserMessage |
 	| [Now] | [Random] | Rhubarb           |
 	And I save the data point to a file
-	And I want to use a database 'Test'
-	And I open a connection to the database
 	When I process the file
 	Then I cannot retrieve a data point
 	Then I can retrieve failed data with text: '"UserMessage":"Rhubarb"'
 
 Scenario: Failed Data - Reject file and move to failed data
 	Given I have a file containing garbage: 'fuubar'
-	And I want to use a database 'Test'
-	And I open a connection to the database
 	When I process the file
 	Then I cannot retrieve a data point
 	Then I can retrieve failed data with text: 'fuubar'

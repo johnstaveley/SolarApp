@@ -4,27 +4,21 @@
 	I want to be able to store data in MongoDb
 
 Scenario: Store a random value to a setting entry in the database and retrieve it
-	Given I want to use a database 'Test'
-	And I want to store some random value
-	When I open a connection to the database
-	And I persist the setting to the database
+	Given I want to store some random value
+	When I persist the setting to the database
 	Then the random value should be retrievable from the database
 
 Scenario: Store a data point in the database and retrieve it
-	Given I want to use a database 'Test'
-	And I have a data point with values:
+	Given I have a data point with values:
 	| Time  | CurrentReading | DayEnergy | YearEnergy | TotalEnergy | FileName |
 	| [Now] | 321            | 100       | 1000       | 10000       | [Random] |
-	When I open a connection to the database
-	And I persist the data point to the database
+	When I persist the data point to the database
 	Then I can retrieve a data point with values:
 	| Time		| CurrentReading | DayEnergy  | YearEnergy | TotalEnergy  |
 	| [Now]		| 321			 | 100        | 1000       | 10000        |
 
 Scenario: Calculates the average reading for a specified hour across two days where data is provided
-	Given I want to use a database 'Test'
-	And I open a connection to the database
-	And I have a data points with values:
+	Given I have a data points with values:
 	| Time                | CurrentReading | Comment  |
 	| 2015-06-15 09:23:00 | 100            | Included |
 	| 2015-06-15 09:33:00 | 200            | Included |
@@ -34,9 +28,7 @@ Scenario: Calculates the average reading for a specified hour across two days wh
 	Then The calculated average value is 200
 
 Scenario: Calculates the average reading as null for a specified hour across two days where no data
-	Given I want to use a database 'Test'
-	And I open a connection to the database
-	And I have a data points with values:
+	Given I have a data points with values:
 	| Time                | CurrentReading | Comment  |
 	| 2015-06-15 09:23:00 | 100            | Included |
 	| 2015-06-15 09:33:00 | 200            | Included |
@@ -46,9 +38,7 @@ Scenario: Calculates the average reading as null for a specified hour across two
 	Then The calculated average value is null
 
 Scenario: Calculates the latest reading across two days where data is provided
-	Given I want to use a database 'Test'
-	And I open a connection to the database
-	And I have a data points with values:
+	Given I have a data points with values:
 	| Time                | CurrentReading |
 	| 2018-06-15 09:23:00 | 100            |
 	| 2018-06-15 09:33:00 | 200            |

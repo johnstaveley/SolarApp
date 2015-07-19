@@ -73,14 +73,10 @@ namespace SolarApp.DataProcessor.Integration.Tests
 #line 6
 this.ScenarioSetup(scenarioInfo);
 #line 7
- testRunner.Given("I want to use a database \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I want to store some random value", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 8
- testRunner.And("I want to store some random value", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.When("I persist the setting to the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 9
- testRunner.When("I open a connection to the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 10
- testRunner.And("I persist the setting to the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 11
  testRunner.Then("the random value should be retrievable from the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -91,10 +87,8 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void StoreADataPointInTheDatabaseAndRetrieveIt()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Store a data point in the database and retrieve it", ((string[])(null)));
-#line 13
+#line 11
 this.ScenarioSetup(scenarioInfo);
-#line 14
- testRunner.Given("I want to use a database \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "Time",
@@ -110,12 +104,10 @@ this.ScenarioSetup(scenarioInfo);
                         "1000",
                         "10000",
                         "[Random]"});
+#line 12
+ testRunner.Given("I have a data point with values:", ((string)(null)), table1, "Given ");
 #line 15
- testRunner.And("I have a data point with values:", ((string)(null)), table1, "And ");
-#line 18
- testRunner.When("I open a connection to the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 19
- testRunner.And("I persist the data point to the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.When("I persist the data point to the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                         "Time",
@@ -129,7 +121,7 @@ this.ScenarioSetup(scenarioInfo);
                         "100",
                         "1000",
                         "10000"});
-#line 20
+#line 16
  testRunner.Then("I can retrieve a data point with values:", ((string)(null)), table2, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -142,12 +134,8 @@ this.ScenarioSetup(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Calculates the average reading for a specified hour across two days where data is" +
                     " provided", ((string[])(null)));
-#line 24
+#line 20
 this.ScenarioSetup(scenarioInfo);
-#line 25
- testRunner.Given("I want to use a database \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 26
- testRunner.And("I open a connection to the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                         "Time",
@@ -169,11 +157,11 @@ this.ScenarioSetup(scenarioInfo);
                         "2015-06-15 10:02:01",
                         "2500",
                         "Excluded"});
+#line 21
+ testRunner.Given("I have a data points with values:", ((string)(null)), table3, "Given ");
 #line 27
- testRunner.And("I have a data points with values:", ((string)(null)), table3, "And ");
-#line 33
  testRunner.When("I calculate the mean for hour 9", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 34
+#line 28
  testRunner.Then("The calculated average value is 200", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -186,12 +174,8 @@ this.ScenarioSetup(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Calculates the average reading as null for a specified hour across two days where" +
                     " no data", ((string[])(null)));
-#line 36
+#line 30
 this.ScenarioSetup(scenarioInfo);
-#line 37
- testRunner.Given("I want to use a database \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 38
- testRunner.And("I open a connection to the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                         "Time",
@@ -213,11 +197,11 @@ this.ScenarioSetup(scenarioInfo);
                         "2015-06-15 10:00:01",
                         "2500",
                         "Excluded"});
-#line 39
- testRunner.And("I have a data points with values:", ((string)(null)), table4, "And ");
-#line 45
+#line 31
+ testRunner.Given("I have a data points with values:", ((string)(null)), table4, "Given ");
+#line 37
  testRunner.When("I calculate the mean for hour 10", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 46
+#line 38
  testRunner.Then("The calculated average value is null", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -228,12 +212,8 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void CalculatesTheLatestReadingAcrossTwoDaysWhereDataIsProvided()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Calculates the latest reading across two days where data is provided", ((string[])(null)));
-#line 48
+#line 40
 this.ScenarioSetup(scenarioInfo);
-#line 49
- testRunner.Given("I want to use a database \'Test\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 50
- testRunner.And("I open a connection to the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
                         "Time",
@@ -250,11 +230,11 @@ this.ScenarioSetup(scenarioInfo);
             table5.AddRow(new string[] {
                         "2018-06-15 10:00:01",
                         "2500"});
-#line 51
- testRunner.And("I have a data points with values:", ((string)(null)), table5, "And ");
-#line 57
+#line 41
+ testRunner.Given("I have a data points with values:", ((string)(null)), table5, "Given ");
+#line 47
  testRunner.When("I calculate the latest date", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 58
+#line 48
  testRunner.Then("The calculated latest date is \'2018-06-15 10:00:01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
