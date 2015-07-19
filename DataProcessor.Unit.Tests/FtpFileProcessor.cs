@@ -16,7 +16,7 @@ namespace SolarApp.DataProcessor.Unit.Tests
 	{
 
 		[Test]
-		public void Given_SomeFilesToDownload_When_ProcessRemoteFiles_Then_AllFilesAreDownload()
+		public void Given_SomeFilesToDownloadAndTwoFilesAlreadyExist_When_ProcessRemoteFiles_Then_OneFileIsDownload()
 		{
 			// Arrange
 			var configuration = MockRepository.GenerateMock<IConfiguration>();
@@ -27,6 +27,11 @@ namespace SolarApp.DataProcessor.Unit.Tests
 			ftp.Expect(i => i.GetDirectoryListing()).Return(filesToDownload);
 			string pollFilePath = "C:/folder";
 			configuration.Expect(i => i.NewFilePollPath).Return(pollFilePath);
+            solarAppContext.Expect(s => s.FindDataPointById("A")).Return(new DataPoint());
+            solarAppContext.Expect(s => s.FindDataPointById("B")).Return(null);
+            solarAppContext.Expect(s => s.FindFailedDataById("B")).Return(new FailedData());
+            solarAppContext.Expect(s => s.FindDataPointById("C")).Return(null);
+            solarAppContext.Expect(s => s.FindFailedDataById("C")).Return(null); 
             configuration.DeleteFileAfterDownload = false;
 
 			// Act
@@ -38,10 +43,7 @@ namespace SolarApp.DataProcessor.Unit.Tests
 			solarAppContext.VerifyAllExpectations();
 			fileSystem.VerifyAllExpectations();
 
-			foreach (var fileToDownload in filesToDownload)
-			{
-				ftp.AssertWasCalled(i => i.Download(Arg<string>.Is.Equal(fileToDownload), Arg<string>.Is.Equal(pollFilePath)));
-			}
+			ftp.AssertWasCalled(i => i.Download(Arg<string>.Is.Equal("C"), Arg<string>.Is.Equal(pollFilePath)));
             ftp.AssertWasNotCalled(f => f.Delete(Arg<string>.Is.Anything));
 			ftp.VerifyAllExpectations();
 

@@ -29,7 +29,7 @@ namespace SolarApp.DataProcessor
 		}
 
 		/// <summary>
-		/// Get list of remote files aand download them
+		/// Get list of remote files aand downloads them if not already downloaded, optionally deletes them off the server
 		/// </summary>
 		/// <returns></returns>
 		public void Process()
@@ -38,10 +38,13 @@ namespace SolarApp.DataProcessor
 			var filesToDownload = _ftp.GetDirectoryListing();
 			foreach (var fileToDownload in filesToDownload)
 			{
-				_ftp.Download(fileToDownload, _configuration.NewFilePollPath);
-                if (_configuration.DeleteFileAfterDownload)
+                if (_context.FindDataPointById(fileToDownload) == null && _context.FindFailedDataById(fileToDownload) == null)
                 {
-                _ftp.Delete(fileToDownload);
+                    _ftp.Download(fileToDownload, _configuration.NewFilePollPath);
+                    if (_configuration.DeleteFileAfterDownload)
+                    {
+                        _ftp.Delete(fileToDownload);
+                    }
                 }
 			}
 		}

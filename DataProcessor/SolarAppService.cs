@@ -44,7 +44,7 @@ namespace SolarApp.DataProcessor
 		public void Init()
 		{
 			// TODO: Start timer that triggers events
-			_timer.Interval = 10000;
+			_timer.Interval = 600000;
 			_timer.Start();
 			_context.SeedDatabase();
 		}
@@ -61,8 +61,8 @@ namespace SolarApp.DataProcessor
 
 			try
 			{
-                //var ftpFileProcessor = new FtpFileProcessor(_configuration, _context, _fileSystem, _ftp);
-                //ftpFileProcessor.Process();
+                var ftpFileProcessor = new FtpFileProcessor(_configuration, _context, _fileSystem, _ftp);
+                ftpFileProcessor.Process();
 
 				var localFileProcessor = new LocalFileProcessor(_configuration, _fileSystem, _context);
 				localFileProcessor.Process();
