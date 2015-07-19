@@ -24,8 +24,12 @@ namespace SolarApp.DataProcessor
         {
 			Bootstrap();
 #if DEBUG
-			var service = new SolarAppService(container.GetInstance<IConfiguration>(), container.GetInstance<IFileSystem>(), 
-				container.GetInstance<IFtp>(), container.GetInstance<ISolarAppContext>(), container.GetInstance<ITimer>());
+			var service = new SolarAppService(container.GetInstance<IConfiguration>(), 
+                container.GetInstance<IFileSystem>(), 
+				container.GetInstance<IFtp>(), 
+                container.GetInstance<ISolarAppContext>(), 
+                container.GetInstance<IServices>(), 
+                container.GetInstance<ITimer>());
 			service.Init();
 			while (true)
 			{

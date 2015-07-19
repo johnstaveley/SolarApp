@@ -14,5 +14,6 @@ namespace SolarApp.DataProcessor.Utility.Interfaces
 		string FtpPassword { get; set; }
 		string FtpUsername { get; set; }
         bool DeleteFileAfterDownload { get; set; }
+        int PollIntervalSeconds { get; set; }
 	}
 }

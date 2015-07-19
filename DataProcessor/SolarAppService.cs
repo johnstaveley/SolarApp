@@ -24,12 +24,13 @@ namespace SolarApp.DataProcessor
 		private ISolarAppContext _context { get; set; }
 		private IServices _services { get; set; }
 
-		public SolarAppService(IConfiguration configuration, IFileSystem fileSystem, IFtp ftp, ISolarAppContext context, ITimer timer)
+		public SolarAppService(IConfiguration configuration, IFileSystem fileSystem, IFtp ftp, ISolarAppContext context, IServices services, ITimer timer)
         {
 			_configuration = configuration;
 			_context = context;
 			_fileSystem = fileSystem;
 			_ftp = ftp;
+            _services = services;
 			_timer = timer;
 			_timer.Tick += TimerTick;
 			_timer.Enabled = false;
@@ -44,7 +45,7 @@ namespace SolarApp.DataProcessor
 		public void Init()
 		{
 			// TODO: Start timer that triggers events
-			_timer.Interval = 600000;
+			_timer.Interval = _configuration.PollIntervalSeconds * 1000;
 			_timer.Start();
 			_context.SeedDatabase();
 		}

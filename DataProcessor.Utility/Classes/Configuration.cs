@@ -22,9 +22,11 @@ namespace SolarApp.DataProcessor.Utility.Classes
 		public string FtpPassword { get; set; }
 		public string FtpUsername { get; set; }
         public bool DeleteFileAfterDownload { get; set; }
+        public int PollIntervalSeconds {get; set; }
 
 		public Configuration()
 		{
+            PollIntervalSeconds = int.Parse(System.Configuration.ConfigurationManager.AppSettings["PollIntervalSeconds"]);
 			MongoDatabaseName = System.Configuration.ConfigurationManager.AppSettings["DatabaseName"];
 			NewFilePollPath = System.Configuration.ConfigurationManager.AppSettings["NewFilePollPath"];
 			MetOfficeUrl = System.Configuration.ConfigurationManager.AppSettings["MetOfficeUrl"];
