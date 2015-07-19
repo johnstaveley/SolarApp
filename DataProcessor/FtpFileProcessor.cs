@@ -39,6 +39,10 @@ namespace SolarApp.DataProcessor
 			foreach (var fileToDownload in filesToDownload)
 			{
 				_ftp.Download(fileToDownload, _configuration.NewFilePollPath);
+                if (_configuration.DeleteFileAfterDownload)
+                {
+                _ftp.Delete(fileToDownload);
+                }
 			}
 		}
 

@@ -27,6 +27,7 @@ namespace SolarApp.DataProcessor.Unit.Tests
 			ftp.Expect(i => i.GetDirectoryListing()).Return(filesToDownload);
 			string pollFilePath = "C:/folder";
 			configuration.Expect(i => i.NewFilePollPath).Return(pollFilePath);
+            configuration.DeleteFileAfterDownload = false;
 
 			// Act
 			var ftpFileProcessor = new FtpFileProcessor(configuration, solarAppContext, fileSystem, ftp);
@@ -41,6 +42,7 @@ namespace SolarApp.DataProcessor.Unit.Tests
 			{
 				ftp.AssertWasCalled(i => i.Download(Arg<string>.Is.Equal(fileToDownload), Arg<string>.Is.Equal(pollFilePath)));
 			}
+            ftp.AssertWasNotCalled(f => f.Delete(Arg<string>.Is.Anything));
 			ftp.VerifyAllExpectations();
 
 		}

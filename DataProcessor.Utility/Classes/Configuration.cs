@@ -21,6 +21,7 @@ namespace SolarApp.DataProcessor.Utility.Classes
 		public string FtpDestinationUrl { get; set; }
 		public string FtpPassword { get; set; }
 		public string FtpUsername { get; set; }
+        public bool DeleteFileAfterDownload { get; set; }
 
 		public Configuration()
 		{
@@ -28,6 +29,9 @@ namespace SolarApp.DataProcessor.Utility.Classes
 			NewFilePollPath = System.Configuration.ConfigurationManager.AppSettings["NewFilePollPath"];
 			MetOfficeUrl = System.Configuration.ConfigurationManager.AppSettings["MetOfficeUrl"];
 			MongoConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MongoDb"].ConnectionString;
+            DeleteFileAfterDownload = false;
+            string deleteFileAfterDownload = System.Configuration.ConfigurationManager.AppSettings["DeleteFileAfterDownload"];
+            if (!string.IsNullOrEmpty(deleteFileAfterDownload)) { DeleteFileAfterDownload = bool.Parse(deleteFileAfterDownload); }
 			var privateSettings = (IDictionary)ConfigurationManager.GetSection("privateSettings");
 			if (privateSettings != null)
 			{
