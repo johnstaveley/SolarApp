@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using SolarApp.DataProcessor.Utility.Interfaces;
+using SolarApp.DataProcessor.Utility.Classes;
 
 namespace SolarApp.DataProcessor.Integration.Tests
 {
@@ -20,25 +21,13 @@ namespace SolarApp.DataProcessor.Integration.Tests
 
         private Setting _setting { get; set; }
         private SolarAppContext _context { get; set; }
-		private IConfiguration _configuration { get; set; }
-		private List<DataItem> _dataItemsToTrack { get; set; }
-
-		[BeforeScenario]
-		public void ScenarioSetup()
-		{
-			_configuration = new SolarApp.DataProcessor.Utility.Classes.Configuration();
-			_dataItemsToTrack = new List<DataItem>();
-            if (!Directory.Exists(_configuration.NewFilePollPath))
-            {
-                Directory.CreateDirectory(_configuration.NewFilePollPath);
-            }
-		}
 
 		[AfterScenario]
 		public void ScenarioCleanup()
 		{
 			// Remove tracked items from the database
-			foreach (var dataItem in _dataItemsToTrack)
+			var dataItemsToTrack = ScenarioContext.Current.Get<List<DataItem>>("DataItemsToTrack");
+			foreach (var dataItem in dataItemsToTrack)
 			{
 				switch (dataItem.TableTypeKind)
 				{
@@ -48,6 +37,12 @@ namespace SolarApp.DataProcessor.Integration.Tests
 						break;
 					case (TableTypeKind.Setting):
 						_context.DeleteSettingById(dataItem.Id);
+						break;
+					case (TableTypeKind.WeatherForecast):
+						_context.DeleteWeatherForecastById(dataItem.Id);
+						break;
+					case (TableTypeKind.WeatherObservation):
+						_context.DeleteWeatherObservationById(dataItem.Id);
 						break;
 					default:
 						throw new Exception(string.Format("Unable to determine type of artifact to delete for id ", dataItem.Id));
@@ -84,21 +79,26 @@ namespace SolarApp.DataProcessor.Integration.Tests
         [Given(@"I want to use a database '(.*)'")]
         public void GivenIWantToUseADatabase(string databaseName)
         {
-			_configuration.MongoDatabaseName = databaseName;
+			var configuration = ScenarioContext.Current.Get<IConfiguration>();
+			configuration.MongoDatabaseName = databaseName;
+			ScenarioContext.Current.Set<IConfiguration>(configuration);
         }
 
 		[Given(@"I open a connection to the database")]
 		[When(@"I open a connection to the database")]
         public void WhenIOpenAConnectionToTheDatabase()
         {
-			_context = new SolarAppContext(_configuration);
+			var configuration = ScenarioContext.Current.Get<IConfiguration>();
+			_context = new SolarAppContext(configuration);
         }
 
         [When(@"I persist the setting to the database")]
         public void WhenIPersistTheSettingToTheDatabase()
         {
             _context.InsertSetting(_setting);
-			_dataItemsToTrack.Add(new DataItem(_setting));
+			var dataItemsToTrack = ScenarioContext.Current.Get<List<DataItem>>("DataItemsToTrack");
+			dataItemsToTrack.Add(new DataItem(_setting));
+			ScenarioContext.Current.Set<List<DataItem>>(dataItemsToTrack, "DataItemsToTrack");
 		}
         
         [Then(@"the random value should be retrievable from the database")]
@@ -121,20 +121,24 @@ namespace SolarApp.DataProcessor.Integration.Tests
 			var dataPoint = energyReadingData.CreateDataPoint();
 			dataPoint.Id = energyReadingData.FileName;
 			_context.InsertDataPoint(dataPoint);
-			_dataItemsToTrack.Add(new DataItem(dataPoint));
+			var dataItemsToTrack = ScenarioContext.Current.Get<List<DataItem>>("DataItemsToTrack");
+			dataItemsToTrack.Add(new DataItem(dataPoint));
+			ScenarioContext.Current.Set<List<DataItem>>(dataItemsToTrack, "DataItemsToTrack");
 		}
 
 		[Then(@"I cannot retrieve a data point")]
 		public void ThenICannotRetrieveADataPoint()
 		{
-			var dataPoint = _context.FindDataPointById(_dataItemsToTrack.First().Id);
+			var dataItemsToTrack = ScenarioContext.Current.Get<List<DataItem>>("DataItemsToTrack");
+			var dataPoint = _context.FindDataPointById(dataItemsToTrack.First().Id);
 			Assert.IsNull(dataPoint, "Data point has been found in the database");
 		}
 
 		[Then(@"I can retrieve failed data with text: '(.*)'")]
 		public void ThenICanRetrieveFailedDataWithText(string dataToFind)
 		{
-			var failedData = _context.FindFailedDataById(_dataItemsToTrack.First().Id);
+			var dataItemsToTrack = ScenarioContext.Current.Get<List<DataItem>>("DataItemsToTrack");
+			var failedData = _context.FindFailedDataById(dataItemsToTrack.First().Id);
 			Assert.IsNotNull(failedData, "Failed data has not been found");
 			Assert.IsTrue(failedData.Data.Contains(dataToFind), string.Format("Failed data did not contained expected value {0}", dataToFind));
 		}
@@ -143,7 +147,8 @@ namespace SolarApp.DataProcessor.Integration.Tests
 		public void ThenICanRetrieveADataPointWithValues(Table table)
 		{
 			var energyReadingData = table.CreateInstance<EnergyReadingData>();
-			var dataPoint = _context.FindDataPointById(_dataItemsToTrack.First().Id);
+			var dataItemsToTrack = ScenarioContext.Current.Get<List<DataItem>>("DataItemsToTrack");
+			var dataPoint = _context.FindDataPointById(dataItemsToTrack.First().Id);
 			var retrievedEnergyReadingData = dataPoint.CreateEnergyReading();
 			Assert.IsTrue(retrievedEnergyReadingData.Timestamp - energyReadingData.Timestamp < new TimeSpan(0, 5, 0), "Timestamp is incorrect");
 			Assert.AreEqual(energyReadingData.DayEnergy, retrievedEnergyReadingData.DayEnergy);
@@ -160,7 +165,9 @@ namespace SolarApp.DataProcessor.Integration.Tests
 				var dataPoint = energyReading.CreateDataPoint();
 				dataPoint.Id = Guid.NewGuid().ToString();
 				_context.InsertDataPoint(dataPoint);
-				_dataItemsToTrack.Add(new DataItem(dataPoint));
+				var dataItemsToTrack = ScenarioContext.Current.Get<List<DataItem>>("DataItemsToTrack");
+				dataItemsToTrack.Add(new DataItem(dataPoint));
+				ScenarioContext.Current.Set<List<DataItem>>(dataItemsToTrack, "DataItemsToTrack");
 			}
 		}
 
@@ -199,14 +206,16 @@ namespace SolarApp.DataProcessor.Integration.Tests
 			var energyReadingData = ScenarioContext.Current.Get<EnergyReadingData>("EnergyReadingData");
 			var dataPoint = energyReadingData.CreateDataPoint();
 			dataPoint.Id = energyReadingData.FileName;
-			var filePath = Path.Combine(_configuration.NewFilePollPath, energyReadingData.FileName);
+			var configuration = ScenarioContext.Current.Get<IConfiguration>();
+			var filePath = Path.Combine(configuration.NewFilePollPath, energyReadingData.FileName);
 			dataPoint.SaveAsJson(filePath);
 		}
 
         [Given(@"I have a file containing garbage: '(.*)'")]
         public void GivenIHaveAFileContainingGarbage(string text)
         {
-            var filePath = Path.Combine(_configuration.NewFilePollPath, string.Format("Log{0}.log", Guid.NewGuid().ToString()));
+			var configuration = ScenarioContext.Current.Get<IConfiguration>();
+            var filePath = Path.Combine(configuration.NewFilePollPath, string.Format("Log{0}.log", Guid.NewGuid().ToString()));
             File.WriteAllText(filePath, text);
         }
 
@@ -220,7 +229,9 @@ namespace SolarApp.DataProcessor.Integration.Tests
 			{
 				var dataPoint = new DataPoint();
 				dataPoint.Id = dataPointId;
-				_dataItemsToTrack.Add(new DataItem(dataPoint));
+				var dataItemsToTrack = ScenarioContext.Current.Get<List<DataItem>>("DataItemsToTrack");
+				dataItemsToTrack.Add(new DataItem(dataPoint));
+				ScenarioContext.Current.Set<List<DataItem>>(dataItemsToTrack, "DataItemsToTrack");
 			}
 		}
 

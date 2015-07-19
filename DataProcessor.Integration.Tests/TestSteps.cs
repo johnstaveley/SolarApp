@@ -9,6 +9,7 @@ using System.Linq;
 using SolarApp.DataProcessor.Tests.Helper;
 using SolarApp.DataProcessor.Utility.Interfaces;
 using SolarApp.DataProcessor.Utility.Classes;
+using System.Collections.Generic;
 
 namespace SolarApp.DataProcessor.Integration.Tests
 {
@@ -16,30 +17,46 @@ namespace SolarApp.DataProcessor.Integration.Tests
     public class DownloadingDataFromTheDropPointSteps
     {
 
-		private IConfiguration _configuration;
-        private IFileSystem _fileSystem = new FileSystem();
-        private Ftp _ftp { get; set; }
+		[BeforeScenario]
+		public void ScenarioSetup()
+		{
+			IConfiguration configuration = new SolarApp.DataProcessor.Utility.Classes.Configuration();
+			if (!Directory.Exists(configuration.NewFilePollPath))
+			{
+				Directory.CreateDirectory(configuration.NewFilePollPath);
+			}
+			ScenarioContext.Current.Set<IConfiguration>(configuration);
+			ScenarioContext.Current.Set<List<DataItem>>(new List<DataItem>(), "DataItemsToTrack");
+			var fileSystem = new FileSystem();
+			ScenarioContext.Current.Set<IFileSystem>(fileSystem);
+			ScenarioContext.Current.Set<IFtp>(new Ftp(configuration, fileSystem));
+
+		}
 
         [Given(@"I have the credentials of the ftp site")]
         public void GivenIHaveTheCredentialsOfTheFtpSite()
         {
-			_configuration = new SolarApp.DataProcessor.Utility.Classes.Configuration();
-			if (string.IsNullOrEmpty(_configuration.FtpUsername)) { Assert.Inconclusive("ftp username not set"); }
-			if (string.IsNullOrEmpty(_configuration.FtpPassword)) { Assert.Inconclusive("ftp password not set"); }
-			if (string.IsNullOrEmpty(_configuration.FtpDestinationUrl)) { Assert.Inconclusive("ftp url not set"); }
+			var configuration = ScenarioContext.Current.Get<IConfiguration>();
+			if (string.IsNullOrEmpty(configuration.FtpUsername)) { Assert.Inconclusive("ftp username not set"); }
+			if (string.IsNullOrEmpty(configuration.FtpPassword)) { Assert.Inconclusive("ftp password not set"); }
+			if (string.IsNullOrEmpty(configuration.FtpDestinationUrl)) { Assert.Inconclusive("ftp url not set"); }
 		}
         
         [When(@"I access the site")]
         public void WhenIAccessTheSite()
         {
-			_ftp = new Ftp(_configuration, _fileSystem);
+			var configuration = ScenarioContext.Current.Get<IConfiguration>();
+			var fileSystem = ScenarioContext.Current.Get<IFileSystem>();
+			var ftp = ScenarioContext.Current.Get<IFtp>();
+			ftp = new Ftp(configuration, fileSystem);
         }
 
         [When(@"I do a directory listing")]
         [Then(@"I do a directory listing")]
         public void ThenIDoADirectoryListing()
         {
-            var logFiles = _ftp.GetDirectoryListing();
+			var ftp = ScenarioContext.Current.Get<IFtp>();
+			var logFiles = ftp.GetDirectoryListing();
             ScenarioContext.Current.Add("LogFileNames", logFiles);
         }
 
@@ -55,9 +72,10 @@ namespace SolarApp.DataProcessor.Integration.Tests
         [Given(@"I want to navigate to a subdirectory of the ftp site '(.*)'")]
         public void GivenIWantToNavigateToASubdirectoryOfTheFtpSite(string ftpSubDirectory)
         {
-			Uri baseUri = new Uri(_configuration.FtpDestinationUrl);
+			var configuration = ScenarioContext.Current.Get<IConfiguration>();
+			Uri baseUri = new Uri(configuration.FtpDestinationUrl);
             Uri uriWithSubDirectory = new Uri(baseUri, ftpSubDirectory + "/");
-			_configuration.FtpDestinationUrl = uriWithSubDirectory.AbsoluteUri.ToString();
+			configuration.FtpDestinationUrl = uriWithSubDirectory.AbsoluteUri.ToString();
         }
 
         [Given(@"the local temp directory '(.*)' is empty")]
@@ -72,14 +90,16 @@ namespace SolarApp.DataProcessor.Integration.Tests
         [When(@"there is a file '(.*)' waiting with text '(.*)'")]
         public void GivenThereIsAFileWaiting(string fileName, string contents)
         {
-            _ftp.Upload(fileName, contents);
+			var ftp = ScenarioContext.Current.Get<IFtp>();
+            ftp.Upload(fileName, contents);
         }
 
         [Then(@"I download the file '(.*)' to a local directory")]
         public void ThenIDownloadTheFileToALocalDirectory(string fileToDownload)
         {
             var localStoragePath = ScenarioContext.Current.Get<string>("LocalStoragePath");
-            _ftp.Download(fileToDownload, localStoragePath);
+			var ftp = ScenarioContext.Current.Get<IFtp>();
+            ftp.Download(fileToDownload, localStoragePath);
         }
 
         [Then(@"The file '(.*)' is stored in the '(.*)' directory")]
@@ -94,7 +114,8 @@ namespace SolarApp.DataProcessor.Integration.Tests
         [When(@"I delete the file '(.*)'")]
         public void WhenIDeleteTheFile(string fileToDelete)
         {
-            _ftp.Delete(fileToDelete);
+			var ftp = ScenarioContext.Current.Get<IFtp>();
+            ftp.Delete(fileToDelete);
         }
 
         [Then(@"The file list does not contain the file '(.*)'")]

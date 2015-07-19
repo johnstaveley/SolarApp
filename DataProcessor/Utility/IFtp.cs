@@ -7,5 +7,6 @@ namespace SolarApp.DataProcessor.Utility
 		void Delete(string fileToDelete);
 		void Download(string fileToDownload, string localStoragePath);
 		string[] GetDirectoryListing();
+		void Upload(string fileName, string contents);
 	}
 }

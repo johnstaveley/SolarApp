@@ -9,6 +9,8 @@ namespace SolarApp.DataProcessor.Tests.Helper
 	{
 		Unknown = 0,
 		Setting = 1,
-		DataPoint = 2
+		DataPoint = 2,
+		WeatherForecast = 3,
+		WeatherObservation = 4
 	}
 }
