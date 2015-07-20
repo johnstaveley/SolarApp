@@ -40,8 +40,13 @@ namespace SolarApp.DataProcessor
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[] 
             { 
-                new SolarAppService(container.GetInstance<IConfiguration>(), container.GetInstance<IFileSystem>(), 
-				container.GetInstance<IFtp>(), container.GetInstance<ISolarAppContext>(), container.GetInstance<ITimer>()) 
+                new SolarAppService(
+                    container.GetInstance<IConfiguration>(), 
+                    container.GetInstance<IFileSystem>(), 
+				    container.GetInstance<IFtp>(), 
+                    container.GetInstance<ISolarAppContext>(), 
+                    container.GetInstance<IServices>(), 
+                    container.GetInstance<ITimer>()) 
             };
             ServiceBase.Run(ServicesToRun);
 #endif

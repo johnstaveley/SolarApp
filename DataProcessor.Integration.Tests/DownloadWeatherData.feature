@@ -1,7 +1,7 @@
 ﻿Feature: DownloadWeatherData
 	In order to better predict energy production
 	As an automated system
-	I want to download a new weather forecast for the day
+	I want to download a weather forecast and observation
 
 Scenario: Download forecast data from the Met office and store in the database
 	Given I have credentials to the met office data point system

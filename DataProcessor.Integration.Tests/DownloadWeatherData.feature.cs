@@ -33,7 +33,7 @@ namespace SolarApp.DataProcessor.Integration.Tests
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
             TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "DownloadWeatherData", "In order to better predict energy production\r\nAs an automated system\r\nI want to d" +
-                    "ownload a new weather forecast for the day", ProgrammingLanguage.CSharp, ((string[])(null)));
+                    "ownload a weather forecast and observation", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
