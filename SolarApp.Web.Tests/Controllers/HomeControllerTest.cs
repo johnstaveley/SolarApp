@@ -12,7 +12,7 @@ namespace SolarApp.Web.Unit.Tests.Controllers
 	[TestFixture]
 	public class HomeControllerTest
 	{
-		[Test]
+		[Test, Ignore]
 		public void Index()
 		{
 			// Arrange
