@@ -7,7 +7,7 @@ using NUnit.Framework;
 using SolarApp.Web;
 using SolarApp.Web.Controllers;
 
-namespace SolarApp.Web.Tests.Controllers
+namespace SolarApp.Web.Unit.Tests.Controllers
 {
 	[TestFixture]
 	public class HomeControllerTest
