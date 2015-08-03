@@ -34,7 +34,7 @@ Scenario: Calculates the average reading as null for a specified hour across two
 	| 2015-06-15 09:33:00 | 200            | Excluded |
 	| 2015-06-14 09:46:00 | 300            | Excluded |
 	| 2015-06-15 10:00:01 | 2500           | Excluded |
-	When I calculate the mean for hour 11
+	When I calculate the mean for hour 8
 	Then The calculated average value is null
 
 Scenario: Calculates the latest reading across two days where data is provided

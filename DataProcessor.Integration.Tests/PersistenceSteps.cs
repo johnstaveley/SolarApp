@@ -140,7 +140,9 @@ namespace SolarApp.DataProcessor.Integration.Tests
 		public void WhenICalculateTheMeanForHour(int hour)
 		{
 			var context = ScenarioContext.Current.Get<ISolarAppContext>();
-			double? average = context.GetAverageOutputForHour(hour);
+            var now = DateTime.Now;
+            var hoursInUtc = now.AddHours(-now.Hour).AddHours(hour).ToUniversalTime().Hour;
+            double? average = context.GetAverageOutputForHour(hoursInUtc);
 			ScenarioContext.Current.Set<double?>(average, "CalculatedAverage");
 		}
 

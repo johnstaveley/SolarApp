@@ -200,7 +200,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 31
  testRunner.Given("I have a data points with values:", ((string)(null)), table4, "Given ");
 #line 37
- testRunner.When("I calculate the mean for hour 11", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I calculate the mean for hour 8", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 38
  testRunner.Then("The calculated average value is null", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
