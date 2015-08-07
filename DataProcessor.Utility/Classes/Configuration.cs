@@ -27,7 +27,11 @@ namespace SolarApp.DataProcessor.Utility.Classes
 
 		public Configuration()
 		{
-            PollIntervalSeconds = int.Parse(System.Configuration.ConfigurationManager.AppSettings["PollIntervalSeconds"]);
+            PollIntervalSeconds = 60;
+            if (System.Configuration.ConfigurationManager.AppSettings["PollIntervalSeconds"] != null)
+            {
+                PollIntervalSeconds = int.Parse(System.Configuration.ConfigurationManager.AppSettings["PollIntervalSeconds"]);
+            }
 			MongoDatabaseName = System.Configuration.ConfigurationManager.AppSettings["DatabaseName"];
 			NewFilePollPath = System.Configuration.ConfigurationManager.AppSettings["NewFilePollPath"];
 			MetOfficeUrl = System.Configuration.ConfigurationManager.AppSettings["MetOfficeUrl"];
