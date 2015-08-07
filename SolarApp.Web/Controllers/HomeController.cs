@@ -24,6 +24,7 @@ namespace SolarApp.Web.Controllers
 		public ActionResult Index()
 		{
 			ViewBag.LatestMeterReading = _context.GetLatestEnergyReading();
+            ViewBag.Environment = _configuration.Environment;
 			return View();
 		}
 

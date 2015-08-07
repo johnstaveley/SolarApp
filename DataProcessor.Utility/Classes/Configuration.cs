@@ -12,7 +12,8 @@ namespace SolarApp.DataProcessor.Utility.Classes
 	public class Configuration : IConfiguration
 	{
 
-		public string NewFilePollPath { get; set; }
+        public string Environment { get; set; }
+        public string NewFilePollPath { get; set; }
 		public string MetOfficeApiKey { get; set; }
 		public string MetOfficeForecastLocationId { get; set; }
 		public string MetOfficeObservationLocationId { get; set; }
@@ -27,6 +28,11 @@ namespace SolarApp.DataProcessor.Utility.Classes
 
 		public Configuration()
 		{
+            Environment = "Dev";
+            if (System.Configuration.ConfigurationManager.AppSettings["Environment"] != null)
+            {
+                Environment = System.Configuration.ConfigurationManager.AppSettings["Environment"];
+            }
             PollIntervalSeconds = 60;
             if (System.Configuration.ConfigurationManager.AppSettings["PollIntervalSeconds"] != null)
             {

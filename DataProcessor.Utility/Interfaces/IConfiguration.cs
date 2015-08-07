@@ -4,7 +4,8 @@ namespace SolarApp.DataProcessor.Utility.Interfaces
 {
 	public interface IConfiguration
 	{
-		string NewFilePollPath { get; set; }
+        string Environment { get; set; }
+        string NewFilePollPath { get; set; }
 		string MetOfficeApiKey { get; set; }
 		string MetOfficeForecastLocationId { get; set; }
 		string MetOfficeObservationLocationId { get; set; }
