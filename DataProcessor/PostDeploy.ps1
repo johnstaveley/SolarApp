@@ -6,7 +6,6 @@ function RemoveOldReleases {
 
 function CleanUp{
 	Write-Host ****** Removing config transform files from release ******
-	#Remove-Item *.config -exclude *.exe.config, log4net.config | Write-Host
 	Remove-Item *.config -exclude *.exe.config | Write-Host
 }
 
