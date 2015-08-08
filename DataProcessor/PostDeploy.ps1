@@ -1,9 +1,3 @@
-function InstallService {
-	Import-Module ".\Deployment\PScripts\ServiceManagement.psm1"
-	$exe = Get-Item -Path .\*.SolarApp.DataProcessor.exe
-	$fullPath = $exe.FullName
-	Install-WindowsService -ServiceName $ServiceName -ServiceUser $ServiceUser -ServicePassword $ServicePassword -FullPath $fullPath -PathToDeploymentScripts .\Deployment\Executables
-}
 
 function RemoveOldReleases {
 	Import-Module ".\Deployment\PScripts\ReleaseManagement.psm1"
@@ -17,7 +11,6 @@ function CleanUp{
 }
 
 try{
-	InstallService
 	CleanUp
 	RemoveOldReleases
 } catch {
