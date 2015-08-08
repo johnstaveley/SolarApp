@@ -23,7 +23,15 @@ namespace SolarApp.Web.Controllers
 
 		public ActionResult Index()
 		{
-			ViewBag.LatestMeterReading = _context.GetLatestEnergyReading();
+
+            try
+            {
+                ViewBag.LatestMeterReading = _context.GetLatestEnergyReading();
+            }
+            catch
+            {
+                ViewBag.LatestMeterReading = "Database unavailable";
+            }
             ViewBag.Environment = _configuration.Environment;
 			return View();
 		}
