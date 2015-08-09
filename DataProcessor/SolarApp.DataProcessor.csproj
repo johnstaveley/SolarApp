@@ -96,28 +96,31 @@
     <Content Include="App.config">
       <SubType>Designer</SubType>
       <TransformOnBuild>true</TransformOnBuild>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App.Debug.config">
       <DependentUpon>App.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App.Integration.config">
       <DependentUpon>App.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App.Production.config">
       <DependentUpon>App.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App.Release.config">
       <DependentUpon>App.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="PreDeploy.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="PostDeploy.ps1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
