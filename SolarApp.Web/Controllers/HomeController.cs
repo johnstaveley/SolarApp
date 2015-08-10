@@ -27,6 +27,7 @@ namespace SolarApp.Web.Controllers
             try
             {
                 ViewBag.LatestMeterReading = _context.GetLatestEnergyReading();
+                ViewBag.LastRunDate = _context.FindSettingById("LastRunDate").Value;
             }
             catch
             {
