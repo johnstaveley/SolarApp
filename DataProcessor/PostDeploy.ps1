@@ -10,7 +10,7 @@ function CleanUp{
 }
 
 try{
-	#CleanUp
+	CleanUp
 	RemoveOldReleases
 } catch {
 	"Failed to run script"

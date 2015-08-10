@@ -1,2 +1,1 @@
-#Copy-Item App.config SolarApp.DataProcessor.exe.config
-Write-Host "Yes I'm doing some stuff"
+Copy-Item App.Config SolarApp.Dataprocessor.exe.config
