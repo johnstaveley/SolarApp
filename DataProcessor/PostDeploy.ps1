@@ -11,7 +11,7 @@ function CleanUp{
 
 try{
 	CleanUp
-	RemoveOldReleases
+	#RemoveOldReleases
 } catch {
 	"Failed to run script"
 	Write-Host $_.Exception.Message  
