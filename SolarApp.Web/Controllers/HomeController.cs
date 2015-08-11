@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using SolarApp.Persistence;
 using SolarApp.DataProcessor.Utility.Interfaces;
 using SolarApp.DataProcessor.Utility.Classes;
+using SolarApp.Web.ViewModel;
 
 namespace SolarApp.Web.Controllers
 {
@@ -24,17 +25,14 @@ namespace SolarApp.Web.Controllers
 		public ActionResult Index()
 		{
 
-            try
-            {
-                ViewBag.LatestMeterReading = _context.GetLatestEnergyReading();
-                ViewBag.LastRunDate = _context.FindSettingById("LastRunDate").Value;
+            SystemStateViewModel viewModel;
+            
+            if (_context.IsDatabasePresent) {
+                viewModel = new SystemStateViewModel(_context.FindSettingById("LastRunDate").Value, _context.GetLatestEnergyReading(), _configuration.Environment);
+            } else {
+                viewModel = new SystemStateViewModel("", null, _configuration.Environment);
             }
-            catch
-            {
-                ViewBag.LatestMeterReading = "Database unavailable";
-            }
-            ViewBag.Environment = _configuration.Environment;
-			return View();
+			return View(viewModel);
 		}
 
 		public ActionResult About()

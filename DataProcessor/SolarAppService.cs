@@ -39,6 +39,7 @@ namespace SolarApp.DataProcessor
 
         protected override void OnStart(string[] args)
         {
+            this.RequestAdditionalTime(30000);
 			Init();
         }
 
