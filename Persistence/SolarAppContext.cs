@@ -34,6 +34,30 @@ namespace SolarApp.Persistence
 			Database = server.GetDatabase(configuration.MongoDatabaseName);
 		}
 
+		public bool IsDatabasePresent
+		{
+			get
+			{
+				try
+				{
+					var ignore = Database.CollectionExists("DataPoints");
+					return true;
+				}
+				catch
+				{
+					return false;
+				}
+			}
+		}
+		public bool IsDatabaseSeeded { 
+			get 
+			{
+				var lastRunDate = this.FindSettingById("LastRunDate");
+				if (lastRunDate == null) return false;
+				return true;
+			}
+		}
+
 		public void SeedDatabase()
 		{
 

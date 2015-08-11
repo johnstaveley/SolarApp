@@ -24,6 +24,8 @@ namespace SolarApp.Persistence
 		void InsertSetting(Setting setting);
 		void InsertWeatherForecast(WeatherForecast weatherForecast);
 		void InsertWeatherObservation(WeatherObservation weatherObservation);
+		bool IsDatabasePresent { get; }
+		bool IsDatabaseSeeded { get; }
 		void SeedDatabase();
 		MongoDB.Driver.MongoCollection<Setting> Settings { get; }
 		void UpdateSetting(Setting setting);

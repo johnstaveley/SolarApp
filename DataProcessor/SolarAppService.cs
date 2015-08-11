@@ -47,7 +47,6 @@ namespace SolarApp.DataProcessor
 			// TODO: Start timer that triggers events
 			_timer.Interval = _configuration.PollIntervalSeconds * 1000;
 			_timer.Start();
-			_context.SeedDatabase();
 		}
 
         protected override void OnStop()
@@ -62,15 +61,25 @@ namespace SolarApp.DataProcessor
 
 			try
 			{
-                var ftpFileProcessor = new FtpFileProcessor(_configuration, _context, _fileSystem, _ftp);
-                ftpFileProcessor.Process();
 
-				var localFileProcessor = new LocalFileProcessor(_configuration, _fileSystem, _context);
-				localFileProcessor.Process();
+				if (_context.IsDatabasePresent)
+				{
 
-				var weatherProcessor = new WeatherProcessor(_configuration, _context, _services);
-				weatherProcessor.GetWeatherForecast();
-				weatherProcessor.GetWeatherObservation();
+					if (!_context.IsDatabaseSeeded)
+					{
+						_context.SeedDatabase();
+					}
+
+					var ftpFileProcessor = new FtpFileProcessor(_configuration, _context, _fileSystem, _ftp);
+					ftpFileProcessor.Process();
+
+					var localFileProcessor = new LocalFileProcessor(_configuration, _fileSystem, _context);
+					localFileProcessor.Process();
+
+					var weatherProcessor = new WeatherProcessor(_configuration, _context, _services);
+					weatherProcessor.GetWeatherForecast();
+					weatherProcessor.GetWeatherObservation();
+				}
 
 			}
 			catch (Exception ex)
