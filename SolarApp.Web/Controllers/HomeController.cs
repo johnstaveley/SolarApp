@@ -28,7 +28,10 @@ namespace SolarApp.Web.Controllers
             SystemStateViewModel viewModel;
             
             if (_context.IsDatabasePresent) {
-                viewModel = new SystemStateViewModel(_context.FindSettingById("LastRunDate").Value, _context.GetLatestEnergyReading(), _configuration.Environment);
+                viewModel = new SystemStateViewModel(
+                    _context.FindSettingById("LastRunDate").Value, 
+                    _context.GetLatestEnergyReading(), 
+                    _configuration.Environment);
             } else {
                 viewModel = new SystemStateViewModel("", null, _configuration.Environment);
             }

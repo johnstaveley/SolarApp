@@ -12,11 +12,11 @@
     @if (Model.IsDatabaseAvailable)
     {
     <div class="row">
-        <div class="col-md-2">Latest Meter Reading:</div>
+        <div class="col-md-4">Latest Meter Reading:</div>
         <div class="col-md-2">@Html.DisplayTextFor(m => m.LatestMeterReading)</div>
     </div>
     <div class="row">
-        <div class="col-md-2">Last Run Date:</div>
+        <div class="col-md-4">Last Run Date:</div>
         <div class="col-md-2">@Html.DisplayTextFor(m => m.LastRunDate)</div>
     </div>
     }
@@ -25,9 +25,9 @@
     <div class="jumbotron">
         Database Unavailable
     </div>
+    }
     <div class="row">
-        <div class="col-md-2">Environment</div>
+        <div class="col-md-4">Environment</div>
         <div class="col-md-2">@Html.DisplayTextFor(m => m.Environment)</div>
     </div>
-    }
 </div>
