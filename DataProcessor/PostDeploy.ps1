@@ -1,8 +1,8 @@
 
-function RemoveOldReleases {
-	Import-Module ".\Deployment\PScripts\ReleaseManagement.psm1"
-	Remove-Releases -ReleaseRoot $ServiceLocation -IsSharedService $false
-}
+#function RemoveOldReleases {
+#	Import-Module ".\Deployment\PScripts\ReleaseManagement.psm1"
+#	Remove-Releases -ReleaseRoot $ServiceLocation -IsSharedService $false
+#}
 
 function CleanUp{
 	Write-Host ****** Removing config transform files from release ******

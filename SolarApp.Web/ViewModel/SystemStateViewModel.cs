@@ -23,7 +23,7 @@ namespace SolarApp.Web.ViewModel
         public SystemStateViewModel(string lastRunDate, DateTime? latestMeterReading, string environment)
         {
             LastRunDate = lastRunDate;
-            LatestMeterReading = (latestMeterReading.HasValue ? latestMeterReading.Value.ToString() : "None");
+            LatestMeterReading = (latestMeterReading.HasValue ? latestMeterReading.Value.ToString("dd/MM/yyyy HH:mm:ss") : "None");
             Environment = environment;
         }
     }
