@@ -16,10 +16,10 @@ namespace SolarApp.Web.Controllers
 		private ISolarAppContext _context { get; set; }
 		private IConfiguration _configuration { get; set; }
 
-		public HomeController()
+		public HomeController(IConfiguration configuration, ISolarAppContext context)
 		{
-			_configuration = new SolarApp.DataProcessor.Utility.Classes.Configuration();
-			_context = new SolarAppContext(_configuration);
+            _configuration = configuration;
+            _context = context;
 		}
 
 		public ActionResult Index()
@@ -37,11 +37,13 @@ namespace SolarApp.Web.Controllers
                 viewModel = new SystemStateViewModel(
                     _context.FindSettingById("LastRunDate").Value,
                     _context.GetLatestEnergyReading(),
+                    _context.GetNumberOfDataPoints(),
+                    _context.GetNumberOfFailedData(),
                     _configuration.Environment);
             }
             else
             {
-                viewModel = new SystemStateViewModel("", null, _configuration.Environment);
+                viewModel = new SystemStateViewModel("", null, 0, 0,_configuration.Environment);
             }
             return View(viewModel);
         }

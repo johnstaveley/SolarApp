@@ -9,25 +9,32 @@
 <p></p>
 <p></p>
 
-    @if (Model.IsDatabaseAvailable)
-    {
+@if (Model.IsDatabaseAvailable)
+{
+    <div class="row">
+        <div class="col-md-4">Last Run Date:</div>
+        <div class="col-md-3">@Html.DisplayTextFor(m => m.LastRunDate)</div>
+    </div>
     <div class="row">
         <div class="col-md-4">Latest Meter Reading:</div>
         <div class="col-md-3">@Html.DisplayTextFor(m => m.LatestMeterReading)</div>
     </div>
     <div class="row">
-        <div class="col-md-4">Last Run Date:</div>
-        <div class="col-md-3">@Html.DisplayTextFor(m => m.LastRunDate)</div>
+        <div class="col-md-4">Number of data points:</div>
+        <div class="col-md-3">@Html.DisplayTextFor(m => m.NumberOfDataPoints)</div>
     </div>
-    }
-    else
-    {
+    <div class="row">
+        <div class="col-md-4">Number of failed data:</div>
+        <div class="col-md-3">@Html.DisplayTextFor(m => m.NumberOfFailedData)</div>
+    </div>
+}
+else
+{
     <div class="jumbotron">
         Database Unavailable
     </div>
-    }
-    <div class="row">
-        <div class="col-md-4">Environment</div>
-        <div class="col-md-3">@Html.DisplayTextFor(m => m.Environment)</div>
-    </div>
+}
+<div class="row">
+    <div class="col-md-4">Environment</div>
+    <div class="col-md-3">@Html.DisplayTextFor(m => m.Environment)</div>
 </div>

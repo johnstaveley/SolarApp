@@ -17,8 +17,10 @@ namespace SolarApp.Persistence
 		Setting FindSettingById(string id);
 		WeatherForecast FindWeatherForecastById(string id);
 		WeatherObservation FindWeatherObservationById(string id);
-		DateTime? GetLatestEnergyReading();
-		double? GetAverageOutputForHour(int hour);
+        double? GetAverageOutputForHour(int hour);
+        DateTime? GetLatestEnergyReading();
+        long GetNumberOfDataPoints();
+        long GetNumberOfFailedData();
 		void InsertDataPoint(DataPoint dataPoint);
 		void InsertFailedData(FailedData failedData);
 		void InsertSetting(Setting setting);

@@ -68,6 +68,10 @@
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="Rhino.Mocks, Version=3.6.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <HintPath>..\packages\RhinoMocks.3.6.1\lib\net\Rhino.Mocks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -122,6 +126,18 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataProcessor.Utility\SolarApp.Utility.csproj">
+      <Project>{e28ad1bd-7f9e-48d5-8e18-f9f1eb9ac5d9}</Project>
+      <Name>SolarApp.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\SolarApp.Model.csproj">
+      <Project>{4723ab29-155c-4eb8-a545-fc9187dfa4e9}</Project>
+      <Name>SolarApp.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Persistence\SolarApp.Persistence.csproj">
+      <Project>{3c392a7b-fb2a-464c-82a2-e389646c705b}</Project>
+      <Name>SolarApp.Persistence</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SolarApp.Web\SolarApp.Web.csproj">
       <Project>{CC0BFEDD-1BEA-4E35-8F72-2A5B2EA46AEB}</Project>
       <Name>SolarApp.Web</Name>

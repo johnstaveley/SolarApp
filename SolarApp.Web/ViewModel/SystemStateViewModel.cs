@@ -7,11 +7,16 @@ namespace SolarApp.Web.ViewModel
 {
     public class SystemStateViewModel
     {
-        public string LastRunDate {get; set; }
+
+        public string Environment { get; set; }
+        
+        public string LastRunDate { get; set; }
 
         public string LatestMeterReading {get; set; }
 
-        public string Environment { get; set; }
+        public long NumberOfDataPoints { get; set;  }
+
+        public long NumberOfFailedData { get; set; }
 
         public bool IsDatabaseAvailable {
             get 
@@ -20,10 +25,12 @@ namespace SolarApp.Web.ViewModel
                 }
             }
 
-        public SystemStateViewModel(string lastRunDate, DateTime? latestMeterReading, string environment)
+        public SystemStateViewModel(string lastRunDate, DateTime? latestMeterReading, long numberOfDataPoints, long numberOfFailedData, string environment)
         {
             LastRunDate = lastRunDate;
             LatestMeterReading = (latestMeterReading.HasValue ? latestMeterReading.Value.ToString("dd/MM/yyyy HH:mm:ss") : "None");
+            NumberOfDataPoints = numberOfDataPoints;
+            NumberOfFailedData = numberOfFailedData;
             Environment = environment;
         }
     }

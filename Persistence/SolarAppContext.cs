@@ -150,6 +150,11 @@ namespace SolarApp.Persistence
 
 		}
 
+        public long GetNumberOfDataPoints()
+        {
+            return this.DataPoints.Count();
+        }
+
 		public double? GetAverageOutputForHour(int hour)
 		{
 			var aggregate = new AggregateArgs
@@ -248,6 +253,11 @@ namespace SolarApp.Persistence
 		{
 			return this.FailedData.Find(Query.EQ("_id", BsonValue.Create(id))).FirstOrDefault();
 		}
+
+        public long GetNumberOfFailedData()
+        {
+            return this.FailedData.Count();
+        }
 
 		public void InsertFailedData(FailedData failedData)
 		{
