@@ -21,6 +21,7 @@ namespace SolarApp.Persistence
         DateTime? GetLatestEnergyReading();
         long GetNumberOfDataPoints();
         long GetNumberOfFailedData();
+        long GetNumberOfWeatherForecasts();
 		void InsertDataPoint(DataPoint dataPoint);
 		void InsertFailedData(FailedData failedData);
 		void InsertSetting(Setting setting);

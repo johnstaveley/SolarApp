@@ -1,0 +1,30 @@
+﻿@model SystemActionViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+<p></p>
+<div class="row">
+    <div class="col-md-4"><h1>System Status</h1></div>
+</div>
+<p></p>
+<p></p>
+
+@if (Model.IsDatabaseAvailable)
+{
+    <div class="row">
+        <div class="col-md-4">Request Weather Forecast:</div>
+        <div class="col-md-3">@Html.DisplayTextFor(m => m.RequestWeatherForecast)</div>
+        <div class="col-md-2">@Html.ActionLink("Request", "RequestWeatherForecast")</div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">Request Weather Observation:</div>
+        <div class="col-md-3">@Html.DisplayTextFor(m => m.RequestWeatherObservation)</div>
+        <div class="col-md-2">@Html.ActionLink("Request", "RequestWeatherObservation")</div>
+    </div>
+}
+else
+{
+    <div class="jumbotron">
+        Database Unavailable
+    </div>
+}

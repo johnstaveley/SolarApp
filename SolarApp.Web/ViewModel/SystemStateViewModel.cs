@@ -18,6 +18,8 @@ namespace SolarApp.Web.ViewModel
 
         public long NumberOfFailedData { get; set; }
 
+        public long NumberOfWeatherForecasts { get; set; }
+
         public bool IsDatabaseAvailable {
             get 
                 {
@@ -25,12 +27,14 @@ namespace SolarApp.Web.ViewModel
                 }
             }
 
-        public SystemStateViewModel(string lastRunDate, DateTime? latestMeterReading, long numberOfDataPoints, long numberOfFailedData, string environment)
+        public SystemStateViewModel(string lastRunDate, DateTime? latestMeterReading, 
+            long numberOfDataPoints, long numberOfFailedData, long numberOFWeatherForecasts, string environment)
         {
             LastRunDate = lastRunDate;
             LatestMeterReading = (latestMeterReading.HasValue ? latestMeterReading.Value.ToString("dd/MM/yyyy HH:mm:ss") : "None");
             NumberOfDataPoints = numberOfDataPoints;
             NumberOfFailedData = numberOfFailedData;
+            NumberOfWeatherForecasts = numberOFWeatherForecasts;
             Environment = environment;
         }
     }

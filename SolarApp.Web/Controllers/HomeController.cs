@@ -39,11 +39,28 @@ namespace SolarApp.Web.Controllers
                     _context.GetLatestEnergyReading(),
                     _context.GetNumberOfDataPoints(),
                     _context.GetNumberOfFailedData(),
+                    _context.GetNumberOfWeatherForecasts(),
                     _configuration.Environment);
             }
             else
             {
-                viewModel = new SystemStateViewModel("", null, 0, 0,_configuration.Environment);
+                viewModel = new SystemStateViewModel("", null, 0, 0,0, _configuration.Environment);
+            }
+            return View(viewModel);
+        }
+
+        public ActionResult Actions()
+        {
+            SystemActionViewModel viewModel;
+            if (_context.IsDatabasePresent)
+            {
+                string requestWeatherForecast = _context.FindSettingById("RequestWeatherForecast").Value;
+                string requestWeatherObservation = _context.FindSettingById("RequestWeatherObservation").Value;
+                viewModel = new SystemActionViewModel(true, requestWeatherForecast, requestWeatherObservation);
+            }
+            else
+            {
+                viewModel = new SystemActionViewModel(false, "Unknown", "Unknown");
             }
             return View(viewModel);
         }

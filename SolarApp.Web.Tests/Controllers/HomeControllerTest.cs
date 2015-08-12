@@ -48,6 +48,26 @@ namespace SolarApp.Web.Unit.Tests.Controllers
 		}
 
         [Test]
+        public void ActionsShouldShowSystemActionValues()
+        {
+            // Arrange
+            _context.Expect(a => a.FindSettingById("RequestWeatherForecast")).Return(new Setting() { Value = "0" });
+            _context.Expect(a => a.FindSettingById("RequestWeatherObservation")).Return(new Setting() { Value = "1" });
+            _context.Expect(a => a.IsDatabasePresent).Return(true);
+
+            // Act
+            ViewResult result = _controller.Actions() as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+            var viewModel = (SystemActionViewModel)result.Model;
+            Assert.IsNotNull(viewModel);
+            Assert.AreEqual("No", viewModel.RequestWeatherForecast);
+            Assert.AreEqual("Pending", viewModel.RequestWeatherObservation);
+
+        }
+
+        [Test]
         public void StatusShouldShowSystemStatusValues()
         {
             // Arrange
