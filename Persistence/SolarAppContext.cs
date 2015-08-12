@@ -142,7 +142,7 @@ namespace SolarApp.Persistence
 			if (output["latest_reading"] == null) return null;
 			var latestReadingString = output["latest_reading"].ToString();
 			DateTime latestReading;
-			if (DateTime.TryParseExact(latestReadingString, "yyyy-MM-dd hh:mm:ss:fff", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AssumeUniversal, out latestReading))
+			if (DateTime.TryParseExact(latestReadingString, "yyyy-MM-dd HH:mm:ss:fff", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.AssumeUniversal, out latestReading))
 			{
 				return latestReading;
 			}

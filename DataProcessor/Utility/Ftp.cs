@@ -61,13 +61,17 @@ namespace SolarApp.DataProcessor.Utility
             File.WriteAllText(localFilePath, response);
         }
 
+        /// <summary>
+        /// Get a list of all the files in the directory
+        /// </summary>
+        /// <returns></returns>
         public string[] GetDirectoryListing()
         {
 
             FtpWebRequest request = InitialiseConnection();
             request.Method = WebRequestMethods.Ftp.ListDirectory;
             var response = GetResponse(request);
-            return response.Split(new string[] { "\r\n" }, StringSplitOptions.None).Where(s => s != String.Empty).ToArray();
+            return response.Split(new string[] { "\r\n" }, StringSplitOptions.None).Where(s => s != String.Empty && s.Contains(".")).ToArray();
         }
 
         public void Delete(string fileToDelete)

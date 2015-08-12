@@ -1,33 +1,13 @@
-﻿@model SystemStateViewModel
-@{
+﻿@{
     ViewBag.Title = "Home Page";
 }
-
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-
-    @if (Model.IsDatabaseAvailable)
-    {
+<p></p>
+<p></p>
     <div class="row">
-        <div class="col-md-4">Latest Meter Reading:</div>
-        <div class="col-md-2">@Html.DisplayTextFor(m => m.LatestMeterReading)</div>
+        <div class="col-md-4"><h1>Welcome</h1></div>
     </div>
-    <div class="row">
-        <div class="col-md-4">Last Run Date:</div>
-        <div class="col-md-2">@Html.DisplayTextFor(m => m.LastRunDate)</div>
-    </div>
-    }
-    else
-    {
-    <div class="jumbotron">
-        Database Unavailable
-    </div>
-    }
-    <div class="row">
-        <div class="col-md-4">Environment</div>
-        <div class="col-md-2">@Html.DisplayTextFor(m => m.Environment)</div>
-    </div>
+<p></p>
+<p></p>
+<div class="row">
+    <div class="col-md-4">This is an application for making the best use of the energy in your solar panels</div>
 </div>

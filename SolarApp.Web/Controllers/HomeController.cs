@@ -24,19 +24,27 @@ namespace SolarApp.Web.Controllers
 
 		public ActionResult Index()
 		{
+			return View();
+		}
+
+        public ActionResult Status()
+        {
 
             SystemStateViewModel viewModel;
-            
-            if (_context.IsDatabasePresent) {
+
+            if (_context.IsDatabasePresent)
+            {
                 viewModel = new SystemStateViewModel(
-                    _context.FindSettingById("LastRunDate").Value, 
-                    _context.GetLatestEnergyReading(), 
+                    _context.FindSettingById("LastRunDate").Value,
+                    _context.GetLatestEnergyReading(),
                     _configuration.Environment);
-            } else {
+            }
+            else
+            {
                 viewModel = new SystemStateViewModel("", null, _configuration.Environment);
             }
-			return View(viewModel);
-		}
+            return View(viewModel);
+        }
 
 		public ActionResult About()
 		{
