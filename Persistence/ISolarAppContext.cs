@@ -32,6 +32,7 @@ namespace SolarApp.Persistence
 		bool IsDatabaseSeeded { get; }
 		void SeedDatabase();
 		MongoDB.Driver.MongoCollection<Setting> Settings { get; }
+        void UpdateLastRunDate();
 		void UpdateSetting(Setting setting);
 		MongoDB.Driver.MongoCollection<WeatherForecast> WeatherForecast { get; }
 		MongoDB.Driver.MongoCollection<WeatherObservation> WeatherObservation { get; }

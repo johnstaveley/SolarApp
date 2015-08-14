@@ -76,19 +76,24 @@ namespace SolarApp.Persistence
 			if (!Database.CollectionExists("Settings"))
 			{
 				Database.CreateCollection("Settings");
-				var requestWeatherForecastSetting = new Setting();
-				requestWeatherForecastSetting.Id = "RequestWeatherForecast";
-				requestWeatherForecastSetting.Value = "0";
-				this.InsertSetting(requestWeatherForecastSetting);
-				var requestWeatherObservationSetting = new Setting();
-				requestWeatherObservationSetting.Id = "RequestWeatherObservation";
-				requestWeatherObservationSetting.Value = "0";
-				this.InsertSetting(requestWeatherObservationSetting);
-			}
-			var setting = new Setting();
-			setting.Id = "LastRunDate";
-			setting.Value = DateTime.Now.ToString();
-			this.UpdateSetting(setting);
+            }
+            var setting = this.FindSettingById("RequestWeatherForecast");
+            if (setting == null)
+            {
+                var requestWeatherForecastSetting = new Setting();
+                requestWeatherForecastSetting.Id = "RequestWeatherForecast";
+                requestWeatherForecastSetting.Value = "0";
+                this.InsertSetting(requestWeatherForecastSetting);
+            }
+            setting = this.FindSettingById("RequestWeatherObservation");
+            if (setting == null)
+            {
+                var requestWeatherObservationSetting = new Setting();
+                requestWeatherObservationSetting.Id = "RequestWeatherObservation";
+                requestWeatherObservationSetting.Value = "0";
+                this.InsertSetting(requestWeatherObservationSetting);
+            }
+            this.UpdateLastRunDate();
 		}
 
 		#endregion
@@ -236,6 +241,13 @@ namespace SolarApp.Persistence
 			setting = newSetting;
 			this.Settings.Save(setting);
 		}
+
+        public void UpdateLastRunDate()
+        {
+            var setting = this.FindSettingById("LastRunDate");
+            setting.Value = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+            this.UpdateSetting(setting);
+        }
 
 		#endregion
 

@@ -80,6 +80,8 @@ namespace SolarApp.DataProcessor
 					var weatherProcessor = new WeatherProcessor(_configuration, _context, _services);
 					weatherProcessor.GetWeatherForecast();
 					weatherProcessor.GetWeatherObservation();
+
+                    _context.UpdateLastRunDate();
 				}
 
 			}
@@ -91,5 +93,6 @@ namespace SolarApp.DataProcessor
 			_timer.Enabled = true;
 			_idle.Set();
 		}
+
     }
 }
