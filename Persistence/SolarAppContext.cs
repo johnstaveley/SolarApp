@@ -328,7 +328,13 @@ namespace SolarApp.Persistence
 			this.WeatherObservation.Remove(Query.EQ("_id", BsonValue.Create(id)));
 		}
 
+        public long GetNumberOfWeatherObservations()
+        {
+            return this.WeatherObservation.Count();
+        }
+
 		#endregion
+
 	}
 }
 

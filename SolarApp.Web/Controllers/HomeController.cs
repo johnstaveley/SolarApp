@@ -40,11 +40,12 @@ namespace SolarApp.Web.Controllers
                     _context.GetNumberOfDataPoints(),
                     _context.GetNumberOfFailedData(),
                     _context.GetNumberOfWeatherForecasts(),
+                    _context.GetNumberOfWeatherObservations(),
                     _configuration.Environment);
             }
             else
             {
-                viewModel = new SystemStateViewModel("", null, 0, 0,0, _configuration.Environment);
+                viewModel = new SystemStateViewModel("", null, 0, 0,0,0,_configuration.Environment);
             }
             return View(viewModel);
         }
@@ -63,6 +64,24 @@ namespace SolarApp.Web.Controllers
                 viewModel = new SystemActionViewModel(false, "Unknown", "Unknown");
             }
             return View(viewModel);
+        }
+
+        // TODO: CHange this to a HttpPOST
+        public ActionResult RequestWeatherForecast()
+        {
+            var requestWeatherForecast = _context.FindSettingById("RequestWeatherForecast");
+            requestWeatherForecast.Value = "1";
+            _context.UpdateSetting(requestWeatherForecast);
+            return RedirectToAction("Actions");
+        }
+
+        // TODO: CHange this to a HttpPOST
+        public ActionResult RequestWeatherObservation()
+        {
+            var requestWeatherObservation = _context.FindSettingById("RequestWeatherObservation");
+            requestWeatherObservation.Value = "1";
+            _context.UpdateSetting(requestWeatherObservation);
+            return RedirectToAction("Actions");
         }
 
 		public ActionResult About()
