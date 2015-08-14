@@ -48,6 +48,44 @@ namespace SolarApp.Web.Unit.Tests.Controllers
 		}
 
         [Test]
+        public void RequestWeatherForecastActionShouldChangeSettingInDatabase()
+        {
+            // Arrange
+            _context.Expect(a => a.FindSettingById("RequestWeatherForecast")).Return(new Setting() { Value = "0", Id = "RequestWeatherForecast" });
+
+            // Act
+            var result = _controller.RequestWeatherForecast();
+
+            // Assert
+            Assert.IsNotNull(result);
+            var redirect = (RedirectToRouteResult)result;
+            Assert.IsTrue(redirect.RouteValues.Any(i => ((string) i.Value) == "Actions"));
+            _context.AssertWasCalled(
+                a => a.UpdateSetting(Arg<Setting>.Matches(
+                    b => b.Id == "RequestWeatherForecast" && b.Value == "1")));
+
+        }
+
+        [Test]
+        public void RequestWeatherObservationActionShouldChangeSettingInDatabase()
+        {
+            // Arrange
+            _context.Expect(a => a.FindSettingById("RequestWeatherObservation")).Return(new Setting() { Value = "0", Id = "RequestWeatherObservation" });
+
+            // Act
+            var result = _controller.RequestWeatherObservation();
+
+            // Assert
+            Assert.IsNotNull(result);
+            var redirect = (RedirectToRouteResult)result;
+            Assert.IsTrue(redirect.RouteValues.Any(i => ((string)i.Value) == "Actions"));
+            _context.AssertWasCalled(
+                a => a.UpdateSetting(Arg<Setting>.Matches(
+                    b => b.Id == "RequestWeatherObservation" && b.Value == "1")));
+
+        }
+
+        [Test]
         public void ActionsShouldShowSystemActionValues()
         {
             // Arrange
@@ -63,7 +101,9 @@ namespace SolarApp.Web.Unit.Tests.Controllers
             var viewModel = (SystemActionViewModel)result.Model;
             Assert.IsNotNull(viewModel);
             Assert.AreEqual("No", viewModel.RequestWeatherForecast);
+            Assert.AreEqual(true, viewModel.CanRequestWeatherForecast);
             Assert.AreEqual("Pending", viewModel.RequestWeatherObservation);
+            Assert.AreEqual(false, viewModel.CanRequestWeatherObservation);
 
         }
 
