@@ -12,7 +12,8 @@ namespace SolarApp.DataProcessor.Utility
 	public class Ftp : SolarApp.DataProcessor.Utility.IFtp
     {
 
-        private string _destinationUrl { get; set; }
+        private string _rootUrl { get; set; }
+		private string _fileUrl { get; set; }
 		private string _username { get; set; }
 		private string _password { get; set; }
         private IFileSystem _fileSystem { get; set; }
@@ -20,7 +21,7 @@ namespace SolarApp.DataProcessor.Utility
         public Ftp(IConfiguration configuration, IFileSystem fileSystem)
         {
 
-			_destinationUrl = configuration.FtpDestinationUrl;
+			_rootUrl = configuration.FtpDestinationUrl;
 			_password = configuration.FtpPassword;
 			_username = configuration.FtpUsername;
             _fileSystem = fileSystem;
@@ -28,12 +29,13 @@ namespace SolarApp.DataProcessor.Utility
 
         private FtpWebRequest InitialiseConnection(string remoteFileName = null)
         {
-            if (!string.IsNullOrEmpty(_destinationUrl)) {
-                Uri baseUri = new Uri(_destinationUrl);
+			_fileUrl = null;
+            if (!string.IsNullOrEmpty(_rootUrl)) {
+                Uri baseUri = new Uri(_rootUrl);
                 Uri modifiedUri = new Uri(baseUri, remoteFileName);
-                _destinationUrl = modifiedUri.AbsoluteUri.ToString();
-            }
-            FtpWebRequest request = (FtpWebRequest) WebRequest.Create(_destinationUrl);
+                _fileUrl = modifiedUri.AbsoluteUri.ToString();
+			}
+			FtpWebRequest request = (FtpWebRequest)WebRequest.Create(_fileUrl ?? _rootUrl);
             request.Credentials = new NetworkCredential(_username, _password);
             return request;
         }
