@@ -273,7 +273,7 @@ this.ScenarioSetup(scenarioInfo);
                         "400",
                         "38"});
             table6.AddRow(new string[] {
-                        "2015-06-16 01:00:00",
+                        "2015-06-16 00:00:01",
                         "50",
                         "1"});
 #line 51

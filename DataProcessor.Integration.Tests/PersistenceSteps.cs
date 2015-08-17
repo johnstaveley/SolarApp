@@ -218,10 +218,11 @@ namespace SolarApp.DataProcessor.Integration.Tests
 		{
 			var expectedResults = table.CreateSet<EnergyOutput>();
 			var actualResults = ScenarioContext.Current.Get<List<EnergyOutput>>("EnergyReadings");
+			Assert.AreEqual(expectedResults.ToList().Count, actualResults.Count, "The number of results received is not correct");
 			foreach (var energyOutput in actualResults)
 			{
 				var expectedOutput = expectedResults.Where(e => e.Timestamp == energyOutput.Timestamp.ToLocalTime()).FirstOrDefault();
-				Assert.IsNotNull(expectedOutput);
+				Assert.IsNotNull(expectedOutput, string.Format("Could not find actual timestamp {0} in expected results", energyOutput.Timestamp.ToLocalTime()));
 				Assert.AreEqual(expectedOutput.CurrentEnergy, energyOutput.CurrentEnergy);
 				Assert.AreEqual(expectedOutput.DayEnergy, energyOutput.DayEnergy);
 			}

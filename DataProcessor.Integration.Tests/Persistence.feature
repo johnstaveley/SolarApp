@@ -55,7 +55,7 @@ Scenario: Calculates the energy output for the period stated
 	| 2015-06-15 09:15:00 | 200            | 15        |
 	| 2015-06-15 09:30:00 | 300            | 27        |
 	| 2015-06-15 09:45:01 | 400            | 38        |
-	| 2015-06-16 01:00:00 | 50             | 1         |
+	| 2015-06-16 00:00:01 | 50             | 1         |
 	When I calculate the energy output for 2015-06-15
 	Then The energy readings returned have values:
 	| Timestamp           | CurrentEnergy  | DayEnergy |
