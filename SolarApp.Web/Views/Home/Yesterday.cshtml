@@ -1,0 +1,28 @@
+﻿@model EnergyReadingsViewModel
+
+@{
+    ViewBag.Title = "Home Page";
+}
+<p></p>
+<div class="row">
+    <div class="col-md-4"><h1>Energy Readings</h1></div>
+</div>
+<p></p>
+<p></p>
+
+@if (Model.IsDatabaseAvailable)
+{
+    foreach (var item in Model.EnergyReadings) { 
+        <div class="row">
+            <div class="col-md-3">@item.Timestamp</div>
+            <div class="col-md-3">@item.CurrentEnergy</div>
+            <div class="col-md-3">@item.DayEnergyInstant</div>
+        </div>
+    }
+}
+else
+{
+    <div class="jumbotron">
+        Database Unavailable
+    </div>
+}

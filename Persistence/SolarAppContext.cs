@@ -190,8 +190,14 @@ namespace SolarApp.Persistence
 			var jsonWriterSettings = new JsonWriterSettings { OutputMode = JsonOutputMode.Shell };
 			var jsonResult = bsonResult.ToJson(jsonWriterSettings);
 			jsonResult = Regex.Replace(jsonResult, "ISODate\\((.{22})\\)", "$1");
-			var mongoResults = JsonConvert.DeserializeObject<List<EnergyOutput>>(jsonResult);
-			return mongoResults;
+			var energyReadings = JsonConvert.DeserializeObject<List<EnergyOutput>>(jsonResult);
+			double lastEnergyProduction = 0;
+			foreach (var energyReading in energyReadings)
+			{
+				energyReading.DayEnergyInstant = energyReading.DayEnergy - lastEnergyProduction;
+				lastEnergyProduction = energyReading.DayEnergy;
+			}
+			return energyReadings;
         }
 
         public double? GetAverageOutputForHour(int hour)

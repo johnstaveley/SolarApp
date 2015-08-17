@@ -189,6 +189,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModel\EnergyReadingsViewModel.cs" />
     <Compile Include="ViewModel\SystemActionViewModel.cs" />
     <Compile Include="ViewModel\SystemStateViewModel.cs" />
   </ItemGroup>
@@ -276,6 +277,7 @@
     </Content>
     <Content Include="Views\Home\Status.cshtml" />
     <Content Include="Views\Home\Actions.cshtml" />
+    <Content Include="Views\Home\Yesterday.cshtml" />
     <None Include="Web.QA.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

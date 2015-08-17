@@ -20,5 +20,8 @@ namespace SolarApp.Model
 		[JsonProperty("day_energy", Required = Required.Always)]
 		public double DayEnergy { get; set; }
 
+		[JsonIgnore]
+		public double DayEnergyInstant { get; set; }
+
     }
 }
