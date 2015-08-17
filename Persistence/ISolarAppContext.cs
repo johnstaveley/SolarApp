@@ -1,5 +1,6 @@
 ﻿using System;
 using SolarApp.Model;
+using System.Collections.Generic;
 
 namespace SolarApp.Persistence
 {
@@ -18,6 +19,7 @@ namespace SolarApp.Persistence
 		WeatherForecast FindWeatherForecastById(string id);
 		WeatherObservation FindWeatherObservationById(string id);
         double? GetAverageOutputForHour(int hour);
+        List<EnergyOutput> GetEnergyOutput(DateTime startDate, DateTime endDate);
         DateTime? GetLatestEnergyReading();
         long GetNumberOfDataPoints();
         long GetNumberOfFailedData();

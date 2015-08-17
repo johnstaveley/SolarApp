@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EnergyOutput.cs" />
     <Compile Include="EnergyReading.cs" />
     <Compile Include="WeatherObservation.cs" />
     <Compile Include="WeatherForecast.cs" />

@@ -46,3 +46,20 @@ Scenario: Calculates the latest reading across two days where data is provided
 	| 2018-06-15 10:00:01 | 2500           |
 	When I calculate the latest date
 	Then The calculated latest date is '2018-06-15 10:00:01'
+
+Scenario: Calculates the energy output for the period stated
+	Given I have a data points with values:
+	| Time                | CurrentReading | DayEnergy |
+	| 2015-06-14 23:59:59 | 50             | 36        |
+	| 2015-06-15 09:00:00 | 100            | 5         |
+	| 2015-06-15 09:15:00 | 200            | 15        |
+	| 2015-06-15 09:30:00 | 300            | 27        |
+	| 2015-06-15 09:45:01 | 400            | 38        |
+	| 2015-06-16 01:00:00 | 50             | 1         |
+	When I calculate the energy output for 2015-06-15
+	Then The energy readings returned have values:
+	| Timestamp           | CurrentEnergy  | DayEnergy |
+	| 2015-06-15 09:00:00 | 100            | 5         |
+	| 2015-06-15 09:15:00 | 200            | 15        |
+	| 2015-06-15 09:30:00 | 300            | 27        |
+	| 2015-06-15 09:45:01 | 400            | 38        |

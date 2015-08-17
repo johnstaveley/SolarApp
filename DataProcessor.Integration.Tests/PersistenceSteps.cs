@@ -19,7 +19,6 @@ namespace SolarApp.DataProcessor.Integration.Tests
     public class PersistenceSteps
     {
 
-
 		[When(@"I calculate the latest date")]
 		public void WhenICalculateTheLatestDate()
 		{
@@ -203,6 +202,32 @@ namespace SolarApp.DataProcessor.Integration.Tests
 				ScenarioContext.Current.Set<List<DataItem>>(dataItemsToTrack, "DataItemsToTrack");
 			}
 		}
+
+        [When(@"I calculate the energy output for (.*)-(.*)-(.*)")]
+        public void WhenICalculateTheEnergyOutputFor(int year, int month, int day)
+        {
+            var startDate = new DateTime(year, month, day);
+            var endDate = startDate.AddDays(1);
+            var context = ScenarioContext.Current.Get<ISolarAppContext>();
+            ScenarioContext.Current.Set<List<EnergyOutput>>(context.GetEnergyOutput(startDate, endDate), "EnergyReadings");
+
+        }
+
+		[Then(@"The energy readings returned have values:")]
+		public void ThenTheEnergyReadingsReturnedHaveValues(Table table)
+		{
+			var expectedResults = table.CreateSet<EnergyOutput>();
+			var actualResults = ScenarioContext.Current.Get<List<EnergyOutput>>("EnergyReadings");
+			foreach (var energyOutput in actualResults)
+			{
+				var expectedOutput = expectedResults.Where(e => e.Timestamp == energyOutput.Timestamp.ToLocalTime()).FirstOrDefault();
+				Assert.IsNotNull(expectedOutput);
+				Assert.AreEqual(expectedOutput.CurrentEnergy, energyOutput.CurrentEnergy);
+				Assert.AreEqual(expectedOutput.DayEnergy, energyOutput.DayEnergy);
+			}
+
+		}
+
 
     }
 }
