@@ -48,6 +48,25 @@ namespace SolarApp.Web.Unit.Tests.Controllers
 		}
 
         [Test]
+        public void YesterdayShouldShowYesterdaysEnergyOutput()
+        {
+            // Arrange
+            _context.Expect(a => a.GetEnergyOutput(Arg<DateTime>.Is.Anything, Arg<DateTime>.Is.Anything)).Return(new List<EnergyOutput>());
+            _context.Expect(a => a.IsDatabasePresent).Return(true);
+
+            // Act
+            ViewResult result = _controller.Yesterday() as ViewResult;
+
+            // Assert
+            Assert.IsNotNull(result);
+            var viewModel = (EnergyReadingsViewModel)result.Model;
+            Assert.IsNotNull(viewModel);
+            Assert.AreEqual(true, viewModel.IsDatabaseAvailable);
+            Assert.IsNotNull(viewModel.EnergyReadings);
+
+        }
+
+        [Test]
         public void RequestWeatherForecastActionShouldChangeSettingInDatabase()
         {
             // Arrange
