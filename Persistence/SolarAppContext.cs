@@ -291,7 +291,14 @@ namespace SolarApp.Persistence
         public void UpdateLastRunDate()
         {
             var setting = this.FindSettingById("LastRunDate");
-            setting.Value = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+			if (setting == null)
+			{
+				setting = new Setting() {
+					Id = "LastRunDate"
+				};
+				this.InsertSetting(setting);
+			}
+			setting.Value = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
             this.UpdateSetting(setting);
         }
 
