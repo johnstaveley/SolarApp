@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using SolarApp.Model;
+using SolarApp.Web.Extensions;
 
 namespace SolarApp.Web.ViewModel
 {
@@ -20,8 +21,9 @@ namespace SolarApp.Web.ViewModel
         {
             IsDatabaseAvailable = isDatabaseAvailable;
 			EnergyReadings = energyReadings;
-			GraphData = string.Format("{0}", energyReadings.Select(e => e.DayEnergyInstant)
-				.Aggregate(new StringBuilder(), (sb, next) => sb.Append(",").Append(next), sb => sb.ToString().Trim(',')));
+            GraphData = energyReadings.Select(e => new { e.Timestamp, e.DayEnergyInstant, e.CurrentEnergy })
+				.Aggregate(new StringBuilder(), (sb, next) => sb.Append("[").Append(next.Timestamp.ToJavaScriptMilliseconds()).Append(",").Append(next.DayEnergyInstant).Append(",").Append(next.CurrentEnergy).Append("],"), sb => sb.ToString().Trim(','));
         }
+
     }
 }
