@@ -50,15 +50,6 @@ namespace SolarApp.Web.Controllers
             return View(viewModel);
         }
 
-		public ActionResult Yesterday()
-		{
-			var startDate = DateTime.Now.AddDays(-1).Date;
-			var endDate = startDate.AddDays(1);
-			var energyReadings = _context.GetEnergyOutput(startDate, endDate);
-			EnergyReadingsViewModel viewModel = new EnergyReadingsViewModel(true, energyReadings);
-			return View(viewModel);
-		}
-
         public ActionResult Actions()
         {
             SystemActionViewModel viewModel;

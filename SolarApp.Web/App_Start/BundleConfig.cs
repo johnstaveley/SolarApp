@@ -8,7 +8,10 @@ namespace SolarApp.Web
 		// For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
 		public static void RegisterBundles(BundleCollection bundles)
 		{
-            bundles.Add(new ScriptBundle("~/bundles/d3").Include("~/Scripts/d3/d3.js"));
+            bundles.Add(new ScriptBundle("~/bundles/d3").Include(
+				"~/Scripts/d3/d3.js",
+				"~/Scripts/moment.js"
+				));
 			bundles.Add(new ScriptBundle("~/bundles/energyreadings").Include("~/app/energyreadings.js"));
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include("~/Scripts/jquery-{version}.js"));
 			bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include("~/Scripts/jquery.validate*"));

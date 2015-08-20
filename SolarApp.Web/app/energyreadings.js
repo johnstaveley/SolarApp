@@ -6,175 +6,189 @@ var dataElement = $('#graphData').data("energyreadings");
 //0 = Time in ticks
 //1 = Energy production (Wh)
 //2 = Instananeous output (W)
-var dataArray = JSON.parse("[" + dataElement + "]");
-var MARGINS = {
-    top: 20,
-    right: 50,
-    bottom: 40,
-    left: 52
-};
+//var dataArray = JSON.parse("[" + dataElement + "]");
 
-// Create canvas to write to
-var svg = d3.select("#graph")
-            .append("svg")
-            .attr("width", WIDTH)   
-            .attr("height", HEIGHT);
+var dataArray; // a global
+var targetDate;
+d3.json("/Report/DayGraphData", function (error, json) {
+    if (error) return console.warn(error);
+    dataArray = json.data;
+    targetDate = new Date(json.targetDate);
+    visualizeit();
+});
 
-var xRange = d3.scale.ordinal()
-    .rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1)
-    .domain(dataArray.map(function (d) {
-        return d[0];
-    }));
+function visualizeit() {
 
-// Create chart 1 - Energy Production (Wh)
-var yRange1 = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
-  d3.max(dataArray, function (d) {
-      return d[1];
-  })]);
+    var MARGINS = {
+        top: 20,
+        right: 55,
+        bottom: 40,
+        left: 52
+    };
 
-var lineFunc1 = d3.svg.line()
-  .x(function (d) {
-      return xRange(d[0]);
-  })
-  .y(function (d) {
-      return yRange1(d[1]) + (MARGINS.top - MARGINS.bottom);
-  })
-  .interpolate('cardinal');
+    // Create canvas to write to
+    var svg = d3.select("#graph")
+                .append("svg")
+                .attr("width", WIDTH)
+                .attr("height", HEIGHT);
 
-svg.append('svg:path')
-  .attr('d', lineFunc1(dataArray))
-  .attr('stroke', 'red')
-  .attr('stroke-width', 2)
-  .attr('fill', 'none');
+    var xRange = d3.scale.ordinal()
+        .rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1)
+        .domain(dataArray.map(function (d) {
+            return d.timestamp;
+        }));
 
-// Create chart 2 - Instananeous output (W)
-var yRange2 = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
-  d3.max(dataArray, function (d) {
-      return d[2];
-  })]);
+    // Create chart 1 - Energy Production (Wh)
+    var yRange1 = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
+      d3.max(dataArray, function (d) {
+          return d.dayEnergyInstant;
+      })]);
 
-var lineFunc2 = d3.svg.line()
-  .x(function (d) {
-      return xRange(d[0]);
-  })
-  .y(function (d) {
-      return yRange2(d[2]) + (MARGINS.top - MARGINS.bottom);
-  })
-  .interpolate('linear');
+    var lineFunc1 = d3.svg.line()
+      .x(function (d) {
+          return xRange(d.timestamp);
+      })
+      .y(function (d) {
+          return yRange1(d.dayEnergyInstant) + (MARGINS.top - MARGINS.bottom);
+      })
+      .interpolate('cardinal');
 
-svg.append('svg:path')
-  .attr('d', lineFunc2(dataArray))
-  .attr('stroke', 'blue')
-  .attr('stroke-width', 2)
-  .attr('fill', 'none');
+    svg.append('svg:path')
+      .attr('d', lineFunc1(dataArray))
+      .attr('stroke', 'red')
+      .attr('stroke-width', 2)
+      .attr('fill', 'none');
 
-// Create display scalings between input data and canvas size
-var xScale = d3.time.scale.utc()
-    .domain([d3.min(dataArray, function (d) { return d[0]; }), d3.max(dataArray, function (d) { return d[0]; })])
-    .range([MARGINS.left, WIDTH - MARGINS.right]);
+    // Create chart 2 - Instananeous output (W)
+    var yRange2 = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
+      d3.max(dataArray, function (d) {
+          return d.dayEnergyInstant;
+      })]);
 
-var yScale1 = d3.scale.linear()
-    .domain([d3.min(dataArray, function (d) { return d[2]; }), d3.max(dataArray, function (d) { return d[2]; })])
-    .range([HEIGHT - MARGINS.top, MARGINS.bottom]);
+    var lineFunc2 = d3.svg.line()
+      .x(function (d) {
+          return xRange(d.timestamp);
+      })
+      .y(function (d) {
+          return yRange2(d.dayEnergyInstant) + (MARGINS.top - MARGINS.bottom);
+      })
+      .interpolate('linear');
 
-var yScale2 = d3.scale.linear()
-    .domain([d3.min(dataArray, function (d) { return d[1]; }), d3.max(dataArray, function (d) { return d[1]; })])
-    .range([HEIGHT - MARGINS.top, MARGINS.bottom]);
+    svg.append('svg:path')
+      .attr('d', lineFunc2(dataArray))
+      .attr('stroke', 'blue')
+      .attr('stroke-width', 2)
+      .attr('fill', 'none');
 
-// Append axes
-var xAxis = d3.svg.axis()
-    .scale(xScale)
-    .orient("bottom")
-    .ticks(12)
-    .tickFormat(d3.time.format("%H"));
+    // Create display scalings between input data and canvas size
+    var xScale = d3.time.scale.utc()
+        .domain([d3.min(dataArray, function (d) { return d.timestamp; }), d3.max(dataArray, function (d) { return d.timestamp; })])
+        .range([MARGINS.left, WIDTH - MARGINS.right]);
 
-svg.append("g")
-    .attr("class", "axis")
-    .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
-    .call(xAxis);
+    var yScale1 = d3.scale.linear()
+        .domain([d3.min(dataArray, function (d) { return d.dayEnergyInstant; }), d3.max(dataArray, function (d) { return d.dayEnergyInstant; })])
+        .range([HEIGHT - MARGINS.top, MARGINS.bottom]);
 
-var yAxis1 = d3.svg.axis()
-    .scale(yScale1)
-    .orient("left")
-    .ticks(5);
+    var yScale2 = d3.scale.linear()
+        .domain([d3.min(dataArray, function (d) { return d.currentEnergy; }), d3.max(dataArray, function (d) { return d.currentEnergy; })])
+        .range([HEIGHT - MARGINS.top, MARGINS.bottom]);
 
-svg.append("g")
-    .attr("class", "axis")
-    .attr("fill", "blue")
-    .attr('transform', 'translate(' + (MARGINS.left) + ',' + (MARGINS.top - MARGINS.bottom) + ')')
-    .call(yAxis1);
+    // Append axes
+    var xAxis = d3.svg.axis()
+        .scale(xScale)
+        .orient("bottom")
+        .ticks(12)
+        .tickFormat(d3.time.format("%H"));
 
-var yAxis2 = d3.svg.axis()
-    .scale(yScale2)
-    .orient("right")
-    .ticks(5);
+    svg.append("g")
+        .attr("class", "axis")
+        .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+        .call(xAxis);
 
-svg.append("g")
-    .attr("class", "axis")
-    .attr("fill", "red")
-    .attr('transform', 'translate(' + (WIDTH - MARGINS.right) + ',' + (MARGINS.top - MARGINS.bottom) + ')')
-    .call(yAxis2);
+    var yAxis1 = d3.svg.axis()
+        .scale(yScale1)
+        .orient("left")
+        .ticks(5);
 
-// Create x-axis label
-svg.append("text")
-    .attr("text-anchor", "end")
-    .attr("x", WIDTH/2 + 30 )
-    .attr("y", HEIGHT - 6)
-    .text("Time of day");
+    svg.append("g")
+        .attr("class", "axis")
+        .attr("fill", "blue")
+        .attr('transform', 'translate(' + (MARGINS.left) + ',' + (MARGINS.top - MARGINS.bottom) + ')')
+        .call(yAxis1);
 
-// Create left y-axis label - Current output (W)
-svg.append("text")
-    .attr("text-anchor", "end")
-    .attr("fill", "blue")
-    .attr("y", 4)
-    .attr("x", -120)
-    .attr("dy", ".55em")
-    .attr("transform", "rotate(-90)")
-    .text("Current Output (W)");
+    var yAxis2 = d3.svg.axis()
+        .scale(yScale2)
+        .orient("right")
+        .ticks(5);
 
-// Create right y-axis label - Instantaneous Production (Wh)
-svg.append("text")
-    .attr("text-anchor", "end")
-    .attr("fill", "red")
-    .attr("y", WIDTH-12)
-    .attr("x", -90)
-    .attr("dy", ".55em")
-    .attr("transform", "rotate(-90)")
-    .text("Energy Production (Wh)");
+    svg.append("g")
+        .attr("class", "axis")
+        .attr("fill", "red")
+        .attr('transform', 'translate(' + (WIDTH - MARGINS.right) + ',' + (MARGINS.top - MARGINS.bottom) + ')')
+        .call(yAxis2);
 
-// Create title
-svg.append("text")
-    .attr("text-anchor", "start")
-    .attr("x", WIDTH * 0.63)
-    .attr("y", 50)
-    .text("Graph of instantaneous energy output");
-svg.append("text")
-    .attr("text-anchor", "start")
-    .attr("x", WIDTH * 0.66)
-    .attr("y", 70)
-    .text("and production for XX/XX/XXXX");
+    // Create x-axis label
+    svg.append("text")
+        .attr("text-anchor", "end")
+        .attr("x", WIDTH / 2 + 30)
+        .attr("y", HEIGHT - 6)
+        .text("Time of day");
 
-// Create chart for first set of data
-//svg.selectAll('rect')
-//  .data(dataArray)
-//  .enter()
-//  .append('rect')
-//  .attr('x', function (d) { // sets the x position of the bar
-//      return xRange(d[0]);
-//  })
-//  .attr('y', function (d) { // sets the y position of the bar
-//      return yRange1(d[1]);
-//  })
-//  .attr('width', xRange.rangeBand()) // sets the width of bar
-//  .attr('height', function (d) {      // sets the height of bar
-//      return ((HEIGHT - MARGINS.bottom) - yRange1(d[1]));
-//  })
-//  .attr('fill', 'red')   // fills the bar with grey color
-//  .on('mouseover', function (d) {
-//      d3.select(this)
-//          .attr('fill', 'blue');
-//  })
-//  .on('mouseout', function (d) {
-//      d3.select(this)
-//          .attr('fill', 'red');
-//  });
+    // Create left y-axis label - Current output (W)
+    svg.append("text")
+        .attr("text-anchor", "end")
+        .attr("fill", "blue")
+        .attr("y", 4)
+        .attr("x", -120)
+        .attr("dy", ".55em")
+        .attr("transform", "rotate(-90)")
+        .text("Current Output (W)");
+
+    // Create right y-axis label - Instantaneous Production (Wh)
+    svg.append("text")
+        .attr("text-anchor", "end")
+        .attr("fill", "red")
+        .attr("y", WIDTH - 12)
+        .attr("x", -90)
+        .attr("dy", ".55em")
+        .attr("transform", "rotate(-90)")
+        .text("Energy Production (Wh)");
+
+    // Create title
+    svg.append("text")
+        .attr("text-anchor", "start")
+        .attr("x", WIDTH * 0.63)
+        .attr("y", 50)
+        .text("Graph of instantaneous energy output");
+    svg.append("text")
+        .attr("text-anchor", "start")
+        .attr("x", WIDTH * 0.66)
+        .attr("y", 70)
+        .text("and production for " + moment(targetDate).format("DD/MM/YYYY"));
+
+    // Create chart for first set of data
+    //svg.selectAll('rect')
+    //  .data(dataArray)
+    //  .enter()
+    //  .append('rect')
+    //  .attr('x', function (d) { // sets the x position of the bar
+    //      return xRange(d.timestamp);
+    //  })
+    //  .attr('y', function (d) { // sets the y position of the bar
+    //      return yRange1(CurrentEnergy);
+    //  })
+    //  .attr('width', xRange.rangeBand()) // sets the width of bar
+    //  .attr('height', function (d) {      // sets the height of bar
+    //      return ((HEIGHT - MARGINS.bottom) - yRange1(CurrentEnergy));
+    //  })
+    //  .attr('fill', 'red')   // fills the bar with grey color
+    //  .on('mouseover', function (d) {
+    //      d3.select(this)
+    //          .attr('fill', 'blue');
+    //  })
+    //  .on('mouseout', function (d) {
+    //      d3.select(this)
+    //          .attr('fill', 'red');
+    //  });
+
+}
