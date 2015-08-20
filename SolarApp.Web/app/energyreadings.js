@@ -41,7 +41,7 @@ function visualizeit() {
     // Create chart 1 - Energy Production (Wh)
     var yRange1 = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
       d3.max(dataArray, function (d) {
-          return d.dayEnergyInstant;
+          return d.currentEnergy;
       })]);
 
     var lineFunc1 = d3.svg.line()
@@ -49,7 +49,7 @@ function visualizeit() {
           return xRange(d.timestamp);
       })
       .y(function (d) {
-          return yRange1(d.dayEnergyInstant) + (MARGINS.top - MARGINS.bottom);
+          return yRange1(d.currentEnergy) + (MARGINS.top - MARGINS.bottom);
       })
       .interpolate('cardinal');
 
