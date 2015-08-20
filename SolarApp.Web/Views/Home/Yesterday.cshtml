@@ -20,23 +20,7 @@
     <div class="col-md-12">&nbsp;</div>
 </div>
 
-@if (Model.IsDatabaseAvailable)
-{
-    <div class="row">
-        <div class="col-md-3">Timestamp</div>
-        <div class="col-md-3">Current Output (W)</div>
-        <div class="col-md-3">Energy Production (Wh)</div>
-    </div>
-    foreach (var item in Model.EnergyReadings)
-    {
-        <div class="row">
-            <div class="col-md-3">@item.Timestamp</div>
-            <div class="col-md-3">@item.CurrentEnergy</div>
-            <div class="col-md-3">@item.DayEnergyInstant</div>
-        </div>
-    }
-}
-else
+@if (!Model.IsDatabaseAvailable)
 {
     <div class="jumbotron">
         Database Unavailable

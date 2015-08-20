@@ -22,7 +22,7 @@ namespace SolarApp.DataProcessor.Integration.Tests
 		public void ScenarioSetup()
 		{
 			IConfiguration configuration = new SolarApp.DataProcessor.Utility.Classes.Configuration();
-			configuration.MongoDatabaseName = "Test";
+			configuration.MongoDatabaseName = "SolarAppTest";
 			if (!Directory.Exists(configuration.NewFilePollPath))
 			{
 				Directory.CreateDirectory(configuration.NewFilePollPath);
