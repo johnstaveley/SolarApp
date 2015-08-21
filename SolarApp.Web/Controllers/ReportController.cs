@@ -23,10 +23,10 @@ namespace SolarApp.Web.Controllers
             _context = context;
 		}
 
-
 		public ActionResult DayGraph(DateTime? targetDate = null)
 		{
-			EnergyReadingsViewModel viewModel = new EnergyReadingsViewModel(true, targetDate ?? DateTime.Now.AddDays(-1).Date);
+			var isDatabasePresent = _context.IsDatabasePresent;
+			EnergyReadingsViewModel viewModel = new EnergyReadingsViewModel(isDatabasePresent, targetDate ?? DateTime.Now.AddDays(-1).Date);
 			return View(viewModel);
 		}
 
@@ -37,7 +37,6 @@ namespace SolarApp.Web.Controllers
 			var energyReadings = _context.GetEnergyOutput(startDate, endDate);
 			return Json(new { targetDate = startDate.ToJavaScriptMilliseconds(), data = energyReadings.Select(a => new { timestamp = a.Timestamp.ToJavaScriptMilliseconds(), currentEnergy = a.CurrentEnergy, dayEnergyInstant = a.DayEnergyInstant }) }, JsonRequestBehavior.AllowGet);
 		}
-
 
 	}
 }

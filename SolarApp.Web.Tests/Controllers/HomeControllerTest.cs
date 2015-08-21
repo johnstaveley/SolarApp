@@ -34,6 +34,7 @@ namespace SolarApp.Web.Unit.Tests.Controllers
         public void Teardown()
         {
             _configuration.VerifyAllExpectations();
+			_context.VerifyAllExpectations();
         }
 
 		[Test]

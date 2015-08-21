@@ -30,12 +30,17 @@ namespace SolarApp.Web.Unit.Tests.Controllers
 			_controller = new ReportController(_configuration, _context);
 		}
 
-		// TODO: Needs to be refactored
+		[TearDown]
+		public void Teardown()
+		{
+			_configuration.VerifyAllExpectations();
+			_context.VerifyAllExpectations();
+		}
+
         [Test]
-        public void DayGraphShouldShowYesterdaysEnergyOutput()
+        public void DayGraphShouldShowViewModelWithDatabaseStatusAndTargetDate()
         {
             // Arrange
-            _context.Expect(a => a.GetEnergyOutput(Arg<DateTime>.Is.Anything, Arg<DateTime>.Is.Anything)).Return(new List<EnergyOutput>());
             _context.Expect(a => a.IsDatabasePresent).Return(true);
 
             // Act
@@ -46,9 +51,25 @@ namespace SolarApp.Web.Unit.Tests.Controllers
             var viewModel = (EnergyReadingsViewModel)result.Model;
             Assert.IsNotNull(viewModel);
             Assert.AreEqual(true, viewModel.IsDatabaseAvailable);
-            //Assert.IsNotNull(viewModel.EnergyReadings);
+            Assert.IsNotNull(viewModel.TargetDate, "Target date should not be null");
 
         }
 
+		// TODO: Finish this
+		[Test]
+		public void DayGraphDataShouldReturnEnergyData()
+		{
+			// Arrange
+			var targetDate = DateTime.Now.AddDays(-7).Date;
+			var energyReadings = new List<EnergyOutput>();
+			_context.Expect(a => a.GetEnergyOutput(targetDate, targetDate.AddDays(1))).Return(energyReadings);
+
+			// Act
+			JsonResult result = _controller.DayGraphData(targetDate) as JsonResult;
+
+			// Assert
+			Assert.IsNotNull(result);
+
+		}
 	}
 }
