@@ -11,6 +11,7 @@ using Rhino.Mocks;
 using SolarApp.Persistence;
 using SolarApp.Model;
 using SolarApp.Web.ViewModel;
+using Newtonsoft.Json;
 
 namespace SolarApp.Web.Unit.Tests.Controllers
 {
@@ -55,13 +56,15 @@ namespace SolarApp.Web.Unit.Tests.Controllers
 
         }
 
-		// TODO: Finish this
+		// TODO: Finish this test
 		[Test]
 		public void DayGraphDataShouldReturnEnergyData()
 		{
 			// Arrange
 			var targetDate = DateTime.Now.AddDays(-7).Date;
-			var energyReadings = new List<EnergyOutput>();
+			var energyReadings = new List<EnergyOutput>(){
+				new EnergyOutput() { Timestamp = targetDate, CurrentEnergy = 100, DayEnergyInstant = 40 }
+			};
 			_context.Expect(a => a.GetEnergyOutput(targetDate, targetDate.AddDays(1))).Return(energyReadings);
 
 			// Act
@@ -69,7 +72,16 @@ namespace SolarApp.Web.Unit.Tests.Controllers
 
 			// Assert
 			Assert.IsNotNull(result);
+			Assert.IsNotNull(result.Data);
+			IDictionary<string, object> wrapper = (IDictionary<string, object>)new System.Web.Routing.RouteValueDictionary(result.Data);
+
+			Assert.IsNotNull(wrapper["targetDate"]);
+			Assert.IsTrue(Convert.ToInt64((wrapper["targetDate"]).ToString()) > 10000000, "Target date is not set");
+			Assert.IsNotNull(wrapper["data"]);
+			var outputEnergyReadings = (IDictionary<string, object>) new System.Web.Routing.RouteValueDictionary(wrapper["data"]);
+			//Assert.AreEqual("Current", outputEnergyReadings.First().Key);
 
 		}
+
 	}
 }
