@@ -4,11 +4,14 @@ var WIDTH = 900;
 var HEIGHT = 350;
 var dataArray;
 var targetDate = $("#targetDate").data("isodate");
-d3.json("/Report/DayGraphData?targetDate="+targetDate, function (error, json) {
+$('#totalProduction').text("0");
+$('#maximumProduction').text("0");
+d3.json("/Report/DayGraphData?targetDate=" + targetDate, function (error, json) {
     if (error) return console.warn(error);
     dataArray = json.data;
     targetDate = new Date(json.targetDate);
-    console.log(targetDate);
+    $('#totalProduction').text(json.totalProduction);
+    $('#maximumProduction').text(json.maximumProduction);
     visualizeit();
 });
 

@@ -78,6 +78,8 @@ namespace SolarApp.Web.Unit.Tests.Controllers
 			Assert.IsNotNull(wrapper["targetDate"]);
 			Assert.IsTrue(Convert.ToInt64((wrapper["targetDate"]).ToString()) > 10000000, "Target date is not set");
 			Assert.IsNotNull(wrapper["data"]);
+			Assert.IsNotNull(wrapper["totalProduction"]);
+			Assert.IsNotNull(wrapper["maximumProduction"]);
 			var outputEnergyReadings = (IDictionary<string, object>) new System.Web.Routing.RouteValueDictionary(wrapper["data"]);
 			//Assert.AreEqual("Current", outputEnergyReadings.First().Key);
 
