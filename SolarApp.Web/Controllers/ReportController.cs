@@ -27,14 +27,14 @@ namespace SolarApp.Web.Controllers
 		{
 			var isDatabasePresent = _context.IsDatabasePresent;
 			EnergyReadingsViewModel viewModel = new EnergyReadingsViewModel(isDatabasePresent, targetDate ?? DateTime.Now.AddDays(-1).Date);
-			return View(viewModel);
+			return View("DayGraph", viewModel);
 		}
 
 		public JsonResult DayGraphData(DateTime targetDate)
 		{
 			var startDate = targetDate.Date;
 			var endDate = startDate.AddDays(1);
-			var energyReadings = _context.GetEnergyOutput(startDate, endDate);
+			var energyReadings = _context.GetEnergyOutputByDay(startDate, endDate);
 			double totalProduction = 0;
 			double maximumProduction = 0;
 			if (energyReadings.Count > 0)
@@ -44,6 +44,35 @@ namespace SolarApp.Web.Controllers
 			}
 			return Json(new { 
 				targetDate = startDate.ToJavaScriptMilliseconds(), 
+				data = energyReadings
+					.Select(a => new { timestamp = a.Timestamp.ToJavaScriptMilliseconds(), currentEnergy = a.CurrentEnergy, dayEnergyInstant = a.DayEnergyInstant }),
+				totalProduction = totalProduction,
+				maximumProduction = maximumProduction
+			}, JsonRequestBehavior.AllowGet);
+		}
+
+		public ActionResult MonthGraph(DateTime? targetDate = null)
+		{
+			var isDatabasePresent = _context.IsDatabasePresent;
+			EnergyReadingsViewModel viewModel = new EnergyReadingsViewModel(isDatabasePresent, targetDate ?? DateTime.Now.AddDays(-1).Date);
+			return View("DayGraph", viewModel);
+		}
+
+		public JsonResult MonthGraphData(DateTime targetDate)
+		{
+			var startDate = targetDate.Date.AddDays(1-targetDate.Day);
+			var endDate = startDate.AddMonths(1);
+			var energyReadings = _context.GetEnergyOutputByMonth(startDate, endDate);
+			double totalProduction = 0;
+			double maximumProduction = 0;
+			if (energyReadings.Count > 0)
+			{
+				totalProduction = energyReadings.Sum(e => e.DayEnergyInstant);
+				maximumProduction = energyReadings.Max(e => e.CurrentEnergy);
+			}
+			return Json(new
+			{
+				targetDate = startDate.ToJavaScriptMilliseconds(),
 				data = energyReadings
 					.Select(a => new { timestamp = a.Timestamp.ToJavaScriptMilliseconds(), currentEnergy = a.CurrentEnergy, dayEnergyInstant = a.DayEnergyInstant }),
 				totalProduction = totalProduction,

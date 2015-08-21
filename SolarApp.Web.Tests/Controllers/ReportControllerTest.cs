@@ -56,6 +56,24 @@ namespace SolarApp.Web.Unit.Tests.Controllers
 
         }
 
+		[Test]
+		public void MonthGraphShouldShowViewModelWithDatabaseStatusAndTargetDate()
+		{
+			// Arrange
+			_context.Expect(a => a.IsDatabasePresent).Return(true);
+
+			// Act
+			ViewResult result = _controller.MonthGraph() as ViewResult;
+
+			// Assert
+			Assert.IsNotNull(result);
+			var viewModel = (EnergyReadingsViewModel)result.Model;
+			Assert.IsNotNull(viewModel);
+			Assert.AreEqual(true, viewModel.IsDatabaseAvailable);
+			Assert.IsNotNull(viewModel.TargetDate, "Target date should not be null");
+
+		}
+
 		// TODO: Finish this test
 		[Test]
 		public void DayGraphDataShouldReturnEnergyData()
@@ -65,7 +83,7 @@ namespace SolarApp.Web.Unit.Tests.Controllers
 			var energyReadings = new List<EnergyOutput>(){
 				new EnergyOutput() { Timestamp = targetDate, CurrentEnergy = 100, DayEnergyInstant = 40 }
 			};
-			_context.Expect(a => a.GetEnergyOutput(targetDate, targetDate.AddDays(1))).Return(energyReadings);
+			_context.Expect(a => a.GetEnergyOutputByDay(targetDate, targetDate.AddDays(1))).Return(energyReadings);
 
 			// Act
 			JsonResult result = _controller.DayGraphData(targetDate) as JsonResult;
@@ -81,6 +99,35 @@ namespace SolarApp.Web.Unit.Tests.Controllers
 			Assert.IsNotNull(wrapper["totalProduction"]);
 			Assert.IsNotNull(wrapper["maximumProduction"]);
 			var outputEnergyReadings = (IDictionary<string, object>) new System.Web.Routing.RouteValueDictionary(wrapper["data"]);
+			//Assert.AreEqual("Current", outputEnergyReadings.First().Key);
+
+		}
+
+		// TODO: Finish this test
+		[Test]
+		public void MonthGraphDataShouldReturnEnergyData()
+		{
+			// Arrange
+			var targetDate = DateTime.Now.AddDays(1-DateTime.Now.Day).Date;
+			var energyReadings = new List<EnergyOutput>(){
+				new EnergyOutput() { Timestamp = targetDate, CurrentEnergy = 100, DayEnergyInstant = 40 }
+			};
+			_context.Expect(a => a.GetEnergyOutputByMonth(targetDate, targetDate.AddMonths(1))).Return(energyReadings);
+
+			// Act
+			JsonResult result = _controller.MonthGraphData(targetDate) as JsonResult;
+
+			// Assert
+			Assert.IsNotNull(result);
+			Assert.IsNotNull(result.Data);
+			IDictionary<string, object> wrapper = (IDictionary<string, object>)new System.Web.Routing.RouteValueDictionary(result.Data);
+
+			Assert.IsNotNull(wrapper["targetDate"]);
+			Assert.IsTrue(Convert.ToInt64((wrapper["targetDate"]).ToString()) > 10000000, "Target date is not set");
+			Assert.IsNotNull(wrapper["data"]);
+			Assert.IsNotNull(wrapper["totalProduction"]);
+			Assert.IsNotNull(wrapper["maximumProduction"]);
+			var outputEnergyReadings = (IDictionary<string, object>)new System.Web.Routing.RouteValueDictionary(wrapper["data"]);
 			//Assert.AreEqual("Current", outputEnergyReadings.First().Key);
 
 		}

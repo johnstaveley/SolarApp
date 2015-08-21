@@ -19,7 +19,8 @@ namespace SolarApp.Persistence
 		WeatherForecast FindWeatherForecastById(string id);
 		WeatherObservation FindWeatherObservationById(string id);
         double? GetAverageOutputForHour(int hour);
-        List<EnergyOutput> GetEnergyOutput(DateTime startDate, DateTime endDate);
+        List<EnergyOutput> GetEnergyOutputByDay(DateTime startDate, DateTime endDate);
+		List<EnergyOutput> GetEnergyOutputByMonth(DateTime startDate, DateTime endDate);
         DateTime? GetLatestEnergyReading();
         long GetNumberOfDataPoints();
         long GetNumberOfFailedData();

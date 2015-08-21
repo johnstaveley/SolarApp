@@ -209,7 +209,7 @@ namespace SolarApp.DataProcessor.Integration.Tests
             var startDate = new DateTime(year, month, day);
             var endDate = startDate.AddDays(1);
             var context = ScenarioContext.Current.Get<ISolarAppContext>();
-            ScenarioContext.Current.Set<List<EnergyOutput>>(context.GetEnergyOutput(startDate, endDate), "EnergyReadings");
+            ScenarioContext.Current.Set<List<EnergyOutput>>(context.GetEnergyOutputByDay(startDate, endDate), "EnergyReadings");
 
         }
 
