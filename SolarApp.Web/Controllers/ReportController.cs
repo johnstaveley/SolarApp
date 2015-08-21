@@ -24,19 +24,15 @@ namespace SolarApp.Web.Controllers
 		}
 
 
-		public ActionResult DayGraph()
+		public ActionResult DayGraph(DateTime? targetDate = null)
 		{
-			EnergyReadingsViewModel viewModel = new EnergyReadingsViewModel(true);
+			EnergyReadingsViewModel viewModel = new EnergyReadingsViewModel(true, targetDate ?? DateTime.Now.AddDays(-1).Date);
 			return View(viewModel);
 		}
 
-		public JsonResult DayGraphData(DateTime? targetDate = null)
+		public JsonResult DayGraphData(DateTime targetDate)
 		{
-			var startDate = DateTime.Now.AddDays(-1).Date;
-			if (targetDate.HasValue)
-			{
-				startDate = targetDate.Value.Date;
-			}
+			var startDate = targetDate.Date;
 			var endDate = startDate.AddDays(1);
 			var energyReadings = _context.GetEnergyOutput(startDate, endDate);
 			return Json(new { targetDate = startDate.ToJavaScriptMilliseconds(), data = energyReadings.Select(a => new { timestamp = a.Timestamp.ToJavaScriptMilliseconds(), currentEnergy = a.CurrentEnergy, dayEnergyInstant = a.DayEnergyInstant }) }, JsonRequestBehavior.AllowGet);

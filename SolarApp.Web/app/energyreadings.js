@@ -2,18 +2,13 @@
 //Width and height
 var WIDTH = 900;
 var HEIGHT = 350;
-var dataElement = $('#graphData').data("energyreadings");
-//0 = Time in ticks
-//1 = Energy production (Wh)
-//2 = Instananeous output (W)
-//var dataArray = JSON.parse("[" + dataElement + "]");
-
-var dataArray; // a global
-var targetDate;
-d3.json("/Report/DayGraphData", function (error, json) {
+var dataArray;
+var targetDate = $("#targetDate").data("isodate");
+d3.json("/Report/DayGraphData?targetDate="+targetDate, function (error, json) {
     if (error) return console.warn(error);
     dataArray = json.data;
     targetDate = new Date(json.targetDate);
+    console.log(targetDate);
     visualizeit();
 });
 
@@ -86,11 +81,11 @@ function visualizeit() {
         .range([MARGINS.left, WIDTH - MARGINS.right]);
 
     var yScale1 = d3.scale.linear()
-        .domain([d3.min(dataArray, function (d) { return d.dayEnergyInstant; }), d3.max(dataArray, function (d) { return d.dayEnergyInstant; })])
+        .domain([d3.min(dataArray, function (d) { return d.currentEnergy; }), d3.max(dataArray, function (d) { return d.currentEnergy; })])
         .range([HEIGHT - MARGINS.top, MARGINS.bottom]);
 
     var yScale2 = d3.scale.linear()
-        .domain([d3.min(dataArray, function (d) { return d.currentEnergy; }), d3.max(dataArray, function (d) { return d.currentEnergy; })])
+        .domain([d3.min(dataArray, function (d) { return d.dayEnergyInstant; }), d3.max(dataArray, function (d) { return d.dayEnergyInstant; })])
         .range([HEIGHT - MARGINS.top, MARGINS.bottom]);
 
     // Append axes
@@ -162,9 +157,9 @@ function visualizeit() {
         .text("Graph of instantaneous energy output");
     svg.append("text")
         .attr("text-anchor", "start")
-        .attr("x", WIDTH * 0.66)
+        .attr("x", WIDTH * 0.63)
         .attr("y", 70)
-        .text("and production for " + moment(targetDate).format("DD/MM/YYYY"));
+        .text("and production for " + moment(targetDate).format("dddd DD/MM/YYYY"));
 
     // Create chart for first set of data
     //svg.selectAll('rect')

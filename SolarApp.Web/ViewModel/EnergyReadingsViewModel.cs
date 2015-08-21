@@ -13,9 +13,12 @@ namespace SolarApp.Web.ViewModel
 
         public bool IsDatabaseAvailable { get; set; }
 
-        public EnergyReadingsViewModel(bool isDatabaseAvailable)
+		public DateTime TargetDate { get; set; }
+
+        public EnergyReadingsViewModel(bool isDatabaseAvailable, DateTime targetDate)
         {
             IsDatabaseAvailable = isDatabaseAvailable;
+			TargetDate = targetDate;
         }
 
     }
