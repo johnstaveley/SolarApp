@@ -32,7 +32,8 @@ namespace SolarApp.Web.ViewModel
                     RequestWeatherForecast = "Pending";
                     break;
                 default:
-                    RequestWeatherForecast = "Unknwon";
+                    RequestWeatherForecast = "Unknown";
+                    CanRequestWeatherForecast = true;
                     break;
             }
             CanRequestWeatherObservation = false;
@@ -46,7 +47,8 @@ namespace SolarApp.Web.ViewModel
                     RequestWeatherObservation = "Pending";
                     break;
                 default:
-                    RequestWeatherObservation = "Unknwon";
+                    RequestWeatherObservation = "Unknown";
+                    CanRequestWeatherObservation = true;
                     break;
             }
         }

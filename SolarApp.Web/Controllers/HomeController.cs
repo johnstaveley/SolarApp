@@ -55,9 +55,13 @@ namespace SolarApp.Web.Controllers
             SystemActionViewModel viewModel;
             if (_context.IsDatabasePresent)
             {
-                string requestWeatherForecast = _context.FindSettingById("RequestWeatherForecast").Value;
-                string requestWeatherObservation = _context.FindSettingById("RequestWeatherObservation").Value;
-                viewModel = new SystemActionViewModel(true, requestWeatherForecast, requestWeatherObservation);
+				string requestWeatherForecastFlag = "";
+				string requestWeatherObservationFlag = "";
+				var requestWeatherForecast = _context.FindSettingById("RequestWeatherForecast");
+				var requestWeatherObservation = _context.FindSettingById("RequestWeatherObservation");
+				if (requestWeatherForecast != null) requestWeatherForecastFlag = requestWeatherForecast.Value;
+				if (requestWeatherObservation != null) requestWeatherObservationFlag = requestWeatherObservation.Value;
+                viewModel = new SystemActionViewModel(true, requestWeatherForecastFlag, requestWeatherObservationFlag);
             }
             else
             {
@@ -70,8 +74,16 @@ namespace SolarApp.Web.Controllers
         public ActionResult RequestWeatherForecast()
         {
             var requestWeatherForecast = _context.FindSettingById("RequestWeatherForecast");
-            requestWeatherForecast.Value = "1";
-            _context.UpdateSetting(requestWeatherForecast);
+			if (requestWeatherForecast == null)
+			{
+				requestWeatherForecast = new Model.Setting() { Id = "RequestWeatherForecast", Value = "1" };
+				_context.InsertSetting(requestWeatherForecast);
+			}
+			else
+			{
+				requestWeatherForecast.Value = "1";
+				_context.UpdateSetting(requestWeatherForecast);
+			}
             return RedirectToAction("Actions");
         }
 
@@ -79,8 +91,16 @@ namespace SolarApp.Web.Controllers
         public ActionResult RequestWeatherObservation()
         {
             var requestWeatherObservation = _context.FindSettingById("RequestWeatherObservation");
-            requestWeatherObservation.Value = "1";
-            _context.UpdateSetting(requestWeatherObservation);
+			if (requestWeatherObservation == null)
+			{
+				requestWeatherObservation = new Model.Setting() { Id = "RequestWeatherObservation", Value = "1" };
+				_context.InsertSetting(requestWeatherObservation);
+			}
+			else
+			{
+				requestWeatherObservation.Value = "1";
+				_context.UpdateSetting(requestWeatherObservation);
+			}
             return RedirectToAction("Actions");
         }
 
