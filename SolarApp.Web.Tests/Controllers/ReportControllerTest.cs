@@ -80,8 +80,8 @@ namespace SolarApp.Web.Unit.Tests.Controllers
 		{
 			// Arrange
 			var targetDate = DateTime.Now.AddDays(-7).Date;
-			var energyReadings = new List<EnergyOutput>(){
-				new EnergyOutput() { Timestamp = targetDate, CurrentEnergy = 100, DayEnergyInstant = 40 }
+			var energyReadings = new List<EnergyOutputDay>(){
+				new EnergyOutputDay() { Timestamp = targetDate, CurrentEnergy = 100, DayEnergyInstant = 40 }
 			};
 			_context.Expect(a => a.GetEnergyOutputByDay(targetDate, targetDate.AddDays(1))).Return(energyReadings);
 
@@ -109,8 +109,8 @@ namespace SolarApp.Web.Unit.Tests.Controllers
 		{
 			// Arrange
 			var targetDate = DateTime.Now.AddDays(1-DateTime.Now.Day).Date;
-			var energyReadings = new List<EnergyOutput>(){
-				new EnergyOutput() { Timestamp = targetDate, CurrentEnergy = 100, DayEnergyInstant = 40 }
+			var energyReadings = new List<EnergyOutputMonth>(){
+				new EnergyOutputMonth() { Day = targetDate.Day, DayEnergy = 100 }
 			};
 			_context.Expect(a => a.GetEnergyOutputByMonth(targetDate, targetDate.AddMonths(1))).Return(energyReadings);
 
@@ -126,6 +126,7 @@ namespace SolarApp.Web.Unit.Tests.Controllers
 			Assert.IsTrue(Convert.ToInt64((wrapper["targetDate"]).ToString()) > 10000000, "Target date is not set");
 			Assert.IsNotNull(wrapper["data"]);
 			Assert.IsNotNull(wrapper["totalProduction"]);
+			Assert.IsNotNull(wrapper["averageProduction"]);
 			Assert.IsNotNull(wrapper["maximumProduction"]);
 			var outputEnergyReadings = (IDictionary<string, object>)new System.Web.Routing.RouteValueDictionary(wrapper["data"]);
 			//Assert.AreEqual("Current", outputEnergyReadings.First().Key);

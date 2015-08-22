@@ -27,7 +27,7 @@ namespace SolarApp.Web.Controllers
 		{
 			var isDatabasePresent = _context.IsDatabasePresent;
 			EnergyReadingsViewModel viewModel = new EnergyReadingsViewModel(isDatabasePresent, targetDate ?? DateTime.Now.AddDays(-1).Date);
-			return View("DayGraph", viewModel);
+			return View(viewModel);
 		}
 
 		public JsonResult DayGraphData(DateTime targetDate)
@@ -54,8 +54,13 @@ namespace SolarApp.Web.Controllers
 		public ActionResult MonthGraph(DateTime? targetDate = null)
 		{
 			var isDatabasePresent = _context.IsDatabasePresent;
+			if (targetDate == null)
+			{
+				targetDate = DateTime.Now;
+				targetDate = targetDate.Value.Date.AddDays(1 - targetDate.Value.Day);
+			}
 			EnergyReadingsViewModel viewModel = new EnergyReadingsViewModel(isDatabasePresent, targetDate ?? DateTime.Now.AddDays(-1).Date);
-			return View("DayGraph", viewModel);
+			return View(viewModel);
 		}
 
 		public JsonResult MonthGraphData(DateTime targetDate)
@@ -63,20 +68,23 @@ namespace SolarApp.Web.Controllers
 			var startDate = targetDate.Date.AddDays(1-targetDate.Day);
 			var endDate = startDate.AddMonths(1);
 			var energyReadings = _context.GetEnergyOutputByMonth(startDate, endDate);
+			double averageProduction = 0;
 			double totalProduction = 0;
 			double maximumProduction = 0;
 			if (energyReadings.Count > 0)
 			{
-				totalProduction = energyReadings.Sum(e => e.DayEnergyInstant);
-				maximumProduction = energyReadings.Max(e => e.CurrentEnergy);
+				averageProduction = energyReadings.Average(e => e.DayEnergy);
+				totalProduction = energyReadings.Sum(e => e.DayEnergy);
+				maximumProduction = energyReadings.Max(e => e.DayEnergy);
 			}
 			return Json(new
 			{
 				targetDate = startDate.ToJavaScriptMilliseconds(),
 				data = energyReadings
-					.Select(a => new { timestamp = a.Timestamp.ToJavaScriptMilliseconds(), currentEnergy = a.CurrentEnergy, dayEnergyInstant = a.DayEnergyInstant }),
+					.Select(a => new { timestamp = targetDate.AddDays(a.Day-1).ToJavaScriptMilliseconds(), dayEnergy = a.DayEnergy }),
 				totalProduction = totalProduction,
-				maximumProduction = maximumProduction
+				maximumProduction = maximumProduction,
+				averageProduction = averageProduction.ToString("0")
 			}, JsonRequestBehavior.AllowGet);
 		}
 

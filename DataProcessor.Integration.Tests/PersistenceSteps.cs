@@ -209,15 +209,15 @@ namespace SolarApp.DataProcessor.Integration.Tests
             var startDate = new DateTime(year, month, day);
             var endDate = startDate.AddDays(1);
             var context = ScenarioContext.Current.Get<ISolarAppContext>();
-            ScenarioContext.Current.Set<List<EnergyOutput>>(context.GetEnergyOutputByDay(startDate, endDate), "EnergyReadings");
+            ScenarioContext.Current.Set<List<EnergyOutputDay>>(context.GetEnergyOutputByDay(startDate, endDate), "EnergyReadings");
 
         }
 
 		[Then(@"The energy readings returned have values:")]
 		public void ThenTheEnergyReadingsReturnedHaveValues(Table table)
 		{
-			var expectedResults = table.CreateSet<EnergyOutput>();
-			var actualResults = ScenarioContext.Current.Get<List<EnergyOutput>>("EnergyReadings");
+			var expectedResults = table.CreateSet<EnergyOutputDay>();
+			var actualResults = ScenarioContext.Current.Get<List<EnergyOutputDay>>("EnergyReadings");
 			Assert.AreEqual(expectedResults.ToList().Count, actualResults.Count, "The number of results received is not correct");
 			foreach (var energyOutput in actualResults)
 			{

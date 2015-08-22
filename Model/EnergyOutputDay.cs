@@ -8,7 +8,7 @@ namespace SolarApp.Model
 {
 
 	[JsonObject(MemberSerialization.OptIn)]
-    public class EnergyOutput
+    public class EnergyOutputDay
     {
 
 		[JsonProperty("_id", Required = Required.Always)]

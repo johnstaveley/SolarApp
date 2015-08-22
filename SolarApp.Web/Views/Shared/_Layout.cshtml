@@ -21,13 +21,20 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Status", "Status", "Home")</li>
-                    <li>@Html.ActionLink("Actions", "Actions", "Home")</li>
-                    <li>@Html.ActionLink("Day Graph", "DayGraph", "Report")</li>
-                    <li>@Html.ActionLink("Month Graph", "MonthGraph", "Report")</li>
+                    <li role="presentation">@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li role="presentation">@Html.ActionLink("Status", "Status", "Home")</li>
+                    <li role="presentation">@Html.ActionLink("Actions", "Actions", "Home")</li>
+                    <li role="presentation" class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            Graphs<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li role="presentation">@Html.ActionLink("Daily Energy", "DayGraph", "Report")</li>
+                            <li role="presentation">@Html.ActionLink("Monthly Energy", "MonthGraph", "Report")</li>
+                        </ul>
+                    </li>
                     @*<li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
                 </ul>
                 @*@Html.Partial("_LoginPartial")*@
             </div>

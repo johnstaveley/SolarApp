@@ -12,8 +12,13 @@ namespace SolarApp.Web
 				"~/Scripts/d3/d3.js",
 				"~/Scripts/moment.js"
 				));
-			bundles.Add(new ScriptBundle("~/bundles/energyreadings").Include("~/app/energyreadings.js"));
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include("~/Scripts/jquery-{version}.js"));
+			bundles.Add(new ScriptBundle("~/bundles/energyreadingsday").Include(
+				"~/app/energyreadingsday.js"
+				));
+			bundles.Add(new ScriptBundle("~/bundles/energyreadingsmonth").Include(
+				"~/app/energyreadingsmonth.js"
+				));
+			bundles.Add(new ScriptBundle("~/bundles/jquery").Include("~/Scripts/jquery-{version}.js"));
 			bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include("~/Scripts/jquery.validate*"));
 
 			// Use the development version of Modernizr to develop with and learn from. Then, when you're

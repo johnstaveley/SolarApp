@@ -163,30 +163,4 @@ function visualizeit() {
         .attr("x", WIDTH * 0.63)
         .attr("y", 70)
         .text("and production for " + moment(targetDate).format("dddd DD/MM/YYYY"));
-
-    // Create chart for first set of data
-    //svg.selectAll('rect')
-    //  .data(dataArray)
-    //  .enter()
-    //  .append('rect')
-    //  .attr('x', function (d) { // sets the x position of the bar
-    //      return xRange(d.timestamp);
-    //  })
-    //  .attr('y', function (d) { // sets the y position of the bar
-    //      return yRange1(CurrentEnergy);
-    //  })
-    //  .attr('width', xRange.rangeBand()) // sets the width of bar
-    //  .attr('height', function (d) {      // sets the height of bar
-    //      return ((HEIGHT - MARGINS.bottom) - yRange1(CurrentEnergy));
-    //  })
-    //  .attr('fill', 'red')   // fills the bar with grey color
-    //  .on('mouseover', function (d) {
-    //      d3.select(this)
-    //          .attr('fill', 'blue');
-    //  })
-    //  .on('mouseout', function (d) {
-    //      d3.select(this)
-    //          .attr('fill', 'red');
-    //  });
-
 }

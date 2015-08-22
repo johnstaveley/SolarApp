@@ -162,54 +162,50 @@ namespace SolarApp.Persistence
             return this.DataPoints.Count();
         }
 
-		public List<EnergyOutput> GetEnergyOutputByMonth(DateTime startDate, DateTime endDate)
+		public List<EnergyOutputMonth> GetEnergyOutputByMonth(DateTime startDate, DateTime endDate)
 		{
-			var results = new List<EnergyOutput>();
+			var results = new List<EnergyOutputDay>();
 			var aggregate = new AggregateArgs
 			{
 				Pipeline = new[] {
 					new BsonDocument("$match", new BsonDocument {{
                         "Head.Timestamp", new BsonDocument {
                             {"$gte", startDate.ToUniversalTime() },
-                            {"$lte", endDate.ToUniversalTime() }
+                            {"$lt", endDate.ToUniversalTime() }
                         }}
                     }),
                     new BsonDocument("$project", new BsonDocument
 						{
-							{"_id", "$Head.Timestamp"},
-							{"current_energy", "$Body.PAC.Values.1"},
+							{"_id", new BsonDocument("$dayOfMonth", "$Head.Timestamp")},
 							{"day_energy", "$Body.DAY_ENERGY.Values.1"}
+						}),
+                    new BsonDocument("$group", new BsonDocument
+						{
+							{"_id", "$_id"},
+							{"day_energy", new BsonDocument("$max", "$day_energy")}
 						}),
                     new BsonDocument("$sort", new BsonDocument("_id", 1))
                 }
 			};
-			//var output = GetAggregateOfDataPointsResult(aggregate);
 			var bsonResults = this.DataPoints.Aggregate(aggregate);
 			var bsonResult = bsonResults.ToList();
 			if (bsonResult == null) return null;
 			var jsonWriterSettings = new JsonWriterSettings { OutputMode = JsonOutputMode.Shell };
 			var jsonResult = bsonResult.ToJson(jsonWriterSettings);
-			jsonResult = Regex.Replace(jsonResult, "ISODate\\((.{22})\\)", "$1");
-			var energyReadings = JsonConvert.DeserializeObject<List<EnergyOutput>>(jsonResult);
-			double lastEnergyProduction = 0;
-			foreach (var energyReading in energyReadings)
-			{
-				energyReading.DayEnergyInstant = energyReading.DayEnergy - lastEnergyProduction;
-				lastEnergyProduction = energyReading.DayEnergy;
-			}
+			var energyReadings = JsonConvert.DeserializeObject<List<EnergyOutputMonth>>(jsonResult);
 			return energyReadings;
 		}
 
-        public List<EnergyOutput> GetEnergyOutputByDay(DateTime startDate, DateTime endDate)
+        public List<EnergyOutputDay> GetEnergyOutputByDay(DateTime startDate, DateTime endDate)
         {
-            var results = new List<EnergyOutput>();
+            var results = new List<EnergyOutputDay>();
             var aggregate = new AggregateArgs
             {
                 Pipeline = new[] {
 					new BsonDocument("$match", new BsonDocument {{
                         "Head.Timestamp", new BsonDocument {
                             {"$gte", startDate.ToUniversalTime() },
-                            {"$lte", endDate.ToUniversalTime() }
+                            {"$lt", endDate.ToUniversalTime() }
                         }}
                     }),
                     new BsonDocument("$project", new BsonDocument
@@ -228,7 +224,7 @@ namespace SolarApp.Persistence
 			var jsonWriterSettings = new JsonWriterSettings { OutputMode = JsonOutputMode.Shell };
 			var jsonResult = bsonResult.ToJson(jsonWriterSettings);
 			jsonResult = Regex.Replace(jsonResult, "ISODate\\((.{22})\\)", "$1");
-			var energyReadings = JsonConvert.DeserializeObject<List<EnergyOutput>>(jsonResult);
+			var energyReadings = JsonConvert.DeserializeObject<List<EnergyOutputDay>>(jsonResult);
 			double lastEnergyProduction = 0;
 			foreach (var energyReading in energyReadings)
 			{
