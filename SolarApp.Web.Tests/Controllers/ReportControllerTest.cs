@@ -12,6 +12,7 @@ using SolarApp.Persistence;
 using SolarApp.Model;
 using SolarApp.Web.ViewModel;
 using Newtonsoft.Json;
+using System.Web.Script.Serialization;
 
 namespace SolarApp.Web.Unit.Tests.Controllers
 {
@@ -22,6 +23,8 @@ namespace SolarApp.Web.Unit.Tests.Controllers
         private ReportController _controller;
         private IConfiguration _configuration;
         private ISolarAppContext _context;
+        private JavaScriptSerializer _serializer;
+
 
 		[SetUp]
 		public void Setup()
@@ -29,13 +32,15 @@ namespace SolarApp.Web.Unit.Tests.Controllers
 			_configuration = MockRepository.GenerateMock<IConfiguration>();
 			_context = MockRepository.GenerateMock<ISolarAppContext>();
 			_controller = new ReportController(_configuration, _context);
-		}
+            _serializer = new JavaScriptSerializer();
+        }
 
 		[TearDown]
 		public void Teardown()
 		{
 			_configuration.VerifyAllExpectations();
 			_context.VerifyAllExpectations();
+            _serializer = null;
 		}
 
         [Test]
@@ -74,14 +79,14 @@ namespace SolarApp.Web.Unit.Tests.Controllers
 
 		}
 
-		// TODO: Finish this test
 		[Test]
 		public void DayGraphDataShouldReturnEnergyData()
 		{
 			// Arrange
-			var targetDate = DateTime.Now.AddDays(-7).Date;
+			var targetDate = DateTime.Parse("2015-08-01").Date;
 			var energyReadings = new List<EnergyOutputDay>(){
-				new EnergyOutputDay() { Timestamp = targetDate, CurrentEnergy = 100, DayEnergyInstant = 40 }
+				new EnergyOutputDay() { Timestamp = targetDate, CurrentEnergy = 100, DayEnergyInstant = 40 },
+                new EnergyOutputDay() { Timestamp = targetDate.AddMinutes(15), CurrentEnergy = 70, DayEnergyInstant = 48 }
 			};
 			_context.Expect(a => a.GetEnergyOutputByDay(targetDate, targetDate.AddDays(1))).Return(energyReadings);
 
@@ -91,26 +96,25 @@ namespace SolarApp.Web.Unit.Tests.Controllers
 			// Assert
 			Assert.IsNotNull(result);
 			Assert.IsNotNull(result.Data);
-			IDictionary<string, object> wrapper = (IDictionary<string, object>)new System.Web.Routing.RouteValueDictionary(result.Data);
 
-			Assert.IsNotNull(wrapper["targetDate"]);
-			Assert.IsTrue(Convert.ToInt64((wrapper["targetDate"]).ToString()) > 10000000, "Target date is not set");
-			Assert.IsNotNull(wrapper["data"]);
-			Assert.IsNotNull(wrapper["totalProduction"]);
-			Assert.IsNotNull(wrapper["maximumProduction"]);
-			var outputEnergyReadings = (IDictionary<string, object>) new System.Web.Routing.RouteValueDictionary(wrapper["data"]);
-			//Assert.AreEqual("Current", outputEnergyReadings.First().Key);
+            var responseObject = _serializer.Serialize(result.Data) as dynamic;
+            var response = _serializer.Deserialize<dynamic>(responseObject);
+            Assert.AreEqual(1438383600000, response["targetDate"]);
+            Assert.AreEqual(3, response["data"][0].Count);
+            Assert.AreEqual(3, response["data"][1].Count);
+            Assert.AreEqual(88, response["totalProduction"]);
+            Assert.AreEqual(100, response["maximumProduction"]);
 
 		}
 
-		// TODO: Finish this test
 		[Test]
 		public void MonthGraphDataShouldReturnEnergyData()
 		{
 			// Arrange
-			var targetDate = DateTime.Now.AddDays(1-DateTime.Now.Day).Date;
+			var targetDate = DateTime.Parse("2015-01-01").Date;
 			var energyReadings = new List<EnergyOutputMonth>(){
-				new EnergyOutputMonth() { Day = targetDate.Day, DayEnergy = 100 }
+				new EnergyOutputMonth() { Day = targetDate.Day, DayEnergy = 100 },
+                new EnergyOutputMonth() { Day = targetDate.Day, DayEnergy = 120 }
 			};
 			_context.Expect(a => a.GetEnergyOutputByMonth(targetDate, targetDate.AddMonths(1))).Return(energyReadings);
 
@@ -120,16 +124,15 @@ namespace SolarApp.Web.Unit.Tests.Controllers
 			// Assert
 			Assert.IsNotNull(result);
 			Assert.IsNotNull(result.Data);
-			IDictionary<string, object> wrapper = (IDictionary<string, object>)new System.Web.Routing.RouteValueDictionary(result.Data);
 
-			Assert.IsNotNull(wrapper["targetDate"]);
-			Assert.IsTrue(Convert.ToInt64((wrapper["targetDate"]).ToString()) > 10000000, "Target date is not set");
-			Assert.IsNotNull(wrapper["data"]);
-			Assert.IsNotNull(wrapper["totalProduction"]);
-			Assert.IsNotNull(wrapper["averageProduction"]);
-			Assert.IsNotNull(wrapper["maximumProduction"]);
-			var outputEnergyReadings = (IDictionary<string, object>)new System.Web.Routing.RouteValueDictionary(wrapper["data"]);
-			//Assert.AreEqual("Current", outputEnergyReadings.First().Key);
+            var responseObject = _serializer.Serialize(result.Data) as dynamic;
+            var response = _serializer.Deserialize<dynamic>(responseObject);
+            Assert.AreEqual(1420070400000, response["targetDate"]);
+            Assert.AreEqual(2, response["data"][0].Count);
+            Assert.AreEqual(2, response["data"][1].Count);
+            Assert.AreEqual(220, response["totalProduction"]);
+            Assert.AreEqual(120, response["maximumProduction"]);
+            Assert.AreEqual("110", response["averageProduction"]);
 
 		}
 
