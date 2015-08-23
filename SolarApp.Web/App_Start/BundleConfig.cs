@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 using System.Web.Optimization;
 
 namespace SolarApp.Web
@@ -8,6 +9,9 @@ namespace SolarApp.Web
 		// For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
 		public static void RegisterBundles(BundleCollection bundles)
 		{
+			bundles.IgnoreList.Clear();
+			AddDefaultIgnorePatterns(bundles.IgnoreList);
+
             bundles.Add(new ScriptBundle("~/bundles/d3").Include(
 				"~/Scripts/d3/d3.js",
 				"~/Scripts/moment.js"
@@ -35,5 +39,17 @@ namespace SolarApp.Web
 					  "~/Content/bootstrap.css",
 					  "~/Content/site.css"));
 		}
+
+		public static void AddDefaultIgnorePatterns(IgnoreList ignoreList)
+		{
+			if (ignoreList == null)
+				throw new ArgumentNullException("ignoreList");
+			ignoreList.Ignore("*.intellisense.js");
+			ignoreList.Ignore("*-vsdoc.js");
+			ignoreList.Ignore("*.debug.js", OptimizationMode.WhenEnabled);
+			//ignoreList.Ignore("*.min.js", OptimizationMode.WhenDisabled);
+			ignoreList.Ignore("*.min.css", OptimizationMode.WhenDisabled);
+		}
+
 	}
 }

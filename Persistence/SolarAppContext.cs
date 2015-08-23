@@ -162,28 +162,6 @@ namespace SolarApp.Persistence
             return this.DataPoints.Count();
         }
 
-		// For each month work out how much energy was produced
-//db.getCollection('DataPoints').aggregate([
-//	{$match: {
-//		"Head.Timestamp": { $gte : ISODate("2015-01-01T00:00:00.0Z"), $lt : ISODate("2015-12-31T00:00:00.0Z") } 
-//	}},
-//	{$project: {
-//		"_id": { $month: "$Head.Timestamp" },
-//		"month_energy": "$Body.TOTAL_ENERGY.Values.1",
-//		}},
-//	{$group: {
-//		_id: "$_id",
-//		"maxProduction": {$max: "$month_energy"},
-//		"minProduction": {$min: "$month_energy"}
-//	}},
-//	{$project: {
-//		"_id": "$_id",
-//		"month_energy": {$subtract: ["$maxProduction", "$minProduction"]},
-//		}},   
-//	{$sort: {
-//		"_id" : 1
-//	}}
-//])
 		public List<EnergyOutputYear> GetEnergyOutputByYear(DateTime startDate, DateTime endDate)
 		{
 			var results = new List<EnergyOutputDay>();
@@ -199,18 +177,20 @@ namespace SolarApp.Persistence
                     new BsonDocument("$project", new BsonDocument
 						{
 							{"_id", new BsonDocument("$month", "$Head.Timestamp")},
-							{"month_energy", "$Body.TOTAL_ENERGY.Values.1"}
+							{"month_energy", "$Body.TOTAL_ENERGY.Values.1"},
+							{"day_energy", "$Body.DAY_ENERGY.Values.1"}
 						}),
                     new BsonDocument("$group", new BsonDocument
 						{
 							{"_id", "$_id"},
-							{"maxProduction", new BsonDocument("$max", "$month_energy")},
-							{"minProduction", new BsonDocument("$min", "$month_energy")}
+							{"maxMonthProduction", new BsonDocument("$max", "$month_energy")},
+							{"minMonthProduction", new BsonDocument("$min", "$month_energy")},
+							{"day_energy", new BsonDocument("$avg", "$day_energy")} // TODO: Finish average day energy
 						}),
                     new BsonDocument("$project", new BsonDocument
 						{
 							{"_id", "$_id"},
-							{"month_energy", new BsonDocument("$subtract", new BsonArray(new List<string>() {"$maxProduction", "$minProduction"}))}
+							{"month_energy", new BsonDocument("$subtract", new BsonArray(new List<string>() {"$maxMonthProduction", "$minMonthProduction"}))}
 						}),
                     new BsonDocument("$sort", new BsonDocument("_id", 1))
                 }
