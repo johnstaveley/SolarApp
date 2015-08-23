@@ -80,6 +80,24 @@ namespace SolarApp.Web.Unit.Tests.Controllers
 		}
 
 		[Test]
+		public void YearGraphShouldShowViewModelWithDatabaseStatusAndTargetDate()
+		{
+			// Arrange
+			_context.Expect(a => a.IsDatabasePresent).Return(true);
+
+			// Act
+			ViewResult result = _controller.YearGraph() as ViewResult;
+
+			// Assert
+			Assert.IsNotNull(result);
+			var viewModel = (EnergyReadingsViewModel)result.Model;
+			Assert.IsNotNull(viewModel);
+			Assert.AreEqual(true, viewModel.IsDatabaseAvailable);
+			Assert.IsNotNull(viewModel.TargetDate, "Target date should not be null");
+
+		}
+
+		[Test]
 		public void DayGraphDataShouldReturnEnergyData()
 		{
 			// Arrange
@@ -135,6 +153,36 @@ namespace SolarApp.Web.Unit.Tests.Controllers
             Assert.AreEqual("110", response["averageProduction"]);
 
 		}
+
+		[Test]
+		public void YearGraphDataShouldReturnEnergyData()
+		{
+			// Arrange
+			var targetDate = DateTime.Parse("2015-01-01").Date;
+			var energyReadings = new List<EnergyOutputYear>(){
+				new EnergyOutputYear() { Month = targetDate.Month, MonthEnergy = 100 },
+                new EnergyOutputYear() { Month = targetDate.Month+1, MonthEnergy = 120 }
+			};
+			_context.Expect(a => a.GetEnergyOutputByYear(targetDate, targetDate.AddYears(1))).Return(energyReadings);
+
+			// Act
+			JsonResult result = _controller.YearGraphData(targetDate) as JsonResult;
+
+			// Assert
+			Assert.IsNotNull(result);
+			Assert.IsNotNull(result.Data);
+
+			var responseObject = _serializer.Serialize(result.Data) as dynamic;
+			var response = _serializer.Deserialize<dynamic>(responseObject);
+			Assert.AreEqual(1420070400000, response["targetDate"]);
+			Assert.AreEqual(2, response["data"][0].Count);
+			Assert.AreEqual(2, response["data"][1].Count);
+			Assert.AreEqual(220, response["totalProduction"]);
+			Assert.AreEqual(120, response["maximumProduction"]);
+			Assert.AreEqual("110", response["averageProduction"]);
+
+		}
+
 
 	}
 }

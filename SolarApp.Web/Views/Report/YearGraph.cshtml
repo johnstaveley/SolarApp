@@ -1,0 +1,39 @@
+﻿@model EnergyReadingsViewModel
+
+@{
+    ViewBag.Title = "Energy Readings - Year";
+}
+
+<p></p>
+<div class="row">
+    <div class="col-md-12"><h1>Energy Readings - Year</h1></div>
+</div>
+<div class="row">
+    <div class="col-md-12">&nbsp;</div>
+</div>
+@if (!Model.IsDatabaseAvailable)
+{
+    <div class="jumbotron">
+        Database Unavailable
+    </div>
+}
+else
+{
+    <div class="row">
+        <div id="graph"></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">@Html.ActionLink("Back 1 year", "YearGraph", "Report", new { targetDate = Model.TargetDate.AddYears(-1).ToString("yyyy-MM-dd") }, null)</div>
+        <div class="col-sm-2 col-sm-offset-6">@Html.ActionLink("Forward 1 year", "YearGraph", "Report", new { targetDate = Model.TargetDate.AddYears(1).ToString("yyyy-MM-dd") }, null)</div>
+    </div>
+    <div>Total Energy Production for the Year <span id="totalProduction"></span> Wh</div>
+    <div>Maximum Monthly Production <span id="maximumProduction"></span> Wh</div>
+    <div>Average Monthly Production <span id="averageProduction"></span> Wh</div>
+}
+
+<div id="targetDate" data-isodate='@Model.TargetDate.ToString("yyyy-MM-dd")'></div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/d3")
+    @Scripts.Render("~/bundles/energyreadingsyear")
+}

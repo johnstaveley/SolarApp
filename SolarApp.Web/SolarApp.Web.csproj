@@ -196,6 +196,7 @@
     <Compile Include="ViewModel\SystemStateViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\energyreadingsyear.js" />
     <Content Include="app\energyreadingsmonth.js" />
     <Content Include="app\energyreadingsday.js" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -287,6 +288,7 @@
     <Content Include="Views\Home\Actions.cshtml" />
     <Content Include="Views\Report\DayGraph.cshtml" />
     <Content Include="Views\Report\MonthGraph.cshtml" />
+    <Content Include="Views\Report\YearGraph.cshtml" />
     <None Include="Web.QA.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

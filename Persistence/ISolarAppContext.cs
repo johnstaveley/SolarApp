@@ -21,6 +21,7 @@ namespace SolarApp.Persistence
         double? GetAverageOutputForHour(int hour);
         List<EnergyOutputDay> GetEnergyOutputByDay(DateTime startDate, DateTime endDate);
 		List<EnergyOutputMonth> GetEnergyOutputByMonth(DateTime startDate, DateTime endDate);
+		List<EnergyOutputYear> GetEnergyOutputByYear(DateTime startDate, DateTime endDate);
         DateTime? GetLatestEnergyReading();
         long GetNumberOfDataPoints();
         long GetNumberOfFailedData();

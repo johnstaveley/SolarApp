@@ -162,6 +162,68 @@ namespace SolarApp.Persistence
             return this.DataPoints.Count();
         }
 
+		// For each month work out how much energy was produced
+//db.getCollection('DataPoints').aggregate([
+//	{$match: {
+//		"Head.Timestamp": { $gte : ISODate("2015-01-01T00:00:00.0Z"), $lt : ISODate("2015-12-31T00:00:00.0Z") } 
+//	}},
+//	{$project: {
+//		"_id": { $month: "$Head.Timestamp" },
+//		"month_energy": "$Body.TOTAL_ENERGY.Values.1",
+//		}},
+//	{$group: {
+//		_id: "$_id",
+//		"maxProduction": {$max: "$month_energy"},
+//		"minProduction": {$min: "$month_energy"}
+//	}},
+//	{$project: {
+//		"_id": "$_id",
+//		"month_energy": {$subtract: ["$maxProduction", "$minProduction"]},
+//		}},   
+//	{$sort: {
+//		"_id" : 1
+//	}}
+//])
+		public List<EnergyOutputYear> GetEnergyOutputByYear(DateTime startDate, DateTime endDate)
+		{
+			var results = new List<EnergyOutputDay>();
+			var aggregate = new AggregateArgs
+			{
+				Pipeline = new[] {
+					new BsonDocument("$match", new BsonDocument {{
+                        "Head.Timestamp", new BsonDocument {
+                            {"$gte", startDate.ToUniversalTime() },
+                            {"$lt", endDate.ToUniversalTime() }
+                        }}
+                    }),
+                    new BsonDocument("$project", new BsonDocument
+						{
+							{"_id", new BsonDocument("$month", "$Head.Timestamp")},
+							{"month_energy", "$Body.TOTAL_ENERGY.Values.1"}
+						}),
+                    new BsonDocument("$group", new BsonDocument
+						{
+							{"_id", "$_id"},
+							{"maxProduction", new BsonDocument("$max", "$month_energy")},
+							{"minProduction", new BsonDocument("$min", "$month_energy")}
+						}),
+                    new BsonDocument("$project", new BsonDocument
+						{
+							{"_id", "$_id"},
+							{"month_energy", new BsonDocument("$subtract", new BsonArray(new List<string>() {"$maxProduction", "$minProduction"}))}
+						}),
+                    new BsonDocument("$sort", new BsonDocument("_id", 1))
+                }
+			};
+			var bsonResults = this.DataPoints.Aggregate(aggregate);
+			var bsonResult = bsonResults.ToList();
+			if (bsonResult == null) return null;
+			var jsonWriterSettings = new JsonWriterSettings { OutputMode = JsonOutputMode.Shell };
+			var jsonResult = bsonResult.ToJson(jsonWriterSettings);
+			var energyReadings = JsonConvert.DeserializeObject<List<EnergyOutputYear>>(jsonResult);
+			return energyReadings;
+		}
+
 		public List<EnergyOutputMonth> GetEnergyOutputByMonth(DateTime startDate, DateTime endDate)
 		{
 			var results = new List<EnergyOutputDay>();
@@ -217,7 +279,6 @@ namespace SolarApp.Persistence
                     new BsonDocument("$sort", new BsonDocument("_id", 1))
                 }
             };
-            //var output = GetAggregateOfDataPointsResult(aggregate);
 			var bsonResults = this.DataPoints.Aggregate(aggregate);
 			var bsonResult = bsonResults.ToList();
 			if (bsonResult == null) return null;

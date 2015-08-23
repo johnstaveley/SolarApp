@@ -18,6 +18,9 @@ namespace SolarApp.Web
 			bundles.Add(new ScriptBundle("~/bundles/energyreadingsmonth").Include(
 				"~/app/energyreadingsmonth.js"
 				));
+			bundles.Add(new ScriptBundle("~/bundles/energyreadingsyear").Include(
+				"~/app/energyreadingsyear.js"
+				));
 			bundles.Add(new ScriptBundle("~/bundles/jquery").Include("~/Scripts/jquery-{version}.js"));
 			bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include("~/Scripts/jquery.validate*"));
 
