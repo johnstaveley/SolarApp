@@ -34,6 +34,7 @@ else
 <div id="targetDate" data-isodate='@Model.TargetDate.ToString("yyyy-MM-dd")'></div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/d3")
+    @Scripts.Render("~/bundles/moment")
+    <script src="~/Scripts/d3/d3.min.js"></script>
     @Scripts.Render("~/bundles/energyreadingsyear")
 }
