@@ -71,6 +71,11 @@ function visualizeit() {
       .on('mouseout', function (d) {
           d3.select(this)
               .attr('fill', 'red');
+      })
+      .on("click", function (d) {
+          var url = "/Report/DayGraph?targetDate=" + moment(d.timestamp).format("YYYY-MM-DD");
+        $(location).attr('href', url);
+        window.location = url;
       });
 
     // Append axes

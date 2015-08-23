@@ -71,7 +71,13 @@ function visualizeit() {
       .on('mouseout', function (d) {
           d3.select(this)
               .attr('fill', 'red');
+      })
+      .on("click", function (d) {
+          var url = "/Report/MonthGraph?targetDate=" + moment(d.timestamp).format("YYYY-MM-DD");
+          $(location).attr('href', url);
+          window.location = url;
       });
+
 
     // Append axes
     var xAxis = d3.svg.axis()
