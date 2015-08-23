@@ -13,7 +13,7 @@ namespace SolarApp.Web
 			AddDefaultIgnorePatterns(bundles.IgnoreList);
 
             bundles.Add(new ScriptBundle("~/bundles/d3").Include(
-				"~/Scripts/d3/d3.js",
+				"~/Scripts/d3/d3.min.js",
 				"~/Scripts/moment.js"
 				));
 			bundles.Add(new ScriptBundle("~/bundles/energyreadingsday").Include(
