@@ -35,6 +35,19 @@ namespace SolarApp.Model
 			}
 		}
 
+        [JsonIgnore]
+        public DateTime? SunAzimuthDateTime
+        {
+            get
+            {
+                if (SunriseDateTime.HasValue && SunsetDateTime.HasValue)
+                {
+                    return SunriseDateTime.Value.AddTicks((SunriseDateTime.Value - SunsetDateTime.Value).Ticks / 2);
+                }
+                return null;
+            }
+        }
+
 		[JsonIgnore]
 		public DateTime? SunriseDateTime
 		{
