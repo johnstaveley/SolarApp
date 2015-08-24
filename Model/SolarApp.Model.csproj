@@ -79,6 +79,7 @@
     <Compile Include="EnergyOutputMonth.cs" />
     <Compile Include="EnergyOutputDay.cs" />
     <Compile Include="EnergyReading.cs" />
+    <Compile Include="SunTime.cs" />
     <Compile Include="WeatherObservation.cs" />
     <Compile Include="WeatherForecast.cs" />
     <Compile Include="FailedData.cs" />

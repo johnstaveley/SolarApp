@@ -1,6 +1,7 @@
 ﻿using System;
 using SolarApp.Model;
 using System.Collections.Generic;
+using MongoDB.Driver;
 
 namespace SolarApp.Persistence
 {
@@ -16,6 +17,7 @@ namespace SolarApp.Persistence
 		FailedData FindFailedDataById(string id);
 		DataPoint FindDataPointById(string id);
 		Setting FindSettingById(string id);
+		SunTime FindSuntimesByDate(DateTime targetDate);
 		WeatherForecast FindWeatherForecastById(string id);
 		WeatherObservation FindWeatherObservationById(string id);
         double? GetAverageOutputForHour(int hour);
@@ -35,10 +37,11 @@ namespace SolarApp.Persistence
 		bool IsDatabasePresent { get; }
 		bool IsDatabaseSeeded { get; }
 		void SeedDatabase();
-		MongoDB.Driver.MongoCollection<Setting> Settings { get; }
+		MongoCollection<Setting> Settings { get; }
+		MongoCollection<SunTime> Suntimes { get; }
         void UpdateLastRunDate();
 		void UpdateSetting(Setting setting);
-		MongoDB.Driver.MongoCollection<WeatherForecast> WeatherForecast { get; }
-		MongoDB.Driver.MongoCollection<WeatherObservation> WeatherObservation { get; }
+		MongoCollection<WeatherForecast> WeatherForecast { get; }
+		MongoCollection<WeatherObservation> WeatherObservation { get; }
 	}
 }

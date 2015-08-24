@@ -50,6 +50,7 @@ namespace SolarApp.Persistence
                 }
             }
         }
+
         public bool IsDatabaseSeeded
         {
             get
@@ -411,9 +412,26 @@ namespace SolarApp.Persistence
 
         #endregion
 
-        #region WeatherForecast
+		#region Sunrise and set
 
-        public MongoCollection<WeatherForecast> WeatherForecast
+		public MongoCollection<SunTime> Suntimes
+		{
+			get
+			{
+				return Database.GetCollection<SunTime>("SunTimes");
+			}
+		}
+
+		public SunTime FindSuntimesByDate(DateTime targetDate)
+		{
+			return this.Suntimes.Find(Query.EQ("_id", BsonValue.Create(targetDate.ToString("yyyy-MM-dd")))).FirstOrDefault();
+		}
+
+		#endregion
+
+		#region WeatherForecast
+
+		public MongoCollection<WeatherForecast> WeatherForecast
         {
             get
             {
