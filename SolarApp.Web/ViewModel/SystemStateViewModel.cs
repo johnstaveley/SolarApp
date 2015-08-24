@@ -9,8 +9,16 @@ namespace SolarApp.Web.ViewModel
     {
 
         public string Environment { get; set; }
-        
-        public string LastRunDate { get; set; }
+
+		public bool IsDatabaseAvailable
+		{
+			get
+			{
+				return !string.IsNullOrEmpty(LastRunDate);
+			}
+		}
+		
+		public string LastRunDate { get; set; }
 
         public string LatestMeterReading {get; set; }
 
@@ -22,16 +30,13 @@ namespace SolarApp.Web.ViewModel
 
         public long NumberOfWeatherObservations { get; set; }
 
-        public bool IsDatabaseAvailable {
-            get 
-                {
-                return !string.IsNullOrEmpty(LastRunDate);
-                }
-            }
+		public string Sunrise { get; set; }
+
+		public string Sunset { get; set; }
 
         public SystemStateViewModel(string lastRunDate, DateTime? latestMeterReading, 
             long numberOfDataPoints, long numberOfFailedData, long numberOFWeatherForecasts,
-            long numberOfWeatherObservations, string environment)
+            long numberOfWeatherObservations, string environment, DateTime? sunrise, DateTime? sunset)
         {
             LastRunDate = lastRunDate;
             LatestMeterReading = (latestMeterReading.HasValue ? latestMeterReading.Value.ToString("dd/MM/yyyy HH:mm:ss") : "None");
@@ -40,6 +45,8 @@ namespace SolarApp.Web.ViewModel
             NumberOfWeatherForecasts = numberOFWeatherForecasts;
             NumberOfWeatherObservations = numberOfWeatherObservations;
             Environment = environment;
+			Sunrise = (sunrise.HasValue ? sunrise.Value.ToString("HH:mm"): "Not set" );
+			Sunset = (sunset.HasValue ? sunset.Value.ToString("HH:mm") : "Not set");
         }
     }
 }

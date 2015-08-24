@@ -41,11 +41,11 @@ namespace SolarApp.Web.Controllers
                     _context.GetNumberOfFailedData(),
                     _context.GetNumberOfWeatherForecasts(),
                     _context.GetNumberOfWeatherObservations(),
-                    _configuration.Environment);
+                    _configuration.Environment, null, null);
             }
             else
             {
-                viewModel = new SystemStateViewModel("", null, 0, 0,0,0,_configuration.Environment);
+                viewModel = new SystemStateViewModel("", null, 0, 0,0,0,_configuration.Environment, null, null);
             }
             return View(viewModel);
         }
