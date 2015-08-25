@@ -126,6 +126,7 @@
     <None Include="App.QA.config">
       <DependentUpon>App.config</DependentUpon>
       <IsTransformFile>True</IsTransformFile>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="App.Release.config">
       <DependentUpon>App.config</DependentUpon>
