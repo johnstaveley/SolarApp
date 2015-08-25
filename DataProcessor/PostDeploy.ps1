@@ -1,7 +1,7 @@
 
 function CleanUp{
 	Write-Host ****** Removing config transform files from release ******
-	Remove-Item *.config -exclude *.exe.config | Write-Host
+	Remove-Item *.config -exclude *.exe.config, privateSettings.config | Write-Host
 }
 
 try{
