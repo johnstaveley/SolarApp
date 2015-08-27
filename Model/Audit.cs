@@ -17,5 +17,16 @@ namespace SolarApp.Model
 
 		public string Where { get; set; }
 
+		public bool IsException { get; set; }
+
+		public Audit(string who, string what, string where, bool isException = false)
+		{
+			Who = who;
+			What = what;
+			Where = where;
+			IsException = isException;
+			When = DateTime.UtcNow;
+		}
+
 	}
 }

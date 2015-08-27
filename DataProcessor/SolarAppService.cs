@@ -11,6 +11,7 @@ using SolarApp.DataProcessor.Utility;
 using SolarApp.Persistence;
 using SolarApp.DataProcessor.Utility.Interfaces;
 using System.Threading;
+using System.Reflection;
 
 namespace SolarApp.DataProcessor
 {
@@ -62,7 +63,7 @@ namespace SolarApp.DataProcessor
 
 			try
 			{
-
+				throw new Exception("blah");
 				if (_context.IsDatabasePresent)
 				{
 
@@ -87,7 +88,15 @@ namespace SolarApp.DataProcessor
 			}
 			catch (Exception ex)
 			{
-				//Logger.Error("Unhandled exception occurred.", ex);
+				var audit = new Model.Audit(System.Environment.UserName, ex.Message, string.Format("{0}-{1}", this.GetType().Name, MethodBase.GetCurrentMethod().Name), true);
+				if (_context.IsDatabasePresent)
+				{
+					_context.InsertAudit(audit);
+				}
+				else
+				{
+					// TODO: Write to event log
+				}
 			}
 
 			_timer.Enabled = true;

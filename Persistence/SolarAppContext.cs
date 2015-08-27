@@ -64,7 +64,11 @@ namespace SolarApp.Persistence
         public void SeedDatabase()
         {
 
-            if (!Database.CollectionExists("DataPoints"))
+			if (!Database.CollectionExists("Audit"))
+			{
+				Database.CreateCollection("Audit");
+			}
+			if (!Database.CollectionExists("DataPoints"))
             {
                 Database.CreateCollection("DataPoints");
             }
@@ -101,9 +105,26 @@ namespace SolarApp.Persistence
 
         #endregion
 
-        #region DataPoints
+		#region DataPoints
 
-        public MongoCollection<DataPoint> DataPoints
+		public MongoCollection<Audit> Audit
+		{
+			get
+			{
+				return Database.GetCollection<Audit>("Audit");
+			}
+		}
+
+		public void InsertAudit(Audit audit)
+		{
+			this.Audit.Insert(audit);
+		}
+
+		#endregion
+
+		#region DataPoints
+
+		public MongoCollection<DataPoint> DataPoints
         {
             get
             {
