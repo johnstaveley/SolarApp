@@ -63,7 +63,7 @@ namespace SolarApp.DataProcessor
 
 			try
 			{
-				throw new Exception("blah");
+
 				if (_context.IsDatabasePresent)
 				{
 
