@@ -12,6 +12,9 @@ d3.json("/Report/DayGraphData?targetDate=" + targetDate, function (error, json) 
     targetDate = new Date(json.targetDate);
     $('#totalProduction').text(json.totalProduction);
     $('#maximumProduction').text(json.maximumProduction);
+    $('#sunrise').text(moment(json.sunrise).format("HH:mm"));
+    $('#sunset').text(moment(json.sunset).format("HH:mm"));
+    $('#sunAzimuth').text(moment(json.sunAzimuth).format("HH:mm"));
     visualizeit();
 });
 
