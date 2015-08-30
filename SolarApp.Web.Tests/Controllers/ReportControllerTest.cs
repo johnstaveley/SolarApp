@@ -102,11 +102,18 @@ namespace SolarApp.Web.Unit.Tests.Controllers
 		{
 			// Arrange
 			var targetDate = DateTime.Parse("2015-08-01").Date;
+			var suntime = new SunTime()
+			{
+				Date = "01/08/2015",
+				Sunrise = "06:05",
+				Sunset = "19:10"
+			};
 			var energyReadings = new List<EnergyOutputDay>(){
 				new EnergyOutputDay() { Timestamp = targetDate, CurrentEnergy = 100, DayEnergyInstant = 40 },
                 new EnergyOutputDay() { Timestamp = targetDate.AddMinutes(15), CurrentEnergy = 70, DayEnergyInstant = 48 }
 			};
 			_context.Expect(a => a.GetEnergyOutputByDay(targetDate, targetDate.AddDays(1))).Return(energyReadings);
+			_context.Expect(a => a.FindSuntimesByDate(targetDate)).Return(suntime);
 
 			// Act
 			JsonResult result = _controller.DayGraphData(targetDate) as JsonResult;
@@ -122,6 +129,9 @@ namespace SolarApp.Web.Unit.Tests.Controllers
             Assert.AreEqual(3, response["data"][1].Count);
             Assert.AreEqual(88, response["totalProduction"]);
             Assert.AreEqual(100, response["maximumProduction"]);
+			Assert.AreEqual(1438409100000, response["sunrise"]);
+			Assert.AreEqual(1438456200000, response["sunset"]);
+			Assert.AreEqual(1438432650000, response["sunAzimuth"]);
 
 		}
 
