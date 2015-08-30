@@ -251,7 +251,7 @@ namespace SolarApp.DataProcessor.Integration.Tests
 		{
 			var targetDate = new DateTime(year, month, day);
 			var context = ScenarioContext.Current.Get<ISolarAppContext>();
-			ScenarioContext.Current.Set<SunTime>(context.FindSuntimesByDate(targetDate), "Suntime");
+			ScenarioContext.Current.Set<SunTime>(context.FindSuntimeByDate(targetDate), "Suntime");
 		}
 
 		[Then(@"I have a sunrise of (.*):(.*):(.*)")]

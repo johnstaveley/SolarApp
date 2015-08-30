@@ -34,7 +34,7 @@ namespace SolarApp.Web.Controllers
 		{
 			var startDate = targetDate.Date;
 			var endDate = startDate.AddDays(1);
-			var suntime = _context.FindSuntimesByDate(startDate);
+			var suntime = _context.FindSuntimeByDate(startDate);
 			var energyReadings = _context.GetEnergyOutputByDay(startDate, endDate);
 			double totalProduction = 0;
 			double maximumProduction = 0;

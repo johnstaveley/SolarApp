@@ -113,7 +113,7 @@ namespace SolarApp.Web.Unit.Tests.Controllers
                 new EnergyOutputDay() { Timestamp = targetDate.AddMinutes(15), CurrentEnergy = 70, DayEnergyInstant = 48 }
 			};
 			_context.Expect(a => a.GetEnergyOutputByDay(targetDate, targetDate.AddDays(1))).Return(energyReadings);
-			_context.Expect(a => a.FindSuntimesByDate(targetDate)).Return(suntime);
+			_context.Expect(a => a.FindSuntimeByDate(targetDate)).Return(suntime);
 
 			// Act
 			JsonResult result = _controller.DayGraphData(targetDate) as JsonResult;

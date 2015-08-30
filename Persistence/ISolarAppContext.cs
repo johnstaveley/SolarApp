@@ -18,7 +18,7 @@ namespace SolarApp.Persistence
 		FailedData FindFailedDataById(string id);
 		DataPoint FindDataPointById(string id);
 		Setting FindSettingById(string id);
-		SunTime FindSuntimesByDate(DateTime targetDate);
+		SunTime FindSuntimeByDate(DateTime targetDate);
 		WeatherForecast FindWeatherForecastById(string id);
 		WeatherObservation FindWeatherObservationById(string id);
         double? GetAverageOutputForHour(int hour);

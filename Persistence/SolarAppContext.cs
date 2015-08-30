@@ -443,9 +443,9 @@ namespace SolarApp.Persistence
 			}
 		}
 
-		public SunTime FindSuntimesByDate(DateTime targetDate)
+		public SunTime FindSuntimeByDate(DateTime targetDate)
 		{
-			return this.Suntimes.Find(Query.EQ("_id", BsonValue.Create(targetDate.ToString("dd/MM/yyyy")))).FirstOrDefault();
+			return this.Suntimes.Find(Query.EQ("_id", BsonValue.Create(targetDate.ToString("dd/MM/yyyy")))).FirstOrDefault() ?? new SunTime();
 		}
 
 		public void InsertSuntime(SunTime suntime)
