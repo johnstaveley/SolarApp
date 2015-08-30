@@ -229,6 +229,57 @@ namespace SolarApp.DataProcessor.Integration.Tests
 
 		}
 
+		[Given(@"I have suntimes for (.*)-(.*)-(.*)")]
+		public void GivenIHaveSuntimesFor(int year, int month, int day)
+		{
+			var targetDate = new DateTime(year, month, day);
+			var context = ScenarioContext.Current.Get<ISolarAppContext>();
+			var suntime = new SunTime()
+			{
+				Date = targetDate.ToString("dd/MM/yyyy"),
+				Sunrise = "05:11",
+				Sunset = "19:02"
+			};
+			context.InsertSuntime(suntime);
+			var dataItemsToTrack = ScenarioContext.Current.Get<List<DataItem>>("DataItemsToTrack");
+			dataItemsToTrack.Add(new DataItem(suntime));
+
+		}
+
+		[When(@"I request the suntime for the date (.*)-(.*)-(.*)")]
+		public void WhenIRequestTheSuntimeForTheDate(int year, int month, int day)
+		{
+			var targetDate = new DateTime(year, month, day);
+			var context = ScenarioContext.Current.Get<ISolarAppContext>();
+			ScenarioContext.Current.Set<SunTime>(context.FindSuntimesByDate(targetDate), "Suntime");
+		}
+
+		[Then(@"I have a sunrise of (.*):(.*):(.*)")]
+		public void ThenIHaveASunriseOf(int hour, int minute, int second)
+		{
+			var sunTime = ScenarioContext.Current.Get<SunTime>("Suntime");
+			var targetTime = new TimeSpan(hour, minute, second);
+			Assert.IsTrue(sunTime.SunriseDateTime.HasValue, "Sunrise has not been set");
+			Assert.AreEqual(targetTime, sunTime.SunriseDateTime.Value.TimeOfDay);
+		}
+
+		[Then(@"I have a sunset of (.*):(.*):(.*)")]
+		public void ThenIHaveASunsetOf(int hour, int minute, int second)
+		{
+			var sunTime = ScenarioContext.Current.Get<SunTime>("Suntime");
+			var targetTime = new TimeSpan(hour, minute, second);
+			Assert.IsTrue(sunTime.SunsetDateTime.HasValue, "Sunset has not been set");
+			Assert.AreEqual(targetTime, sunTime.SunsetDateTime.Value.TimeOfDay);
+		}
+
+		[Then(@"I have a sun azimuth time of (.*):(.*):(.*)")]
+		public void ThenIHaveASunAzimuthTimeOf(int hour, int minute, int second)
+		{
+			var sunTime = ScenarioContext.Current.Get<SunTime>("Suntime");
+			var targetTime = new TimeSpan(hour, minute, second);
+			Assert.IsTrue(sunTime.SunAzimuthDateTime.HasValue, "Sun azimuth time has not been set");
+			Assert.AreEqual(targetTime, sunTime.SunAzimuthDateTime.Value.TimeOfDay);
+		}
 
     }
 }

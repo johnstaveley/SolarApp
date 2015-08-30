@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,8 +15,10 @@ namespace SolarApp.Model
 		[BsonElement("_id")]
 		public string Date { get; set; }
 
+		[BsonElement("sunrise")]
 		public string Sunrise { get; set; }
 
+		[BsonElement("sunset")]
 		public string Sunset { get; set; }
 
 		[JsonIgnore]
@@ -25,7 +28,7 @@ namespace SolarApp.Model
 			{
 				try
 				{
-					DateTime date = DateTime.Parse(Date);
+					DateTime date = DateTime.ParseExact(Date, "dd/MM/yyyy", new CultureInfo("en-GB"));
 					return date;
 				}
 				catch
@@ -42,7 +45,7 @@ namespace SolarApp.Model
             {
                 if (SunriseDateTime.HasValue && SunsetDateTime.HasValue)
                 {
-                    return SunriseDateTime.Value.AddTicks((SunriseDateTime.Value - SunsetDateTime.Value).Ticks / 2);
+                    return SunriseDateTime.Value.AddTicks((SunsetDateTime.Value.Ticks - SunriseDateTime.Value.Ticks) / 2);
                 }
                 return null;
             }

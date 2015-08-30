@@ -25,6 +25,12 @@ namespace SolarApp.DataProcessor.Tests.Helper
 			this.TableTypeKind = Helper.TableTypeKind.DataPoint;
 		}
 
+		public DataItem(SunTime suntime)
+		{
+			this.Id = suntime.Date;
+			this.TableTypeKind = Helper.TableTypeKind.Suntime;
+		}
+
 		public DataItem(WeatherForecast weatherForecast)
 		{
 			this.Id = weatherForecast.Id;

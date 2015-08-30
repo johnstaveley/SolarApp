@@ -11,6 +11,7 @@ namespace SolarApp.DataProcessor.Tests.Helper
 		Setting = 1,
 		DataPoint = 2,
 		WeatherForecast = 3,
-		WeatherObservation = 4
+		WeatherObservation = 4,
+		Suntime = 5
 	}
 }

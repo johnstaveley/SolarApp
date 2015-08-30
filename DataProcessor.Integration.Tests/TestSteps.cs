@@ -70,6 +70,9 @@ namespace SolarApp.DataProcessor.Integration.Tests
 					case (TableTypeKind.Setting):
 						context.DeleteSettingById(dataItem.Id);
 						break;
+					case (TableTypeKind.Suntime):
+						context.DeleteSuntimeById(dataItem.Id);
+						break;
 					case (TableTypeKind.WeatherForecast):
 						context.DeleteWeatherForecastById(dataItem.Id);
 						break;

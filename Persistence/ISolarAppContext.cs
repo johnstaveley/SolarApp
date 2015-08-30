@@ -11,6 +11,7 @@ namespace SolarApp.Persistence
 		void DeleteDataPointById(string id);
 		void DeleteFailedDataById(string id);
 		void DeleteSettingById(string id);
+		void DeleteSuntimeById(string id);
 		void DeleteWeatherForecastById(string id);
 		void DeleteWeatherObservationById(string id);
 		MongoDB.Driver.MongoCollection<FailedData> FailedData { get; }
@@ -33,6 +34,7 @@ namespace SolarApp.Persistence
 		void InsertDataPoint(DataPoint dataPoint);
 		void InsertFailedData(FailedData failedData);
 		void InsertSetting(Setting setting);
+		void InsertSuntime(SunTime suntime);
 		void InsertWeatherForecast(WeatherForecast weatherForecast);
 		void InsertWeatherObservation(WeatherObservation weatherObservation);
 		bool IsDatabasePresent { get; }

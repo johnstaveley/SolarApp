@@ -105,7 +105,7 @@ namespace SolarApp.Persistence
 
         #endregion
 
-		#region DataPoints
+		#region Audit
 
 		public MongoCollection<Audit> Audit
 		{
@@ -439,13 +439,23 @@ namespace SolarApp.Persistence
 		{
 			get
 			{
-				return Database.GetCollection<SunTime>("SunTimes");
+				return Database.GetCollection<SunTime>("Suntime");
 			}
 		}
 
 		public SunTime FindSuntimesByDate(DateTime targetDate)
 		{
-			return this.Suntimes.Find(Query.EQ("_id", BsonValue.Create(targetDate.ToString("yyyy-MM-dd")))).FirstOrDefault();
+			return this.Suntimes.Find(Query.EQ("_id", BsonValue.Create(targetDate.ToString("dd/MM/yyyy")))).FirstOrDefault();
+		}
+
+		public void InsertSuntime(SunTime suntime)
+		{
+			this.Suntimes.Insert(suntime);
+		}
+
+		public void DeleteSuntimeById(string id)
+		{
+			this.Suntimes.Remove(Query.EQ("_id", BsonValue.Create(id)));
 		}
 
 		#endregion
