@@ -27,16 +27,16 @@ namespace SolarApp.DataProcessor
 			_services = services;
 		}
 
-		public string GetWeatherForecast()
+		public DateTime? GetWeatherForecast()
 		{
 			var requestWeatherForecast = _context.FindSettingById("RequestWeatherForecast");
-			string forecastDownloaded = null;
+			DateTime? forecastDownloaded = null;
 			if (requestWeatherForecast != null && requestWeatherForecast.Value == "1")
 			{
 				var metOfficeLocationForecastUrl = string.Format("{0}wxfcs/all/json/{1}?res=3hourly&key={2}", _configuration.MetOfficeUrl, _configuration.MetOfficeForecastLocationId, _configuration.MetOfficeApiKey);
-				forecastDownloaded = string.Format("{0:ddMMyyyy-HHmmss}", DateTime.Now);
 				var weatherForecastJson = _services.WebRequestForJson(metOfficeLocationForecastUrl);
-				_context.InsertWeatherForecast(new WeatherForecast() { Id = forecastDownloaded, Data = weatherForecastJson });
+				forecastDownloaded = DateTime.UtcNow;
+				_context.InsertWeatherForecast(new WeatherForecast() { Id = forecastDownloaded.Value, Data = weatherForecastJson });
 				requestWeatherForecast.Value = "0";
 				_context.UpdateSetting(requestWeatherForecast);
 			}

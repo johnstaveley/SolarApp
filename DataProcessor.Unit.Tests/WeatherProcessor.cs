@@ -66,7 +66,7 @@ namespace SolarApp.DataProcessor.Unit.Tests
 			var weatherForecastId = weatherProcessor.GetWeatherForecast();
 
 			// Assert
-			Assert.IsFalse(string.IsNullOrEmpty(weatherForecastId), "Forecast should have been downloaded");
+			Assert.IsTrue(weatherForecastId.HasValue, "Forecast should have been downloaded");
             solarAppContext.AssertWasCalled(c => c.InsertWeatherForecast(Arg<WeatherForecast>.Is.Anything));
             solarAppContext.AssertWasCalled(c => c.UpdateSetting(Arg<Setting>.Is.Anything));
             VerifyAllExpectation();

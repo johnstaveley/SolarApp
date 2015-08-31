@@ -13,7 +13,7 @@ namespace SolarApp.Model
 	{
 		    
         [JsonIgnore, BsonElement("_id")]
-        public string Id { get; set; }
+        public DateTime Id { get; set; }
 
         [JsonProperty(Order = 1)]
         public string Data { get; set; }

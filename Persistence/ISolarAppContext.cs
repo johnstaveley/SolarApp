@@ -12,14 +12,14 @@ namespace SolarApp.Persistence
 		void DeleteFailedDataById(string id);
 		void DeleteSettingById(string id);
 		void DeleteSuntimeById(DateTime id);
-		void DeleteWeatherForecastById(string id);
+		void DeleteWeatherForecastById(DateTime id);
 		void DeleteWeatherObservationById(string id);
 		MongoDB.Driver.MongoCollection<FailedData> FailedData { get; }
 		FailedData FindFailedDataById(string id);
 		DataPoint FindDataPointById(string id);
 		Setting FindSettingById(string id);
 		SunTime FindSuntimeByDate(DateTime targetDate);
-		WeatherForecast FindWeatherForecastById(string id);
+		WeatherForecast FindWeatherForecastById(DateTime id);
 		WeatherObservation FindWeatherObservationById(string id);
         double? GetAverageOutputForHour(int hour);
         List<EnergyOutputDay> GetEnergyOutputByDay(DateTime startDate, DateTime endDate);

@@ -7,6 +7,7 @@ using SolarApp.Model;
 using SolarApp.Persistence;
 using TechTalk.SpecFlow;
 using System.Linq;
+using System.Globalization;
 
 namespace SolarApp.DataProcessor.Integration.Tests
 {
@@ -63,7 +64,7 @@ namespace SolarApp.DataProcessor.Integration.Tests
 			var result = weather.GetWeatherForecast();
 			var dataItemsToTrack = ScenarioContext.Current.Get<List<DataItem>>("DataItemsToTrack");
 			var weatherForecast = new WeatherForecast();
-			weatherForecast.Id = result;
+			weatherForecast.Id = result.Value;
 			dataItemsToTrack.Add(new DataItem(weatherForecast));
 			ScenarioContext.Current.Set<List<DataItem>>(dataItemsToTrack, "DataItemsToTrack");
         }
@@ -88,7 +89,7 @@ namespace SolarApp.DataProcessor.Integration.Tests
         {
 			var dataItemsToTrack = ScenarioContext.Current.Get<List<DataItem>>("DataItemsToTrack");
 			var context = ScenarioContext.Current.Get<ISolarAppContext>();
-			var weatherForecast = context.FindWeatherForecastById(dataItemsToTrack.First().Id);
+			var weatherForecast = context.FindWeatherForecastById(DateTime.ParseExact(dataItemsToTrack.First().Id, "yyyy-MM-dd HH:mm:ss.fffZ", CultureInfo.InvariantCulture));
 			Assert.IsNotNull(weatherForecast, "Weather forecast should have been stored");
 			Assert.IsTrue(weatherForecast.Data.Contains("\"type\":\"Forecast\""), "Data returned is not of the correct type");
 
