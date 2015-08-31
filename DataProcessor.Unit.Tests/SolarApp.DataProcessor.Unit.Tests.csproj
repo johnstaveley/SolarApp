@@ -90,6 +90,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="EnergyReadingConverterTest.cs" />
+    <Compile Include="Model\SunTimeTests.cs" />
     <Compile Include="WeatherProcessor.cs" />
     <Compile Include="LocalFileProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

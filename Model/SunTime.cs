@@ -42,5 +42,19 @@ namespace SolarApp.Model
             }
         }
 
+		public double SunIntensity(DateTime date)
+		{
+			if (date >= Sunset) return 0;
+			if (date <= Sunrise) return 0;
+			if (date > SunAzimuth)
+			{
+				return ((double)(date.Ticks - SunAzimuth.Ticks) / (double)(Sunset.Ticks - SunAzimuth.Ticks) * 100.0);
+			}
+			else
+			{
+				return ((double)(date.Ticks - Sunrise.Ticks) / (double) (SunAzimuth.Ticks - Sunrise.Ticks)) * 100.0;
+			}
+		}
+
 	}
 }
