@@ -443,9 +443,14 @@ namespace SolarApp.Persistence
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="targetDate">UTC Date</param>
+		/// <returns></returns>
 		public SunTime FindSuntimeByDate(DateTime targetDate)
 		{
-			return this.Suntimes.Find(Query.EQ("_id", BsonValue.Create(targetDate.ToString("dd/MM/yyyy")))).FirstOrDefault() ?? new SunTime();
+			return this.Suntimes.Find(Query.EQ("_id", BsonValue.Create(targetDate))).FirstOrDefault() ?? new SunTime();
 		}
 
 		public void InsertSuntime(SunTime suntime)
@@ -453,7 +458,7 @@ namespace SolarApp.Persistence
 			this.Suntimes.Insert(suntime);
 		}
 
-		public void DeleteSuntimeById(string id)
+		public void DeleteSuntimeById(DateTime id)
 		{
 			this.Suntimes.Remove(Query.EQ("_id", BsonValue.Create(id)));
 		}

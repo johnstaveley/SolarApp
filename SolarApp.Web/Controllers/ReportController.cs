@@ -34,7 +34,7 @@ namespace SolarApp.Web.Controllers
 		{
 			var startDate = targetDate.Date;
 			var endDate = startDate.AddDays(1);
-			var suntime = _context.FindSuntimeByDate(startDate);
+			var suntime = _context.FindSuntimeByDate(startDate.ToUniversalTime());
 			var energyReadings = _context.GetEnergyOutputByDay(startDate, endDate);
 			double totalProduction = 0;
 			double maximumProduction = 0;
@@ -49,9 +49,9 @@ namespace SolarApp.Web.Controllers
 					.Select(a => new { timestamp = a.Timestamp.ToLocalTime().ToJavaScriptMilliseconds(), currentEnergy = a.CurrentEnergy, dayEnergyInstant = a.DayEnergyInstant }),
 				totalProduction = totalProduction,
 				maximumProduction = maximumProduction,
-				sunrise = (suntime.SunriseDateTime.HasValue ? suntime.SunriseDateTime.Value.ToLocalTime().ToJavaScriptMilliseconds() : 0),
-				sunset = (suntime.SunsetDateTime.HasValue ? suntime.SunsetDateTime.Value.ToLocalTime().ToJavaScriptMilliseconds() : 0),
-				sunAzimuth = (suntime.SunAzimuthDateTime.HasValue ? suntime.SunAzimuthDateTime.Value.ToLocalTime().ToJavaScriptMilliseconds() : 0)
+				sunrise = suntime.Sunrise.ToLocalTime().ToJavaScriptMilliseconds(),
+				sunset = suntime.Sunset.ToLocalTime().ToJavaScriptMilliseconds(),
+				sunAzimuth = suntime.SunAzimuth.ToLocalTime().ToJavaScriptMilliseconds()
 			}, JsonRequestBehavior.AllowGet);
 		}
 

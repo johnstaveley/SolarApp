@@ -229,16 +229,16 @@ namespace SolarApp.DataProcessor.Integration.Tests
 
 		}
 
-		[Given(@"I have suntimes for (.*)-(.*)-(.*)")]
+		[Given(@"I have suntimes for utc date (.*)-(.*)-(.*)")]
 		public void GivenIHaveSuntimesFor(int year, int month, int day)
 		{
-			var targetDate = new DateTime(year, month, day);
+			var targetDate = new DateTime(year, month, day).ToLocalTime();
 			var context = ScenarioContext.Current.Get<ISolarAppContext>();
 			var suntime = new SunTime()
 			{
-				Date = targetDate.ToString("dd/MM/yyyy"),
-				Sunrise = "05:11",
-				Sunset = "19:02"
+				Date = targetDate,
+				Sunrise = targetDate.AddHours(5).AddMinutes(11),
+				Sunset = targetDate.AddHours(19).AddMinutes(2)
 			};
 			context.InsertSuntime(suntime);
 			var dataItemsToTrack = ScenarioContext.Current.Get<List<DataItem>>("DataItemsToTrack");
@@ -246,10 +246,10 @@ namespace SolarApp.DataProcessor.Integration.Tests
 
 		}
 
-		[When(@"I request the suntime for the date (.*)-(.*)-(.*)")]
+		[When(@"I request the suntime for the utc date (.*)-(.*)-(.*)")]
 		public void WhenIRequestTheSuntimeForTheDate(int year, int month, int day)
 		{
-			var targetDate = new DateTime(year, month, day);
+			var targetDate = new DateTime(year, month, day).ToLocalTime();
 			var context = ScenarioContext.Current.Get<ISolarAppContext>();
 			ScenarioContext.Current.Set<SunTime>(context.FindSuntimeByDate(targetDate), "Suntime");
 		}
@@ -259,8 +259,7 @@ namespace SolarApp.DataProcessor.Integration.Tests
 		{
 			var sunTime = ScenarioContext.Current.Get<SunTime>("Suntime");
 			var targetTime = new TimeSpan(hour, minute, second);
-			Assert.IsTrue(sunTime.SunriseDateTime.HasValue, "Sunrise has not been set");
-			Assert.AreEqual(targetTime, sunTime.SunriseDateTime.Value.TimeOfDay);
+			Assert.AreEqual(targetTime, sunTime.Sunrise.TimeOfDay);
 		}
 
 		[Then(@"I have a sunset of (.*):(.*):(.*)")]
@@ -268,8 +267,7 @@ namespace SolarApp.DataProcessor.Integration.Tests
 		{
 			var sunTime = ScenarioContext.Current.Get<SunTime>("Suntime");
 			var targetTime = new TimeSpan(hour, minute, second);
-			Assert.IsTrue(sunTime.SunsetDateTime.HasValue, "Sunset has not been set");
-			Assert.AreEqual(targetTime, sunTime.SunsetDateTime.Value.TimeOfDay);
+			Assert.AreEqual(targetTime, sunTime.Sunset.TimeOfDay);
 		}
 
 		[Then(@"I have a sun azimuth time of (.*):(.*):(.*)")]
@@ -277,8 +275,7 @@ namespace SolarApp.DataProcessor.Integration.Tests
 		{
 			var sunTime = ScenarioContext.Current.Get<SunTime>("Suntime");
 			var targetTime = new TimeSpan(hour, minute, second);
-			Assert.IsTrue(sunTime.SunAzimuthDateTime.HasValue, "Sun azimuth time has not been set");
-			Assert.AreEqual(targetTime, sunTime.SunAzimuthDateTime.Value.TimeOfDay);
+			Assert.AreEqual(targetTime, sunTime.SunAzimuth.TimeOfDay);
 		}
 
     }

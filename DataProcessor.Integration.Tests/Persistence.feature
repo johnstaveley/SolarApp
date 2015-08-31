@@ -65,8 +65,8 @@ Scenario: Calculates the energy output for the period stated
 	| 2015-06-15 09:45:01 | 400            | 38        |
 
 Scenario: Gets the sun up, set and azimuth times for a specified date
-	Given I have suntimes for 2015-08-30
-	When I request the suntime for the date 2015-08-30
+	Given I have suntimes for utc date 2015-08-30
+	When I request the suntime for the utc date 2015-08-30
 	Then I have a sunrise of 05:11:00
 	And I have a sunset of 19:02:00
 	And I have a sun azimuth time of 12:06:30

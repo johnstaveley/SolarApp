@@ -27,7 +27,7 @@ namespace SolarApp.DataProcessor.Tests.Helper
 
 		public DataItem(SunTime suntime)
 		{
-			this.Id = suntime.Date;
+			this.Id = suntime.Date.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss.fffZ");
 			this.TableTypeKind = Helper.TableTypeKind.Suntime;
 		}
 

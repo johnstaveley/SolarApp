@@ -11,6 +11,7 @@ using SolarApp.DataProcessor.Utility.Interfaces;
 using SolarApp.DataProcessor.Utility.Classes;
 using System.Collections.Generic;
 using SolarApp.Persistence;
+using System.Globalization;
 
 namespace SolarApp.DataProcessor.Integration.Tests
 {
@@ -71,7 +72,7 @@ namespace SolarApp.DataProcessor.Integration.Tests
 						context.DeleteSettingById(dataItem.Id);
 						break;
 					case (TableTypeKind.Suntime):
-						context.DeleteSuntimeById(dataItem.Id);
+						context.DeleteSuntimeById(DateTime.ParseExact(dataItem.Id, "yyyy-MM-dd HH:mm:ss.fffZ", CultureInfo.InvariantCulture));
 						break;
 					case (TableTypeKind.WeatherForecast):
 						context.DeleteWeatherForecastById(dataItem.Id);

@@ -13,6 +13,7 @@ using SolarApp.Model;
 using SolarApp.Web.ViewModel;
 using Newtonsoft.Json;
 using System.Web.Script.Serialization;
+using System.Globalization;
 
 namespace SolarApp.Web.Unit.Tests.Controllers
 {
@@ -104,9 +105,9 @@ namespace SolarApp.Web.Unit.Tests.Controllers
 			var targetDate = DateTime.Parse("2015-08-01").Date;
 			var suntime = new SunTime()
 			{
-				Date = "01/08/2015",
-				Sunrise = "06:05",
-				Sunset = "19:10"
+				Date = DateTime.ParseExact("01/08/2015", "dd/MM/yyyy", CultureInfo.InvariantCulture),
+				Sunrise = DateTime.ParseExact("01/08/2015 06:05:00", "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture),
+				Sunset = DateTime.ParseExact("01/08/2015 19:10:00", "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture)
 			};
 			var energyReadings = new List<EnergyOutputDay>(){
 				new EnergyOutputDay() { Timestamp = targetDate, CurrentEnergy = 100, DayEnergyInstant = 40 },

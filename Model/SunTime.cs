@@ -13,77 +13,22 @@ namespace SolarApp.Model
 	{
 
 		[BsonElement("_id")]
-		public string Date { get; set; }
+		public DateTime Date { get; set; }
 
 		[BsonElement("sunrise")]
-		public string Sunrise { get; set; }
+		public DateTime Sunrise { get; set; }
 
 		[BsonElement("sunset")]
-		public string Sunset { get; set; }
-
-		[JsonIgnore]
-		public DateTime? TargetDate
-		{
-			get
-			{
-				try
-				{
-					DateTime date = DateTime.ParseExact(Date, "dd/MM/yyyy", new CultureInfo("en-GB"));
-					return date;
-				}
-				catch
-				{
-					return null;
-				}
-			}
-		}
+		public DateTime Sunset { get; set; }
 
         [JsonIgnore]
-        public DateTime? SunAzimuthDateTime
+        public DateTime SunAzimuth
         {
             get
             {
-                if (SunriseDateTime.HasValue && SunsetDateTime.HasValue)
-                {
-                    return SunriseDateTime.Value.AddTicks((SunsetDateTime.Value.Ticks - SunriseDateTime.Value.Ticks) / 2);
-                }
-                return null;
+	            return Sunrise.AddTicks((Sunset.Ticks - Sunrise.Ticks) / 2);
             }
         }
-
-		[JsonIgnore]
-		public DateTime? SunriseDateTime
-		{
-			get
-			{
-				try
-				{
-					TimeSpan time = TimeSpan.Parse(Sunrise);
-					return (TargetDate.HasValue ? (DateTime?) TargetDate.Value.AddTicks(time.Ticks) : null);
-				}
-				catch
-				{
-					return null;
-				}
-			}
-		}
-
-		[JsonIgnore]
-		public DateTime? SunsetDateTime
-		{
-			get
-			{
-				try
-				{
-					TimeSpan time = TimeSpan.Parse(Sunset);
-					return (TargetDate.HasValue ? (DateTime?)TargetDate.Value.AddTicks(time.Ticks) : null);
-				}
-				catch
-				{
-					return null;
-				}
-			}
-		}
 
 	}
 }

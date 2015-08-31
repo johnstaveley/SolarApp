@@ -315,9 +315,9 @@ this.ScenarioSetup(scenarioInfo);
 #line 67
 this.ScenarioSetup(scenarioInfo);
 #line 68
- testRunner.Given("I have suntimes for 2015-08-30", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I have suntimes for utc date 2015-08-30", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 69
- testRunner.When("I request the suntime for the date 2015-08-30", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I request the suntime for the utc date 2015-08-30", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 70
  testRunner.Then("I have a sunrise of 05:11:00", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 71
