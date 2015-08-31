@@ -165,7 +165,6 @@
     </None>
     <None Include="privateSettings.config">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="ProcessingData.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

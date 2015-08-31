@@ -12,15 +12,27 @@ namespace SolarApp.Model
 	public class SunTime
 	{
 
+		/// <summary>
+		/// Midnight of the target date in UTC
+		/// </summary>
 		[BsonElement("_id")]
 		public DateTime Date { get; set; }
 
+		/// <summary>
+		/// Sunrise of the target date in UTC
+		/// </summary>
 		[BsonElement("sunrise")]
 		public DateTime Sunrise { get; set; }
 
+		/// <summary>
+		/// Sunset of the target date in UTC
+		/// </summary>
 		[BsonElement("sunset")]
 		public DateTime Sunset { get; set; }
 
+		/// <summary>
+		/// The sun azimuth time and date in UTC
+		/// </summary>
         [JsonIgnore]
         public DateTime SunAzimuth
         {

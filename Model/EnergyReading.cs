@@ -9,6 +9,9 @@ namespace SolarApp.Model
 	public class EnergyReading
 	{
 
+		/// <summary>
+		/// UTC Date
+		/// </summary>
 		public DateTime Timestamp { get; set; }
 
 		public int CurrentReading { get; set; }
