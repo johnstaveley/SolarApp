@@ -187,9 +187,6 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
-DataProcessor.Integration.Tests/privateSettings.config
-DataProcessor/privateSettings.config
-DataProcessor/privateSettings.config
 DataProcessor/Deployment/Executables/ntrights.exe
 DataProcessor/Deployment/ServiceManagement.psm1
 DataProcessor/Deployment/ReleaseManagement.psm1
