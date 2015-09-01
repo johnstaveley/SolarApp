@@ -222,7 +222,7 @@ namespace SolarApp.Persistence
 			if (bsonResult == null) return null;
 			var jsonWriterSettings = new JsonWriterSettings { OutputMode = JsonOutputMode.Shell };
 			var jsonResult = bsonResult.ToJson(jsonWriterSettings);
-			var energyReadings = JsonConvert.DeserializeObject<List<EnergyOutputYear>>(jsonResult);
+			var energyReadings = Newtonsoft.Json.JsonConvert.DeserializeObject<List<EnergyOutputYear>>(jsonResult);
 			return energyReadings;
 		}
 
@@ -256,7 +256,7 @@ namespace SolarApp.Persistence
 			if (bsonResult == null) return null;
 			var jsonWriterSettings = new JsonWriterSettings { OutputMode = JsonOutputMode.Shell };
 			var jsonResult = bsonResult.ToJson(jsonWriterSettings);
-			var energyReadings = JsonConvert.DeserializeObject<List<EnergyOutputMonth>>(jsonResult);
+			var energyReadings = Newtonsoft.Json.JsonConvert.DeserializeObject<List<EnergyOutputMonth>>(jsonResult);
 			return energyReadings;
 		}
 
@@ -287,7 +287,7 @@ namespace SolarApp.Persistence
 			var jsonWriterSettings = new JsonWriterSettings { OutputMode = JsonOutputMode.Shell };
 			var jsonResult = bsonResult.ToJson(jsonWriterSettings);
 			jsonResult = Regex.Replace(jsonResult, "ISODate\\((.{22})\\)", "$1");
-			var energyReadings = JsonConvert.DeserializeObject<List<EnergyOutputDay>>(jsonResult);
+			var energyReadings = Newtonsoft.Json.JsonConvert.DeserializeObject<List<EnergyOutputDay>>(jsonResult);
 			double lastEnergyProduction = 0;
 			foreach (var energyReading in energyReadings)
 			{

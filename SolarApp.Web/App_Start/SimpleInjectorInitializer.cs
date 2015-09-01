@@ -31,7 +31,7 @@ namespace SolarApp.Web.App_Start
      
         private static void InitializeContainer(Container container)
         {
-            container.RegisterSingle<IConfiguration, Configuration>();
+            container.RegisterSingleton<IConfiguration, Configuration>();
             container.Register<IFileSystem, FileSystem>();
             container.Register<IServices, Services>();
             container.Register<ISolarAppContext, SolarAppContext>();

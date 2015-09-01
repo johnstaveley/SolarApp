@@ -55,7 +55,7 @@ namespace SolarApp.DataProcessor
 		private static void Bootstrap()
 		{
 			container = new Container();
-			container.RegisterSingle<IConfiguration, Configuration>();
+			container.RegisterSingleton<IConfiguration, Configuration>();
 			container.Register<IFileSystem, FileSystem>();
 			container.Register<IFtp, Ftp>();
 			container.Register<IServices, Services>();
