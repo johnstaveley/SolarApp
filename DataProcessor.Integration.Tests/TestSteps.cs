@@ -12,6 +12,8 @@ using SolarApp.DataProcessor.Utility.Classes;
 using System.Collections.Generic;
 using SolarApp.Persistence;
 using System.Globalization;
+using SolarApp.Utility.Interfaces;
+using SolarApp.Utility.Classes;
 
 namespace SolarApp.DataProcessor.Integration.Tests
 {
@@ -29,12 +31,14 @@ namespace SolarApp.DataProcessor.Integration.Tests
 				Directory.CreateDirectory(configuration.NewFilePollPath);
 			}
 			ScenarioContext.Current.Set<IServices>(new Services());
+			var logger = new Logger("Test");
+			ScenarioContext.Current.Set<ILogger>(logger);
 			ScenarioContext.Current.Set<IConfiguration>(configuration);
 			ScenarioContext.Current.Set<List<DataItem>>(new List<DataItem>(), "DataItemsToTrack");
 			var fileSystem = new FileSystem();
 			ScenarioContext.Current.Set<IFileSystem>(fileSystem);
 			ScenarioContext.Current.Set<IFtp>(new Ftp(configuration, fileSystem));
-			var context = new SolarAppContext(configuration);
+			var context = new SolarAppContext(configuration, logger);
 			ScenarioContext.Current.Set<ISolarAppContext>(context);
 			var forecastRequestSetting = context.FindSettingById("RequestWeatherForecast");
 			if (forecastRequestSetting == null)

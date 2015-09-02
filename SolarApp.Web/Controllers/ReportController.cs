@@ -8,23 +8,27 @@ using SolarApp.DataProcessor.Utility.Interfaces;
 using SolarApp.DataProcessor.Utility.Classes;
 using SolarApp.Web.ViewModel;
 using SolarApp.Web.Extensions;
+using SolarApp.Utility.Interfaces;
 
 namespace SolarApp.Web.Controllers
 {
 
 	public class ReportController : Controller
 	{
-		private ISolarAppContext _context { get; set; }
-		private IConfiguration _configuration { get; set; }
+		private readonly ISolarAppContext _context;
+		private readonly IConfiguration _configuration;
+		private readonly ILogger _logger;
 
-		public ReportController(IConfiguration configuration, ISolarAppContext context)
+		public ReportController(IConfiguration configuration, ISolarAppContext context, ILogger logger)
 		{
             _configuration = configuration;
             _context = context;
+			_logger = logger;
 		}
 
 		public ActionResult DayGraph(DateTime? targetDate = null)
 		{
+			_logger.Debug("Day Graph");
 			var isDatabasePresent = _context.IsDatabasePresent;
 			EnergyReadingsViewModel viewModel = new EnergyReadingsViewModel(isDatabasePresent, targetDate ?? DateTime.Now.AddDays(-1).Date);
 			return View(viewModel);

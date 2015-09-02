@@ -30,7 +30,6 @@ namespace SolarApp.Persistence
         long GetNumberOfFailedData();
         long GetNumberOfWeatherForecasts();
         long GetNumberOfWeatherObservations();
-		void InsertAudit(Audit audit);
 		void InsertDataPoint(DataPoint dataPoint);
 		void InsertFailedData(FailedData failedData);
 		void InsertSetting(Setting setting);

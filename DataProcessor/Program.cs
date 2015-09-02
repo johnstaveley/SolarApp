@@ -10,6 +10,9 @@ using SolarApp.DataProcessor.Utility.Interfaces;
 using SolarApp.DataProcessor.Utility.Classes;
 using SolarApp.Persistence;
 using System.Threading;
+using SolarApp.Utility.Interfaces;
+using SolarApp.Utility.Classes;
+using log4net.Config;
 
 namespace SolarApp.DataProcessor
 {
@@ -23,11 +26,13 @@ namespace SolarApp.DataProcessor
         static void Main()
         {
 			Bootstrap();
+			XmlConfigurator.Configure();
 #if DEBUG
 			var service = new SolarAppService(
 				container.GetInstance<IConfiguration>(), 
                 container.GetInstance<IFileSystem>(), 
-				container.GetInstance<IFtp>(), 
+				container.GetInstance<IFtp>(),
+				container.GetInstance<ILogger>(), 
                 container.GetInstance<ISolarAppContext>(), 
                 container.GetInstance<IServices>(), 
                 container.GetInstance<ITimer>());
@@ -58,6 +63,9 @@ namespace SolarApp.DataProcessor
 			container.RegisterSingleton<IConfiguration, Configuration>();
 			container.Register<IFileSystem, FileSystem>();
 			container.Register<IFtp, Ftp>();
+			container.Register<ILogger>(() => {
+				return new Logger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName);
+				});
 			container.Register<IServices, Services>();
 			container.Register<ISolarAppContext, SolarAppContext>();
 			container.Register<ITimer, ReliableTimer>();

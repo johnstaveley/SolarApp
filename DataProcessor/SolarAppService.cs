@@ -12,25 +12,28 @@ using SolarApp.Persistence;
 using SolarApp.DataProcessor.Utility.Interfaces;
 using System.Threading;
 using System.Reflection;
+using SolarApp.Utility.Interfaces;
 
 namespace SolarApp.DataProcessor
 {
     public partial class SolarAppService : ServiceBase
     {
 		private readonly AutoResetEvent _idle = new AutoResetEvent(true);
-		private ITimer _timer { get; set; }
-		private IConfiguration _configuration { get; set; }
-		private IFileSystem _fileSystem { get; set; }
-		private IFtp _ftp { get; set; }
-		private ISolarAppContext _context { get; set; }
-		private IServices _services { get; set; }
+		private readonly ITimer _timer;
+		private readonly IConfiguration _configuration;
+		private readonly IFileSystem _fileSystem;
+		private readonly IFtp _ftp;
+		private readonly ISolarAppContext _context;
+		private readonly IServices _services;
+		private readonly ILogger _logger;
 
-		public SolarAppService(IConfiguration configuration, IFileSystem fileSystem, IFtp ftp, ISolarAppContext context, IServices services, ITimer timer)
+		public SolarAppService(IConfiguration configuration, IFileSystem fileSystem, IFtp ftp, ILogger logger, ISolarAppContext context, IServices services, ITimer timer)
         {
 			_configuration = configuration;
 			_context = context;
 			_fileSystem = fileSystem;
 			_ftp = ftp;
+			_logger = logger;
             _services = services;
 			_timer = timer;
 			_timer.Tick += TimerTick;
@@ -40,6 +43,7 @@ namespace SolarApp.DataProcessor
 
         protected override void OnStart(string[] args)
         {
+			_logger.Debug("On Start");
             this.RequestAdditionalTime(30000);
 			Init();
         }
@@ -47,12 +51,14 @@ namespace SolarApp.DataProcessor
 		public void Init()
 		{
 			// TODO: Start timer that triggers events
+			_logger.Debug("Init called");
 			_timer.Interval = _configuration.PollIntervalSeconds * 1000;
 			_timer.Start();
 		}
 
         protected override void OnStop()
         {
+			_logger.Debug("Stop called");
 			_timer.Stop();
         }
 
@@ -63,7 +69,7 @@ namespace SolarApp.DataProcessor
 
 			try
 			{
-
+				_logger.Debug("Tick");
 				if (_context.IsDatabasePresent)
 				{
 
@@ -84,19 +90,16 @@ namespace SolarApp.DataProcessor
 
                     _context.UpdateLastRunDate();
 				}
+				else
+				{
+					_logger.Debug("SolarAppService - TimerTick - Database not present");
+				}
 
 			}
 			catch (Exception ex)
 			{
-				var audit = new Model.Audit(System.Environment.UserName, ex.Message, string.Format("{0}-{1}", this.GetType().Name, MethodBase.GetCurrentMethod().Name), true);
-				if (_context.IsDatabasePresent)
-				{
-					_context.InsertAudit(audit);
-				}
-				else
-				{
-					// TODO: Write to event log
-				}
+				_logger.Error(string.Format("{0}-{1}-{2}", this.GetType().Name, MethodBase.GetCurrentMethod().Name, ex.Message));
+				//var audit = new Model.Audit(System.Environment.UserName, ex.Message, string.Format("{0}-{1}", this.GetType().Name, MethodBase.GetCurrentMethod().Name), true);
 			}
 
 			_timer.Enabled = true;

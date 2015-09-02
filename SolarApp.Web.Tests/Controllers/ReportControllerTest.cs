@@ -14,6 +14,7 @@ using SolarApp.Web.ViewModel;
 using Newtonsoft.Json;
 using System.Web.Script.Serialization;
 using System.Globalization;
+using SolarApp.Utility.Interfaces;
 
 namespace SolarApp.Web.Unit.Tests.Controllers
 {
@@ -24,6 +25,7 @@ namespace SolarApp.Web.Unit.Tests.Controllers
         private ReportController _controller;
         private IConfiguration _configuration;
         private ISolarAppContext _context;
+		private ILogger _logger;
         private JavaScriptSerializer _serializer;
 
 
@@ -32,7 +34,8 @@ namespace SolarApp.Web.Unit.Tests.Controllers
 		{
 			_configuration = MockRepository.GenerateMock<IConfiguration>();
 			_context = MockRepository.GenerateMock<ISolarAppContext>();
-			_controller = new ReportController(_configuration, _context);
+			_logger = MockRepository.GenerateMock<ILogger>();
+			_controller = new ReportController(_configuration, _context, _logger);
             _serializer = new JavaScriptSerializer();
         }
 

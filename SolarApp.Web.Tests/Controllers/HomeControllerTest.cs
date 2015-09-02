@@ -11,6 +11,7 @@ using Rhino.Mocks;
 using SolarApp.Persistence;
 using SolarApp.Model;
 using SolarApp.Web.ViewModel;
+using SolarApp.Utility.Interfaces;
 
 namespace SolarApp.Web.Unit.Tests.Controllers
 {
@@ -21,13 +22,15 @@ namespace SolarApp.Web.Unit.Tests.Controllers
         private HomeController _controller;
         private IConfiguration _configuration;
         private ISolarAppContext _context;
+		private ILogger _logger;
 
         [SetUp]
         public void Setup()
         {
             _configuration = MockRepository.GenerateMock<IConfiguration>();
             _context = MockRepository.GenerateMock<ISolarAppContext>();
-            _controller = new HomeController(_configuration, _context);
+			_logger = MockRepository.GenerateMock<ILogger>();
+			_controller = new HomeController(_configuration, _context, _logger);
         }
 
         [TearDown]

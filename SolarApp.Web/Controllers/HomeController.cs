@@ -7,23 +7,27 @@ using SolarApp.Persistence;
 using SolarApp.DataProcessor.Utility.Interfaces;
 using SolarApp.DataProcessor.Utility.Classes;
 using SolarApp.Web.ViewModel;
+using SolarApp.Utility.Interfaces;
 
 namespace SolarApp.Web.Controllers
 {
 
 	public class HomeController : Controller
 	{
-		private ISolarAppContext _context { get; set; }
-		private IConfiguration _configuration { get; set; }
+		private readonly ISolarAppContext _context;
+		private readonly IConfiguration _configuration;
+		private readonly ILogger _logger;
 
-		public HomeController(IConfiguration configuration, ISolarAppContext context)
+		public HomeController(IConfiguration configuration, ISolarAppContext context, ILogger logger)
 		{
             _configuration = configuration;
             _context = context;
+			_logger = logger;
 		}
 
 		public ActionResult Index()
 		{
+			_logger.Debug("Home index called");
 			return View();
 		}
 

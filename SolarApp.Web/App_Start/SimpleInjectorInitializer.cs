@@ -12,6 +12,9 @@ namespace SolarApp.Web.App_Start
     using SolarApp.DataProcessor.Utility.Interfaces;
     using SolarApp.DataProcessor.Utility.Classes;
     using SolarApp.Persistence;
+	using SolarApp.Utility.Interfaces;
+	using SolarApp.Utility.Classes;
+	using log4net.Config;
     
     public static class SimpleInjectorInitializer
     {
@@ -33,6 +36,10 @@ namespace SolarApp.Web.App_Start
         {
             container.RegisterSingleton<IConfiguration, Configuration>();
             container.Register<IFileSystem, FileSystem>();
+			container.Register<ILogger>(() =>
+			{
+				return new Logger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.FullName);
+			});
             container.Register<IServices, Services>();
             container.Register<ISolarAppContext, SolarAppContext>();
             container.Register<ITimer, ReliableTimer>();

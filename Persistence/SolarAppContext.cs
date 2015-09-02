@@ -15,6 +15,7 @@ using Newtonsoft.Json.Linq;
 using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization;
 using System.Text.RegularExpressions;
+using SolarApp.Utility.Interfaces;
 
 namespace SolarApp.Persistence
 {
@@ -23,13 +24,15 @@ namespace SolarApp.Persistence
     {
 
         public MongoDatabase Database;
-        private IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
+		private readonly ILogger _logger;
 
         #region Setup
 
-        public SolarAppContext(IConfiguration configuration)
+        public SolarAppContext(IConfiguration configuration, ILogger logger)
         {
             _configuration = configuration;
+			_logger = logger;
             var client = new MongoClient(configuration.MongoConnectionString);
             var server = client.GetServer();
             Database = server.GetDatabase(configuration.MongoDatabaseName);
@@ -63,6 +66,7 @@ namespace SolarApp.Persistence
 
         public void SeedDatabase()
         {
+			_logger.Info("SolarAppService - Seed");
 
 			if (!Database.CollectionExists("Audit"))
 			{
@@ -104,23 +108,6 @@ namespace SolarApp.Persistence
         }
 
         #endregion
-
-		#region Audit
-
-		public MongoCollection<Audit> Audit
-		{
-			get
-			{
-				return Database.GetCollection<Audit>("Audit");
-			}
-		}
-
-		public void InsertAudit(Audit audit)
-		{
-			this.Audit.Insert(audit);
-		}
-
-		#endregion
 
 		#region DataPoints
 
