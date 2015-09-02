@@ -49,6 +49,7 @@ namespace SolarApp.DataProcessor
                     container.GetInstance<IConfiguration>(), 
                     container.GetInstance<IFileSystem>(), 
 				    container.GetInstance<IFtp>(), 
+					container.GetInstance<ILogger>(),
                     container.GetInstance<ISolarAppContext>(), 
                     container.GetInstance<IServices>(), 
                     container.GetInstance<ITimer>()) 

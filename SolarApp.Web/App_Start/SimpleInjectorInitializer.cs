@@ -15,6 +15,7 @@ namespace SolarApp.Web.App_Start
 	using SolarApp.Utility.Interfaces;
 	using SolarApp.Utility.Classes;
 	using log4net.Config;
+	using log4net;
     
     public static class SimpleInjectorInitializer
     {

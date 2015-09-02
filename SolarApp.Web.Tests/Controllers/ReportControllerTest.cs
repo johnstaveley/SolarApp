@@ -44,6 +44,7 @@ namespace SolarApp.Web.Unit.Tests.Controllers
 		{
 			_configuration.VerifyAllExpectations();
 			_context.VerifyAllExpectations();
+			_logger.VerifyAllExpectations();
             _serializer = null;
 		}
 
