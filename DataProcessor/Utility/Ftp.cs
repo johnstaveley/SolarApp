@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using SolarApp.DataProcessor.Utility.Interfaces;
+using SolarApp.Utility.Interfaces;
 
 namespace SolarApp.DataProcessor.Utility
 {
@@ -16,15 +17,17 @@ namespace SolarApp.DataProcessor.Utility
 		private string _fileUrl { get; set; }
 		private string _username { get; set; }
 		private string _password { get; set; }
-        private IFileSystem _fileSystem { get; set; }
+		private readonly IFileSystem _fileSystem;
+		private readonly ILogger _logger;
 
-        public Ftp(IConfiguration configuration, IFileSystem fileSystem)
+        public Ftp(IConfiguration configuration, IFileSystem fileSystem, ILogger logger)
         {
 
 			_rootUrl = configuration.FtpDestinationUrl;
 			_password = configuration.FtpPassword;
 			_username = configuration.FtpUsername;
             _fileSystem = fileSystem;
+			_logger = logger;
         }
 
         private FtpWebRequest InitialiseConnection(string remoteFileName = null)
@@ -35,7 +38,9 @@ namespace SolarApp.DataProcessor.Utility
                 Uri modifiedUri = new Uri(baseUri, remoteFileName);
                 _fileUrl = modifiedUri.AbsoluteUri.ToString();
 			}
-			FtpWebRequest request = (FtpWebRequest)WebRequest.Create(_fileUrl ?? _rootUrl);
+			var connectionUrl = _fileUrl ?? _rootUrl;
+			_logger.DebugFormat("Making connection to {0}", connectionUrl);
+			FtpWebRequest request = (FtpWebRequest)WebRequest.Create(connectionUrl);
             request.Credentials = new NetworkCredential(_username, _password);
             return request;
         }
@@ -47,8 +52,8 @@ namespace SolarApp.DataProcessor.Utility
             {
                 using (StreamReader reader = new StreamReader(responseStream))
                 {
-                    Console.WriteLine("Directory List Complete, status {0}", response.StatusDescription);
-                    return reader.ReadToEnd();
+					_logger.DebugFormat("Directory List Complete, status {0}", response.StatusDescription);
+					return reader.ReadToEnd();
                 }
             }
         }
@@ -57,11 +62,13 @@ namespace SolarApp.DataProcessor.Utility
 
             FtpWebRequest request = InitialiseConnection(fileToDownload);
             request.Method = WebRequestMethods.Ftp.DownloadFile;
-            var response = GetResponse(request);
+			_logger.DebugFormat("About to download {0}", fileToDownload);
+			var response = GetResponse(request);
             if (!_fileSystem.Directory_Exists(localStoragePath)) { _fileSystem.CreateDirectory(localStoragePath); }
             var localFilePath = Path.Combine(localStoragePath, fileToDownload);
             File.WriteAllText(localFilePath, response);
-        }
+			_logger.DebugFormat("Downloaded file to {0}", localFilePath);
+		}
 
         /// <summary>
         /// Get a list of all the files in the directory

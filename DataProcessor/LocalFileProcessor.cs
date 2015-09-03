@@ -9,21 +9,24 @@ using Newtonsoft.Json;
 using SolarApp.Model;
 using SolarApp.DataProcessor.Utility;
 using SolarApp.DataProcessor.Utility.Interfaces;
+using SolarApp.Utility.Interfaces;
 
 namespace SolarApp.DataProcessor
 {
 	public class LocalFileProcessor
 	{
 
-		private IConfiguration _configuration { get; set; }
-		private IFileSystem _fileSystem { get; set; }
-		private ISolarAppContext _context { get; set; }
+		private readonly IConfiguration _configuration;
+		private readonly IFileSystem _fileSystem;
+		private readonly ISolarAppContext _context;
+		private readonly ILogger _logger;
 
-		public LocalFileProcessor(IConfiguration configuration, IFileSystem fileSystem, ISolarAppContext context)
+		public LocalFileProcessor(IConfiguration configuration, IFileSystem fileSystem, ISolarAppContext context, ILogger logger)
 		{
 			_configuration = configuration;
 			_context = context;
 			_fileSystem = fileSystem;
+			_logger = logger;
 		}
 
 		public List<string> Process()
@@ -62,6 +65,7 @@ namespace SolarApp.DataProcessor
                 }
                 catch (Exception exception)
                 {
+					_logger.ErrorFormat("Error processing message {0}", exception.Message);
                     _context.InsertFailedData(new FailedData() { Id = fileName, Data = fileText });
                     dataPointIds.Add(fileName);
                 }

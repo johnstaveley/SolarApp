@@ -27,6 +27,16 @@ namespace SolarApp.Utility.Classes
 			this.log.Debug(message, exception);
 		}
 
+		public void DebugFormat(string format, object arg)
+		{
+			this.log.DebugFormat(format, arg);
+		}
+
+		public void DebugFormat(string format, params object[] args)
+		{
+			this.log.DebugFormat(format, args);
+		}
+
 		public void Error(object message)
 		{
 			this.log.Error(message);
@@ -35,6 +45,16 @@ namespace SolarApp.Utility.Classes
 		public void Error(object message, Exception exception)
 		{
 			this.log.Error(message, exception);
+		}
+
+		public void ErrorFormat(string format, object arg)
+		{
+			this.log.ErrorFormat(format, arg);
+		}
+
+		public void ErrorFormat(string format, params object[] args)
+		{
+			this.log.ErrorFormat(format, args);
 		}
 
 		public void Fatal(object message)

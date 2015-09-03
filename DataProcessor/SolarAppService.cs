@@ -78,10 +78,10 @@ namespace SolarApp.DataProcessor
 						_context.SeedDatabase();
 					}
 
-					var ftpFileProcessor = new FtpFileProcessor(_configuration, _context, _fileSystem, _ftp);
+					var ftpFileProcessor = new FtpFileProcessor(_configuration, _context, _fileSystem, _ftp, _logger);
 					ftpFileProcessor.Process();
 
-					var localFileProcessor = new LocalFileProcessor(_configuration, _fileSystem, _context);
+					var localFileProcessor = new LocalFileProcessor(_configuration, _fileSystem, _context, _logger);
 					localFileProcessor.Process();
 
 					var weatherProcessor = new WeatherProcessor(_configuration, _context, _logger, _services);
@@ -92,7 +92,7 @@ namespace SolarApp.DataProcessor
 				}
 				else
 				{
-					_logger.Debug("SolarAppService - TimerTick - Database not present");
+					_logger.Debug("TimerTick - Database not present");
 				}
 
 			}

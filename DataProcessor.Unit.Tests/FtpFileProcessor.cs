@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using SolarApp.DataProcessor.Unit.Tests.Properties;
 using Rhino.Mocks;
 using SolarApp.Persistence;
+using SolarApp.Utility.Interfaces;
 
 namespace SolarApp.DataProcessor.Unit.Tests
 {
@@ -23,6 +24,7 @@ namespace SolarApp.DataProcessor.Unit.Tests
 			var solarAppContext = MockRepository.GenerateMock<ISolarAppContext>();
 			var fileSystem = MockRepository.GenerateMock<IFileSystem>();
 			var ftp = MockRepository.GenerateMock<IFtp>();
+			var logger = MockRepository.GenerateMock<ILogger>();
 			string[] filesToDownload = { "A", "B", "C" };
 			ftp.Expect(i => i.GetDirectoryListing()).Return(filesToDownload);
 			string pollFilePath = "C:/folder";
@@ -35,7 +37,7 @@ namespace SolarApp.DataProcessor.Unit.Tests
             configuration.DeleteFileAfterDownload = false;
 
 			// Act
-			var ftpFileProcessor = new FtpFileProcessor(configuration, solarAppContext, fileSystem, ftp);
+			var ftpFileProcessor = new FtpFileProcessor(configuration, solarAppContext, fileSystem, ftp, logger);
 			ftpFileProcessor.Process();
 
 			// Assert
@@ -46,6 +48,7 @@ namespace SolarApp.DataProcessor.Unit.Tests
 			ftp.AssertWasCalled(i => i.Download(Arg<string>.Is.Equal("C"), Arg<string>.Is.Equal(pollFilePath)));
             ftp.AssertWasNotCalled(f => f.Delete(Arg<string>.Is.Anything));
 			ftp.VerifyAllExpectations();
+			logger.VerifyAllExpectations();
 
 		}
 	}

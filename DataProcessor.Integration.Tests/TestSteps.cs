@@ -37,7 +37,7 @@ namespace SolarApp.DataProcessor.Integration.Tests
 			ScenarioContext.Current.Set<List<DataItem>>(new List<DataItem>(), "DataItemsToTrack");
 			var fileSystem = new FileSystem();
 			ScenarioContext.Current.Set<IFileSystem>(fileSystem);
-			ScenarioContext.Current.Set<IFtp>(new Ftp(configuration, fileSystem));
+			ScenarioContext.Current.Set<IFtp>(new Ftp(configuration, fileSystem, logger));
 			var context = new SolarAppContext(configuration, logger);
 			ScenarioContext.Current.Set<ISolarAppContext>(context);
 			var forecastRequestSetting = context.FindSettingById("RequestWeatherForecast");
@@ -105,7 +105,8 @@ namespace SolarApp.DataProcessor.Integration.Tests
 			var configuration = ScenarioContext.Current.Get<IConfiguration>();
 			var fileSystem = ScenarioContext.Current.Get<IFileSystem>();
 			var ftp = ScenarioContext.Current.Get<IFtp>();
-			ftp = new Ftp(configuration, fileSystem);
+			var logger = ScenarioContext.Current.Get<ILogger>();
+			ftp = new Ftp(configuration, fileSystem, logger);
         }
 
         [When(@"I do a directory listing")]

@@ -12,6 +12,7 @@ using System.Linq;
 using System.IO;
 using SolarApp.DataProcessor.Utility.Interfaces;
 using SolarApp.DataProcessor.Utility.Classes;
+using SolarApp.Utility.Interfaces;
 
 namespace SolarApp.DataProcessor.Integration.Tests
 {
@@ -191,7 +192,8 @@ namespace SolarApp.DataProcessor.Integration.Tests
 		{
 			IConfiguration configuration = new SolarApp.DataProcessor.Utility.Classes.Configuration();
 			var context = ScenarioContext.Current.Get<ISolarAppContext>();
-			LocalFileProcessor fileProcessor = new LocalFileProcessor(configuration, new SolarApp.DataProcessor.Utility.Classes.FileSystem(), context);
+			var logger = ScenarioContext.Current.Get<ILogger>();
+			LocalFileProcessor fileProcessor = new LocalFileProcessor(configuration, new SolarApp.DataProcessor.Utility.Classes.FileSystem(), context, logger);
 			var dataPointIds = fileProcessor.Process();
 			foreach (var dataPointId in dataPointIds)
 			{

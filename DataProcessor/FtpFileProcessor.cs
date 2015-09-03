@@ -9,23 +9,26 @@ using Newtonsoft.Json;
 using SolarApp.Model;
 using SolarApp.DataProcessor.Utility;
 using SolarApp.DataProcessor.Utility.Interfaces;
+using SolarApp.Utility.Interfaces;
 
 namespace SolarApp.DataProcessor
 {
 	public class FtpFileProcessor
 	{
 
-		private IConfiguration _configuration { get; set; }
-		private IFileSystem _fileSystem { get; set; }
-		private IFtp _ftp { get; set; }
-		private ISolarAppContext _context { get; set; }
+		private readonly IConfiguration _configuration;
+		private readonly IFileSystem _fileSystem;
+		private readonly IFtp _ftp;
+		private readonly ISolarAppContext _context;
+		private readonly ILogger _logger;
 
-		public FtpFileProcessor(IConfiguration configuration, ISolarAppContext context, IFileSystem fileSystem, IFtp ftp)
+		public FtpFileProcessor(IConfiguration configuration, ISolarAppContext context, IFileSystem fileSystem, IFtp ftp, ILogger logger)
 		{
 			_configuration = configuration;
 			_context = context;
 			_fileSystem = fileSystem;
 			_ftp = ftp;
+			_logger = logger;
 		}
 
 		/// <summary>
@@ -36,6 +39,7 @@ namespace SolarApp.DataProcessor
 		{
 
 			var filesToDownload = _ftp.GetDirectoryListing();
+			_logger.DebugFormat("{0} files at remote site", filesToDownload.Length);
 			foreach (var fileToDownload in filesToDownload)
 			{
                 if (_context.FindDataPointById(fileToDownload) == null && _context.FindFailedDataById(fileToDownload) == null)
@@ -43,7 +47,8 @@ namespace SolarApp.DataProcessor
                     _ftp.Download(fileToDownload, _configuration.NewFilePollPath);
                     if (_configuration.DeleteFileAfterDownload)
                     {
-                        _ftp.Delete(fileToDownload);
+						_logger.DebugFormat("Deleting file {0}", fileToDownload);
+						_ftp.Delete(fileToDownload);
                     }
                 }
 			}

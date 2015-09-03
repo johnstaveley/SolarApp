@@ -8,6 +8,7 @@ using SolarApp.DataProcessor.Unit.Tests.Properties;
 using Rhino.Mocks;
 using SolarApp.Persistence;
 using System.Linq;
+using SolarApp.Utility.Interfaces;
 
 namespace SolarApp.DataProcessor.Unit.Tests
 {
@@ -22,6 +23,7 @@ namespace SolarApp.DataProcessor.Unit.Tests
 			var configuration = MockRepository.GenerateMock<IConfiguration>();
 			var solarAppContext = MockRepository.GenerateMock<ISolarAppContext>();
 			var fileSystem = MockRepository.GenerateMock<IFileSystem>();
+			var logger = MockRepository.GenerateMock<ILogger>();
 			string[] filesToProcess = { "D.log", "E.log" };
 			string pollFilePath = "C:/folder";
 			DataPoint dataPoint = new DataPoint();
@@ -37,14 +39,15 @@ namespace SolarApp.DataProcessor.Unit.Tests
 			solarAppContext.Expect(c => c.InsertDataPoint(Arg<DataPoint>.Is.Anything)).Repeat.Times(filesToProcess.Length);
 
 			// Act
-			var ftpFileProcessor = new LocalFileProcessor(configuration, fileSystem, solarAppContext);
+			var ftpFileProcessor = new LocalFileProcessor(configuration, fileSystem, solarAppContext, logger);
 			var results = ftpFileProcessor.Process();
 
 			// Assert
 			Assert.AreEqual(filesToProcess.Length, results.Count);
 			configuration.VerifyAllExpectations();
 			solarAppContext.VerifyAllExpectations();
-			fileSystem.VerifyAllExpectations();		
+			fileSystem.VerifyAllExpectations();
+			logger.VerifyAllExpectations();
 				
 			}
 
