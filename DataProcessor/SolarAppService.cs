@@ -84,7 +84,7 @@ namespace SolarApp.DataProcessor
 					var localFileProcessor = new LocalFileProcessor(_configuration, _fileSystem, _context);
 					localFileProcessor.Process();
 
-					var weatherProcessor = new WeatherProcessor(_configuration, _context, _services);
+					var weatherProcessor = new WeatherProcessor(_configuration, _context, _logger, _services);
 					weatherProcessor.GetWeatherForecast();
 					weatherProcessor.GetWeatherObservation();
 

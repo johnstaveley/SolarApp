@@ -4,6 +4,7 @@ using SolarApp.DataProcessor.Utility.Interfaces;
 using Rhino.Mocks;
 using SolarApp.Persistence;
 using System.Linq;
+using SolarApp.Utility.Interfaces;
 
 namespace SolarApp.DataProcessor.Unit.Tests
 {
@@ -12,6 +13,7 @@ namespace SolarApp.DataProcessor.Unit.Tests
 	{
 
         IConfiguration configuration;
+		ILogger logger;
         IServices services;
         ISolarAppContext solarAppContext;
 
@@ -19,6 +21,7 @@ namespace SolarApp.DataProcessor.Unit.Tests
         public void Setup()
         {
             configuration = MockRepository.GenerateMock<IConfiguration>();
+			logger = MockRepository.GenerateMock<ILogger>();
             services = MockRepository.GenerateMock<IServices>();
             solarAppContext = MockRepository.GenerateMock<ISolarAppContext>();
         }
@@ -45,7 +48,7 @@ namespace SolarApp.DataProcessor.Unit.Tests
             solarAppContext.Expect(c => c.FindSettingById("RequestWeatherForecast")).Return(new Setting() { Id = "RequestWeatherForecast", Value = "0" });
 
 			// Act
-			var weatherProcessor = new WeatherProcessor(configuration, solarAppContext, services);
+			var weatherProcessor = new WeatherProcessor(configuration, solarAppContext, logger, services);
 			var result = weatherProcessor.GetWeatherForecast();
 
 			// Assert
@@ -62,7 +65,7 @@ namespace SolarApp.DataProcessor.Unit.Tests
             solarAppContext.Expect(c => c.FindSettingById("RequestWeatherForecast")).Return(new Setting() { Id = "RequestWeatherForecast", Value = "1" });
 
 			// Act
-			var weatherProcessor = new WeatherProcessor(configuration, solarAppContext, services);
+			var weatherProcessor = new WeatherProcessor(configuration, solarAppContext, logger, services);
 			var weatherForecastId = weatherProcessor.GetWeatherForecast();
 
 			// Assert
@@ -79,7 +82,7 @@ namespace SolarApp.DataProcessor.Unit.Tests
             solarAppContext.Expect(c => c.FindSettingById("RequestWeatherObservation")).Return(new Setting() { Id = "RequestWeatherObservation", Value = "0" });
 
             // Act
-            var weatherProcessor = new WeatherProcessor(configuration, solarAppContext, services);
+			var weatherProcessor = new WeatherProcessor(configuration, solarAppContext, logger, services);
             var result = weatherProcessor.GetWeatherObservation();
 
             // Assert
@@ -95,7 +98,7 @@ namespace SolarApp.DataProcessor.Unit.Tests
             solarAppContext.Expect(c => c.FindSettingById("RequestWeatherObservation")).Return(new Setting() { Id = "RequestWeatherObservation", Value = "1" });
 
             // Act
-            var weatherProcessor = new WeatherProcessor(configuration, solarAppContext, services);
+			var weatherProcessor = new WeatherProcessor(configuration, solarAppContext, logger, services);
             var weatherObservationId = weatherProcessor.GetWeatherObservation();
 
             // Assert

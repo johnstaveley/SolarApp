@@ -10,20 +10,23 @@ using SolarApp.Model;
 using SolarApp.DataProcessor.Utility;
 using SolarApp.DataProcessor.Utility.Interfaces;
 using System.Net;
+using SolarApp.Utility.Interfaces;
 
 namespace SolarApp.DataProcessor
 {
 	public class WeatherProcessor
 	{
 
-		private IConfiguration _configuration { get; set; }
-		private ISolarAppContext _context { get; set; }
-		private IServices _services { get; set; }
+		private readonly IConfiguration _configuration;
+		private readonly ISolarAppContext _context;
+		private readonly ILogger _logger;
+		private readonly IServices _services;
 
-		public WeatherProcessor(IConfiguration configuration, ISolarAppContext context, IServices services)
+		public WeatherProcessor(IConfiguration configuration, ISolarAppContext context, ILogger logger, IServices services)
 		{
 			_configuration = configuration;
 			_context = context;
+			_logger = logger;
 			_services = services;
 		}
 
@@ -34,6 +37,7 @@ namespace SolarApp.DataProcessor
 			if (requestWeatherForecast != null && requestWeatherForecast.Value == "1")
 			{
 				var metOfficeLocationForecastUrl = string.Format("{0}wxfcs/all/json/{1}?res=3hourly&key={2}", _configuration.MetOfficeUrl, _configuration.MetOfficeForecastLocationId, _configuration.MetOfficeApiKey);
+				_logger.Debug(string.Format("About to be http get to {0}", metOfficeLocationForecastUrl));
 				var weatherForecastJson = _services.WebRequestForJson(metOfficeLocationForecastUrl);
 				forecastDownloaded = DateTime.UtcNow;
 				_context.InsertWeatherForecast(new WeatherForecast() { Id = forecastDownloaded.Value, Data = weatherForecastJson });

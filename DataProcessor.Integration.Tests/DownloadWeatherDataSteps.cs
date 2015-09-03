@@ -8,6 +8,7 @@ using SolarApp.Persistence;
 using TechTalk.SpecFlow;
 using System.Linq;
 using System.Globalization;
+using SolarApp.Utility.Interfaces;
 
 namespace SolarApp.DataProcessor.Integration.Tests
 {
@@ -59,8 +60,9 @@ namespace SolarApp.DataProcessor.Integration.Tests
         {
 			var configuration = ScenarioContext.Current.Get<IConfiguration>();
 			var context = ScenarioContext.Current.Get<ISolarAppContext>();
+			var logger = ScenarioContext.Current.Get<ILogger>();
 			var services = ScenarioContext.Current.Get<IServices>();
-			var weather = new WeatherProcessor(configuration, context, services);
+			var weather = new WeatherProcessor(configuration, context, logger, services);
 			var result = weather.GetWeatherForecast();
 			var dataItemsToTrack = ScenarioContext.Current.Get<List<DataItem>>("DataItemsToTrack");
 			var weatherForecast = new WeatherForecast();
@@ -74,8 +76,9 @@ namespace SolarApp.DataProcessor.Integration.Tests
 		{
 			var configuration = ScenarioContext.Current.Get<IConfiguration>();
 			var context = ScenarioContext.Current.Get<ISolarAppContext>();
+			var logger = ScenarioContext.Current.Get<ILogger>();
 			var services = ScenarioContext.Current.Get<IServices>();
-			var weather = new WeatherProcessor(configuration, context, services);
+			var weather = new WeatherProcessor(configuration, context, logger, services);
 			var result = weather.GetWeatherObservation();
 			var dataItemsToTrack = ScenarioContext.Current.Get<List<DataItem>>("DataItemsToTrack");
 			var weatherObservation = new WeatherObservation();
