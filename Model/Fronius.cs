@@ -25,6 +25,19 @@ namespace SolarApp.Model
 			Head = new Head();
 			Body = new Body();
 		}
+
+        /// <summary>
+        /// Indicates whether the point can be used for querying in the web portal or not
+        /// </summary>
+        /// <returns></returns>
+        public bool IsValid() {
+            return Head.Status.Code == 0 && 
+                Head.Status.Reason == "" && 
+                Head.Status.UserMessage == "" &&
+                Head.RequestArguments.Query == "Inverter" && 
+                Head.RequestArguments.Scope == "System";
+
+        }
     }
 
     public class Head

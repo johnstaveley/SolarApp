@@ -29,7 +29,8 @@ namespace SolarApp.DataProcessor.Unit.Tests
 			DataPoint dataPoint = new DataPoint();
 			configuration.Expect(i => i.NewFilePollPath).Return(pollFilePath);
 			fileSystem.Expect(f => f.Directory_Exists(Arg<string>.Is.Anything)).Return(true);
-			fileSystem.Expect(f => f.Directory_GetFiles(Arg<string>.Is.Anything, Arg<string>.Is.Anything)).Return(filesToProcess);
+            fileSystem.Expect(f => f.Directory_GetFiles(pollFilePath, "Log*.log")).Return(filesToProcess);
+            fileSystem.Expect(f => f.Directory_GetFiles(pollFilePath, "*.json")).Return(new string[0]);
 			fileSystem.Expect(f => f.File_Exists(Arg<string>.Is.Anything)).Return(false);
 			foreach(var fileToProcess in filesToProcess){
 				fileSystem.Expect(f => f.File_ReadAllText(Arg<string>.Is.Equal(fileToProcess))).Return(JsonConvert.SerializeObject(dataPoint));

@@ -40,7 +40,9 @@ namespace SolarApp.DataProcessor
 				_logger.Debug(string.Format("About to be http get to {0}", metOfficeLocationForecastUrl));
 				var weatherForecastJson = _services.WebRequestForJson(metOfficeLocationForecastUrl);
 				forecastDownloaded = DateTime.UtcNow;
-				_context.InsertWeatherForecast(new WeatherForecast() { Id = forecastDownloaded.Value, Data = weatherForecastJson });
+                WeatherForecast weatherForecast = JsonConvert.DeserializeObject<WeatherForecast>(weatherForecastJson);
+                weatherForecast.Id = string.Format("{0:yyyy-MM-ddTHHmmss}", forecastDownloaded.Value);
+                _context.InsertWeatherForecast(weatherForecast);
 				requestWeatherForecast.Value = "0";
 				_context.UpdateSetting(requestWeatherForecast);
 			}

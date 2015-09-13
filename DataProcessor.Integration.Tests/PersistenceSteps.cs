@@ -194,11 +194,11 @@ namespace SolarApp.DataProcessor.Integration.Tests
 			var context = ScenarioContext.Current.Get<ISolarAppContext>();
 			var logger = ScenarioContext.Current.Get<ILogger>();
 			LocalFileProcessor fileProcessor = new LocalFileProcessor(configuration, new SolarApp.DataProcessor.Utility.Classes.FileSystem(), context, logger);
-			var dataPointIds = fileProcessor.Process();
-			foreach (var dataPointId in dataPointIds)
+			var processedFiles = fileProcessor.Process();
+            foreach (var processedFile in processedFiles)
 			{
 				var dataPoint = new DataPoint();
-				dataPoint.Id = dataPointId;
+                dataPoint.Id = processedFile.Id;
 				var dataItemsToTrack = ScenarioContext.Current.Get<List<DataItem>>("DataItemsToTrack");
 				dataItemsToTrack.Add(new DataItem(dataPoint));
 				ScenarioContext.Current.Set<List<DataItem>>(dataItemsToTrack, "DataItemsToTrack");

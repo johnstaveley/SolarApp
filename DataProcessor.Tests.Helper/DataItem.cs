@@ -33,7 +33,7 @@ namespace SolarApp.DataProcessor.Tests.Helper
 
 		public DataItem(WeatherForecast weatherForecast)
 		{
-			this.Id = weatherForecast.Id.ToString("yyyy-MM-dd HH:mm:ss.fffZ");
+			this.Id = weatherForecast.Id;
 			this.TableTypeKind = Helper.TableTypeKind.WeatherForecast;
 		}
 

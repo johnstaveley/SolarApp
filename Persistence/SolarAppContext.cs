@@ -462,7 +462,7 @@ namespace SolarApp.Persistence
             }
         }
 
-        public WeatherForecast FindWeatherForecastById(DateTime id)
+        public WeatherForecast FindWeatherForecastById(string id)
         {
             return this.WeatherForecast.Find(Query.EQ("_id", BsonValue.Create(id))).FirstOrDefault();
         }
@@ -472,7 +472,7 @@ namespace SolarApp.Persistence
             this.WeatherForecast.Insert(weatherForecast);
         }
 
-        public void DeleteWeatherForecastById(DateTime id)
+        public void DeleteWeatherForecastById(string id)
         {
             this.WeatherForecast.Remove(Query.EQ("_id", BsonValue.Create(id)));
         }

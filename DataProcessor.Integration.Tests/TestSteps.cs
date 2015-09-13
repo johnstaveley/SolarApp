@@ -79,7 +79,7 @@ namespace SolarApp.DataProcessor.Integration.Tests
 						context.DeleteSuntimeById(DateTime.ParseExact(dataItem.Id, "yyyy-MM-dd HH:mm:ss.fffZ", CultureInfo.InvariantCulture));
 						break;
 					case (TableTypeKind.WeatherForecast):
-						context.DeleteWeatherForecastById(DateTime.ParseExact(dataItem.Id, "yyyy-MM-dd HH:mm:ss.fffZ", CultureInfo.InvariantCulture));
+						context.DeleteWeatherForecastById(dataItem.Id);
 						break;
 					case (TableTypeKind.WeatherObservation):
 						context.DeleteWeatherObservationById(dataItem.Id);
