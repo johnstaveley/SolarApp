@@ -70,6 +70,9 @@ namespace SolarApp.Model
         [BsonElement("Visibility"), JsonProperty(PropertyName = "V")]
         public string Visibility { get; set; }
 
+        /// <summary>
+        /// http://www.metoffice.gov.uk/datapoint/support/documentation/code-definitions
+        /// </summary>
         [BsonElement("WeatherType"), JsonProperty(PropertyName = "W")]
         public int WeatherType { get; set; }
 
