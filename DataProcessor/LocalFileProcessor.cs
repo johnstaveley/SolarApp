@@ -89,14 +89,13 @@ namespace SolarApp.DataProcessor
                     {
                         _context.InsertFailedData(new FailedData() { Id = fileName, Data = fileText });
                     }
-                    processedFiles.Add(processedFile);
                 }
                 catch (Exception exception)
                 {
                     _logger.ErrorFormat("Error processing message {0}", exception.Message);
                     _context.InsertFailedData(new FailedData() { Id = fileName, Data = fileText });
-                    processedFiles.Add(processedFile);
                 }
+                processedFiles.Add(processedFile);
             }
             return processedFiles;
 
