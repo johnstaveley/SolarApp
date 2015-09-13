@@ -29,6 +29,13 @@ namespace SolarApp.DataProcessor
             _logger = logger;
         }
 
+        public List<string> GetFilesToProcess(string pollPath)
+        {
+            var filesToProcess = _fileSystem.Directory_GetFiles(pollPath, "Log*.log").ToList();
+            filesToProcess.AddRange(_fileSystem.Directory_GetFiles(pollPath, "*.json").ToList());
+            return filesToProcess;
+        }
+
         public List<ProcessedFile> Process()
         {
             var processedFiles = new List<ProcessedFile>();
@@ -38,8 +45,7 @@ namespace SolarApp.DataProcessor
             {
                 _fileSystem.CreateDirectory(archivePath);
             }
-            var filesToProcess = _fileSystem.Directory_GetFiles(pollPath, "Log*.log").ToList();
-            filesToProcess.AddRange(_fileSystem.Directory_GetFiles(pollPath, "*.json").ToList());
+            var filesToProcess = GetFilesToProcess(pollPath);
             foreach (string fileToProcess in filesToProcess)
             {
                 string fileText = _fileSystem.File_ReadAllText(fileToProcess);
