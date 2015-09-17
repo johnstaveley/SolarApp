@@ -64,7 +64,7 @@ namespace SolarApp.Model
         [BsonElement("WindSpeedMPH"), JsonProperty(PropertyName = "S")]
         public int WindSpeedMPH { get; set; }
 
-        [BsonElement("Temperature"), JsonProperty(PropertyName = "T")]
+        [BsonElement("TemperatureCentigrade"), JsonProperty(PropertyName = "T")]
         public int Temperature { get; set; }
 
         [BsonElement("Visibility"), JsonProperty(PropertyName = "V")]
