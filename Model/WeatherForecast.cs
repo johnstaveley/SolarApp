@@ -73,8 +73,8 @@ namespace SolarApp.Model
         /// <summary>
         /// http://www.metoffice.gov.uk/datapoint/support/documentation/code-definitions
         /// </summary>
-        [BsonElement("WeatherType"), JsonProperty(PropertyName = "W")]
-        public int WeatherType { get; set; }
+        [BsonElement("WeatherTypeId"), JsonProperty(PropertyName = "W")]
+        public int WeatherTypeId { get; set; }
 
         [BsonElement("MaxUVIndex"), JsonProperty(PropertyName = "U")]
         public int MaxUVIndex { get; set; }
