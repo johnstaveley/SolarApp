@@ -192,3 +192,5 @@ DataProcessor/Deployment/ServiceManagement.psm1
 DataProcessor/Deployment/ReleaseManagement.psm1
 DataProcessor/privateSettings.config
 DataProcessor.Integration.Tests/privateSettings.config
+DataProcessor.Integration.Tests/privateSettings.config
+DataProcessor/privateSettings.config
