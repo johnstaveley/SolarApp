@@ -117,7 +117,7 @@ namespace SolarApp.Web.Unit.Tests.Controllers
 				new EnergyOutputDay() { Timestamp = targetDate, CurrentEnergy = 100, DayEnergyInstant = 40 },
                 new EnergyOutputDay() { Timestamp = targetDate.AddMinutes(15), CurrentEnergy = 70, DayEnergyInstant = 48 }
 			};
-			_context.Expect(a => a.GetEnergyOutputByDay(targetDate, targetDate.AddDays(1))).Return(energyReadings);
+			_context.Expect(a => a.GetEnergyOutputByDay(targetDate.ToUniversalTime(), targetDate.ToUniversalTime().AddDays(1))).Return(energyReadings);
 			_context.Expect(a => a.FindSuntimeByDate(targetDate.ToUniversalTime())).Return(suntime);
 
 			// Act
@@ -144,7 +144,7 @@ namespace SolarApp.Web.Unit.Tests.Controllers
 		public void MonthGraphDataShouldReturnEnergyData()
 		{
 			// Arrange
-			var targetDate = DateTime.Parse("2015-01-01").Date;
+			var targetDate = DateTime.Parse("2015-01-01").Date.ToUniversalTime();
 			var energyReadings = new List<EnergyOutputMonth>(){
 				new EnergyOutputMonth() { Day = targetDate.Day, DayEnergy = 100 },
                 new EnergyOutputMonth() { Day = targetDate.Day, DayEnergy = 120 }

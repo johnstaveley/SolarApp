@@ -22,8 +22,23 @@ namespace SolarApp.Persistence
 		WeatherForecast FindWeatherForecastById(string id);
 		WeatherObservation FindWeatherObservationById(string id);
         double? GetAverageOutputForHour(int hour);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="startDate">UTC Date</param>
+		/// <param name="endDate">UTC Date</param>
+		/// <returns></returns>
         List<EnergyOutputDay> GetEnergyOutputByDay(DateTime startDate, DateTime endDate);
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="startDate">UTC Date</param>
+		/// <param name="endDate">UTC Date</param>
+		/// <returns></returns>
 		List<EnergyOutputMonth> GetEnergyOutputByMonth(DateTime startDate, DateTime endDate);
+
 		List<EnergyOutputYear> GetEnergyOutputByYear(DateTime startDate, DateTime endDate);
         DateTime? GetLatestEnergyReading();
         long GetNumberOfDataPoints();

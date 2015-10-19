@@ -213,6 +213,12 @@ namespace SolarApp.Persistence
 			return energyReadings;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="startDate">UTC Date</param>
+		/// <param name="endDate">UTC Date</param>
+		/// <returns></returns>
 		public List<EnergyOutputMonth> GetEnergyOutputByMonth(DateTime startDate, DateTime endDate)
 		{
 			var results = new List<EnergyOutputDay>();
@@ -221,8 +227,8 @@ namespace SolarApp.Persistence
 				Pipeline = new[] {
 					new BsonDocument("$match", new BsonDocument {{
                         "Head.Timestamp", new BsonDocument {
-                            {"$gte", startDate.ToUniversalTime() },
-                            {"$lt", endDate.ToUniversalTime() }
+                            {"$gte", startDate },
+                            {"$lt", endDate }
                         }}
                     }),
                     new BsonDocument("$project", new BsonDocument
@@ -247,6 +253,12 @@ namespace SolarApp.Persistence
 			return energyReadings;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="startDate">UTC Date</param>
+		/// <param name="endDate">UTC Date</param>
+		/// <returns></returns>
         public List<EnergyOutputDay> GetEnergyOutputByDay(DateTime startDate, DateTime endDate)
         {
             var results = new List<EnergyOutputDay>();
@@ -255,8 +267,8 @@ namespace SolarApp.Persistence
                 Pipeline = new[] {
 					new BsonDocument("$match", new BsonDocument {{
                         "Head.Timestamp", new BsonDocument {
-                            {"$gte", startDate.ToUniversalTime() },
-                            {"$lt", endDate.ToUniversalTime() }
+                            {"$gte", startDate},
+                            {"$lt", endDate }
                         }}
                     }),
                     new BsonDocument("$project", new BsonDocument

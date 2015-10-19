@@ -36,7 +36,7 @@ namespace SolarApp.Web.Controllers
 
 		public JsonResult DayGraphData(DateTime targetDate)
 		{
-			var startDate = targetDate.Date;
+			var startDate = targetDate.Date.ToUniversalTime();
 			var endDate = startDate.AddDays(1);
 			var suntime = _context.FindSuntimeByDate(startDate.ToUniversalTime());
 			var energyReadings = _context.GetEnergyOutputByDay(startDate, endDate);
@@ -73,7 +73,7 @@ namespace SolarApp.Web.Controllers
 
 		public JsonResult MonthGraphData(DateTime targetDate)
 		{
-			var startDate = targetDate.Date.AddDays(1-targetDate.Day);
+			var startDate = targetDate.Date.AddDays(1-targetDate.Day).ToUniversalTime();
 			var endDate = startDate.AddMonths(1);
 			var energyReadings = _context.GetEnergyOutputByMonth(startDate, endDate);
 			double averageProduction = 0;
