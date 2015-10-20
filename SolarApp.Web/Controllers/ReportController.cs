@@ -36,10 +36,10 @@ namespace SolarApp.Web.Controllers
 
 		public JsonResult DayGraphData(DateTime targetDate)
 		{
-			var startDate = targetDate.Date.ToUniversalTime();
-			var endDate = startDate.AddDays(1);
-			var suntime = _context.FindSuntimeByDate(startDate.ToUniversalTime());
-			var energyReadings = _context.GetEnergyOutputByDay(startDate, endDate);
+			var startDateUTC = targetDate.Date.ToUniversalTime();
+			var endDateUTC = startDateUTC.AddDays(1);
+			var suntime = _context.FindSuntimeByDate(startDateUTC);
+			var energyReadings = _context.GetEnergyOutputByDay(startDateUTC, endDateUTC);
 			double totalProduction = 0;
 			double maximumProduction = 0;
 			if (energyReadings.Count > 0)
@@ -48,7 +48,7 @@ namespace SolarApp.Web.Controllers
 				maximumProduction = energyReadings.Max(e => e.CurrentEnergy);
 			}
 			return Json(new { 
-				targetDate = startDate.ToJavaScriptMilliseconds(), 
+				targetDate = startDateUTC.ToLocalTime().ToJavaScriptMilliseconds(), 
 				data = energyReadings
 					.Select(a => new { timestamp = a.Timestamp.ToLocalTime().ToJavaScriptMilliseconds(), currentEnergy = a.CurrentEnergy, dayEnergyInstant = a.DayEnergyInstant }),
 				totalProduction = totalProduction,
@@ -73,9 +73,9 @@ namespace SolarApp.Web.Controllers
 
 		public JsonResult MonthGraphData(DateTime targetDate)
 		{
-			var startDate = targetDate.Date.AddDays(1-targetDate.Day).ToUniversalTime();
-			var endDate = startDate.AddMonths(1);
-			var energyReadings = _context.GetEnergyOutputByMonth(startDate, endDate);
+			var startDateUTC = targetDate.Date.AddDays(1-targetDate.Day).ToUniversalTime();
+			var endDateUTC = startDateUTC.AddMonths(1);
+			var energyReadings = _context.GetEnergyOutputByMonth(startDateUTC, endDateUTC);
 			double averageProduction = 0;
 			double totalProduction = 0;
 			double maximumProduction = 0;
@@ -87,7 +87,7 @@ namespace SolarApp.Web.Controllers
 			}
 			return Json(new
 			{
-				targetDate = startDate.ToJavaScriptMilliseconds(),
+				targetDate = startDateUTC.ToLocalTime().ToJavaScriptMilliseconds(),
 				data = energyReadings
 					.Select(a => new { timestamp = targetDate.AddDays(a.Day-1).ToJavaScriptMilliseconds(), dayEnergy = a.DayEnergy }),
 				totalProduction = totalProduction,
@@ -110,9 +110,9 @@ namespace SolarApp.Web.Controllers
 
 		public JsonResult YearGraphData(DateTime targetDate)
 		{
-			var startDate = targetDate.Date.AddMonths(1 - targetDate.Month).AddDays(1 - targetDate.Day);
-			var endDate = startDate.AddYears(1);
-			var energyReadings = _context.GetEnergyOutputByYear(startDate, endDate);
+			var startDateUTC = targetDate.Date.AddMonths(1 - targetDate.Month).AddDays(1 - targetDate.Day);
+			var endDateUTC = startDateUTC.AddYears(1);
+			var energyReadings = _context.GetEnergyOutputByYear(startDateUTC, endDateUTC);
 			double averageProduction = 0;
 			double totalProduction = 0;
 			double maximumProduction = 0;
@@ -124,7 +124,7 @@ namespace SolarApp.Web.Controllers
 			}
 			return Json(new
 			{
-				targetDate = startDate.ToJavaScriptMilliseconds(),
+				targetDate = startDateUTC.ToLocalTime().ToJavaScriptMilliseconds(),
 				data = energyReadings
 					.Select(a => new { timestamp = targetDate.AddMonths(a.Month - 1).ToJavaScriptMilliseconds(), monthEnergy = a.MonthEnergy }),
 				totalProduction = totalProduction,

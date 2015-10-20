@@ -34,7 +34,7 @@ function visualizeit() {
                 .attr("height", HEIGHT);
 
     var xRange = d3.scale.ordinal()
-        .rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1)
+        .rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right])
         .domain(dataArray.map(function (d) {
             return d.timestamp;
         }));
