@@ -84,7 +84,7 @@ function visualizeit() {
     // Create display scalings between input data and canvas size
     var xScale = d3.time.scale.utc()
         .domain([d3.min(dataArray, function (d) { return d.timestamp; }), d3.max(dataArray, function (d) { return d.timestamp; })])
-        .range([MARGINS.left, WIDTH - MARGINS.right]);
+        .range([MARGINS.left + xRange.rangeBand(), WIDTH - MARGINS.right - xRange.rangeBand()]);
 
     var yScale1 = d3.scale.linear()
         .domain([d3.min(dataArray, function (d) { return d.currentEnergy; }), d3.max(dataArray, function (d) { return d.currentEnergy; })])

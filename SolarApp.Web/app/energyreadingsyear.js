@@ -33,13 +33,13 @@ function visualizeit() {
                 .attr("height", HEIGHT);
 
     // Create display scalings between input data and canvas size
-    var xScale = d3.time.scale.utc()
-        .domain([d3.min(dataArray, function (d) { return d.timestamp; }), d3.max(dataArray, function (d) { return d.timestamp; })])
-        .range([MARGINS.left+50, WIDTH - MARGINS.right-50]);
-
     var xRange = d3.scale.ordinal()
         .rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1)
         .domain(dataArray.map(function (d) { return d.timestamp; }));
+
+    var xScale = d3.time.scale.utc()
+        .domain([d3.min(dataArray, function (d) { return d.timestamp; }), d3.max(dataArray, function (d) { return d.timestamp; })])
+        .range([MARGINS.left + xRange.rangeBand()/2, WIDTH - MARGINS.right - xRange.rangeBand()/2]);
 
     var yScale1 = d3.scale.linear()
         .domain([d3.min(dataArray, function (d) { return d.monthEnergy; }), d3.max(dataArray, function (d) { return d.monthEnergy; })])
