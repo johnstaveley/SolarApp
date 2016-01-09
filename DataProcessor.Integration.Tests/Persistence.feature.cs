@@ -142,19 +142,19 @@ this.ScenarioSetup(scenarioInfo);
                         "CurrentReading",
                         "Comment"});
             table3.AddRow(new string[] {
-                        "2015-06-15 09:23:00",
+                        "2015-01-15 09:23:00",
                         "100",
                         "Included"});
             table3.AddRow(new string[] {
-                        "2015-06-15 09:33:00",
+                        "2015-01-15 09:33:00",
                         "200",
                         "Included"});
             table3.AddRow(new string[] {
-                        "2015-06-14 09:46:00",
+                        "2015-01-14 09:46:00",
                         "300",
                         "Included"});
             table3.AddRow(new string[] {
-                        "2015-06-15 10:02:01",
+                        "2015-01-15 10:02:01",
                         "2500",
                         "Excluded"});
 #line 21
@@ -182,19 +182,19 @@ this.ScenarioSetup(scenarioInfo);
                         "CurrentReading",
                         "Comment"});
             table4.AddRow(new string[] {
-                        "2015-06-15 09:23:00",
+                        "2015-01-15 09:23:00",
                         "100",
                         "Excluded"});
             table4.AddRow(new string[] {
-                        "2015-06-15 09:33:00",
+                        "2015-01-15 09:33:00",
                         "200",
                         "Excluded"});
             table4.AddRow(new string[] {
-                        "2015-06-14 09:46:00",
+                        "2015-01-14 09:46:00",
                         "300",
                         "Excluded"});
             table4.AddRow(new string[] {
-                        "2015-06-15 10:00:01",
+                        "2015-01-15 10:00:01",
                         "2500",
                         "Excluded"});
 #line 31
