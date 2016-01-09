@@ -123,7 +123,7 @@ namespace SolarApp.DataProcessor.Integration.Tests
         {
             string[] logFiles = ScenarioContext.Current.Get<string[]>("LogFileNames");
             Assert.AreNotEqual(0, logFiles.Length);
-            Assert.IsTrue(logFiles[0].Contains(string.Format("Log{0}", DateTime.Now.Year)));
+            Assert.IsTrue(logFiles[0].Contains("Log201"));
             Assert.IsTrue(logFiles[0].Contains(".log"));
         }
 
