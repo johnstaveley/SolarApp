@@ -22,7 +22,6 @@ namespace SolarApp.DataProcessor.Unit.Tests
 			// Arrange
 			var configuration = MockRepository.GenerateMock<IConfiguration>();
 			var solarAppContext = MockRepository.GenerateMock<ISolarAppContext>();
-			var fileSystem = MockRepository.GenerateMock<IFileSystem>();
 			var ftp = MockRepository.GenerateMock<IFtp>();
 			var logger = MockRepository.GenerateMock<ILogger>();
 			string[] filesToDownload = { "A", "B", "C" };
@@ -37,13 +36,12 @@ namespace SolarApp.DataProcessor.Unit.Tests
             configuration.DeleteFileAfterDownload = false;
 
 			// Act
-			var ftpFileProcessor = new FtpFileProcessor(configuration, solarAppContext, fileSystem, ftp, logger);
+			var ftpFileProcessor = new FtpFileProcessor(configuration, solarAppContext, ftp, logger);
 			ftpFileProcessor.Process();
 
 			// Assert
 			configuration.VerifyAllExpectations();
 			solarAppContext.VerifyAllExpectations();
-			fileSystem.VerifyAllExpectations();
 
 			ftp.AssertWasCalled(i => i.Download(Arg<string>.Is.Equal("C"), Arg<string>.Is.Equal(pollFilePath)));
             ftp.AssertWasNotCalled(f => f.Delete(Arg<string>.Is.Anything));

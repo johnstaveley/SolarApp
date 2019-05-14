@@ -11,7 +11,7 @@ And There are files of the right format
 
 Scenario: Download files via ftp to a local receiving directory
 Given I have the credentials of the ftp site
-And I want to navigate to a subdirectory of the ftp site 'test'
+And I want to navigate to a subdirectory of the ftp site 'test' 
 And the local temp directory 'receiving' is empty
 When I access the site
 And there is a file 'Log20150520062000.log' waiting with text 'test download file'

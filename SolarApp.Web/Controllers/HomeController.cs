@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using SolarApp.DataProcessor.Utility.Interfaces;
 using SolarApp.Persistence;
-using SolarApp.DataProcessor.Utility.Interfaces;
-using SolarApp.DataProcessor.Utility.Classes;
-using SolarApp.Web.ViewModel;
 using SolarApp.Utility.Interfaces;
+using SolarApp.Web.ViewModel;
+using System.Web.Mvc;
 
 namespace SolarApp.Web.Controllers
 {

@@ -10,4 +10,4 @@ Scenario: An energy prediction algorthm tells me when I can start my appliance
 	And I am using prediction algorithm 'Y'
 	And I have historic data...
 	When I run the prediction routine
-	Then the first time the appliance should run is 11
+	Then the first time the appliance should run is 11 

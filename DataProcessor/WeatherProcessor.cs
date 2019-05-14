@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using SolarApp.Persistence;
-using Newtonsoft.Json;
-using SolarApp.Model;
-using SolarApp.DataProcessor.Utility;
+﻿using Newtonsoft.Json;
 using SolarApp.DataProcessor.Utility.Interfaces;
-using System.Net;
+using SolarApp.Model;
+using SolarApp.Persistence;
 using SolarApp.Utility.Interfaces;
+using System;
 
 namespace SolarApp.DataProcessor
 {

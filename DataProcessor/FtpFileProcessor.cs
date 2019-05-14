@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using SolarApp.Persistence;
-using Newtonsoft.Json;
-using SolarApp.Model;
-using SolarApp.DataProcessor.Utility;
+﻿using SolarApp.DataProcessor.Utility;
 using SolarApp.DataProcessor.Utility.Interfaces;
+using SolarApp.Persistence;
 using SolarApp.Utility.Interfaces;
 
 namespace SolarApp.DataProcessor
@@ -17,16 +9,14 @@ namespace SolarApp.DataProcessor
 	{
 
 		private readonly IConfiguration _configuration;
-		private readonly IFileSystem _fileSystem;
 		private readonly IFtp _ftp;
 		private readonly ISolarAppContext _context;
 		private readonly ILogger _logger;
 
-		public FtpFileProcessor(IConfiguration configuration, ISolarAppContext context, IFileSystem fileSystem, IFtp ftp, ILogger logger)
+		public FtpFileProcessor(IConfiguration configuration, ISolarAppContext context, IFtp ftp, ILogger logger)
 		{
 			_configuration = configuration;
 			_context = context;
-			_fileSystem = fileSystem;
 			_ftp = ftp;
 			_logger = logger;
 		}

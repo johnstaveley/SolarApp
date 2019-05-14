@@ -1,26 +1,20 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.IO;
+using MongoDB.Driver;
+using MongoDB.Driver.Builders;
+using Newtonsoft.Json.Linq;
+using SolarApp.DataProcessor.Utility.Interfaces;
+using SolarApp.Model;
+using SolarApp.Utility.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MongoDB.Driver;
-using MongoDB;
-using MongoDB.Shared;
-using MongoDB.Bson;
-using SolarApp.Model;
-using MongoDB.Driver.Builders;
-using Newtonsoft.Json;
-using SolarApp.DataProcessor.Utility.Interfaces;
-using Newtonsoft.Json.Linq;
-using MongoDB.Bson.IO;
-using MongoDB.Bson.Serialization;
 using System.Text.RegularExpressions;
-using SolarApp.Utility.Interfaces;
 
 namespace SolarApp.Persistence
 {
 
-    public class SolarAppContext : ISolarAppContext
+	public class SolarAppContext : ISolarAppContext
     {
 
         public MongoDatabase Database;
@@ -47,7 +41,7 @@ namespace SolarApp.Persistence
                     var ignore = Database.CollectionExists("DataPoints");
                     return true;
                 }
-                catch
+                catch (Exception exception)
                 {
                     return false;
                 }

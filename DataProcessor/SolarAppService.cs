@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
-using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
-using SolarApp.DataProcessor.Utility;
-using SolarApp.Persistence;
+﻿using SolarApp.DataProcessor.Utility;
 using SolarApp.DataProcessor.Utility.Interfaces;
-using System.Threading;
-using System.Reflection;
+using SolarApp.Persistence;
 using SolarApp.Utility.Interfaces;
+using System;
+using System.Reflection;
+using System.ServiceProcess;
+using System.Threading;
 
 namespace SolarApp.DataProcessor
 {
-    public partial class SolarAppService : ServiceBase
+	public partial class SolarAppService : ServiceBase
     {
 		private readonly AutoResetEvent _idle = new AutoResetEvent(true);
 		private readonly ITimer _timer;
@@ -72,21 +65,20 @@ namespace SolarApp.DataProcessor
 				_logger.Debug("Tick");
 				if (_context.IsDatabasePresent)
 				{
-
 					if (!_context.IsDatabaseSeeded)
 					{
 						_context.SeedDatabase();
 					}
 
-					var ftpFileProcessor = new FtpFileProcessor(_configuration, _context, _fileSystem, _ftp, _logger);
-					ftpFileProcessor.Process();
+					//var ftpFileProcessor = new FtpFileProcessor(_configuration, _context, _ftp, _logger);
+					//ftpFileProcessor.Process();
 
 					var localFileProcessor = new LocalFileProcessor(_configuration, _fileSystem, _context, _logger);
 					localFileProcessor.Process();
 
-					var weatherProcessor = new WeatherProcessor(_configuration, _context, _logger, _services);
-					weatherProcessor.GetWeatherForecast();
-					weatherProcessor.GetWeatherObservation();
+					//var weatherProcessor = new WeatherProcessor(_configuration, _context, _logger, _services);
+					//weatherProcessor.GetWeatherForecast();
+					//weatherProcessor.GetWeatherObservation();
 
                     _context.UpdateLastRunDate();
 				}

@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using SolarApp.Persistence;
-using Newtonsoft.Json;
-using SolarApp.Model;
-using SolarApp.DataProcessor.Utility;
+﻿using Newtonsoft.Json;
 using SolarApp.DataProcessor.Utility.Interfaces;
+using SolarApp.Model;
+using SolarApp.Persistence;
 using SolarApp.Utility.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace SolarApp.DataProcessor
 {
-    public class LocalFileProcessor
+	public class LocalFileProcessor
     {
 
         private readonly IConfiguration _configuration;

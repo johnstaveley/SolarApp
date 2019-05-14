@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
+﻿using log4net.Config;
 using SimpleInjector;
 using SolarApp.DataProcessor.Utility;
-using SolarApp.DataProcessor.Utility.Interfaces;
 using SolarApp.DataProcessor.Utility.Classes;
+using SolarApp.DataProcessor.Utility.Interfaces;
 using SolarApp.Persistence;
-using System.Threading;
-using SolarApp.Utility.Interfaces;
 using SolarApp.Utility.Classes;
-using log4net.Config;
+using SolarApp.Utility.Interfaces;
+using System.Threading;
 
 namespace SolarApp.DataProcessor
 {
-    static class Program
+	static class Program
     {
 		private static Container container;
 
